@@ -1,0 +1,169 @@
+﻿@model IEnumerable<ICTS.com.Models.Slider>
+@{
+    ViewBag.Title = "Home Page";
+}
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+
+    <div id="slidehome" class="carousel-inner">
+        <div class="carousel-item active">
+            <img class="d-block w-100" src="~/Images/05052022114041_39.jpg" alt="First slide">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="~/Images/29462021094637394_46.png" alt="Second slide">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="~/Images/29462021094649875_3.jpg" alt="Third slide">
+        </div>
+    </div>
+</div>
+<div class="h-product-wp" >
+    <div style="text-align:center" class="h-product-block">
+        <ul id="imgcategory">
+        </ul>
+    </div>
+    <div class="title-big  wow fadeInUp animated">
+        <div id="h1why">
+        </div>
+        <div id="pwhy">
+        </div>
+    </div>
+</div>
+<div class="slider">
+    <div id="partner" class="slide-track">
+    </div>
+</div>
+<div class="title-big  wow fadeInUp animated">
+    <div style="margin-top:100px" id="partnercontent">
+    </div>
+</div>
+<div class="h-product-wp">
+    <div style="text-align:center" class="h-product-block">
+        <ul id="imgsolution">
+        </ul>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            ImgCategory();
+            Why();
+            Partner();
+            PartnerContent();
+            Solution();
+        });
+        /*    ---------------------category---------------------------*/
+        function ImgCategory() {
+            $.ajax({
+                url: '/home/DanhMucTheoAnh',
+                type: 'get',
+                success: function (data) {
+                    $('#imgcategory').empty();
+                    if (data.code == 200) {
+                        $.each(data.dmsp, function (k, v) {
+                            let div = '<li>'
+                            div += ' <div class="h-product-item">'
+                            div += ' <div  class="h-product-item-img wow fadeInDown animated">';
+                            div += '<a  href="/ProductDetail/39934/may-in-ma-vach">';
+                            div += '<img src="/Images/' + v.image + '" title="' + v.title + '" />';
+                            div += '</a>';
+                            div += '</div>';
+                            div += '</div>';
+                            div += '</li>';
+                            $('#imgcategory').append(div);
+                        });
+
+                    } else {
+                        alert(data.msg)
+                    }
+                }
+            });
+        }
+        function Why() {
+            $.ajax({
+                url: '/home/Why',
+                type: 'get',
+                success: function (data) {
+                    if (data.code == 200) {
+                        $.each(data.w, function (k, v) {
+                            $('#h1why').empty();
+                            let h1 = '<h1 id="' + v.id + '">';
+                            h1 += '' + v.name + '';
+                            h1 += '</h1>';
+                            $('#h1why').append(h1);
+                            $('#pwhy').empty();
+                            let p = ''+v.content+'';
+                            $('#pwhy').append(p);
+                        });
+
+                    } else {
+                        alert(data.msg)
+                    }
+                }
+            });
+        }
+        function Partner() {
+            $.ajax({
+                url: '/partner/Partner',
+                type: 'get',
+                success: function (data) {
+                    $('#partner').empty();
+                    if (data.code == 200) {
+                        $.each(data.pn, function (k, v) {                         
+                            let div = ' <div class="slide">';
+                            div += ' <img src="/Images/' + v.image + '" height="100" width="250" alt="' + v.title + '" />'
+                            div += '</div>';
+                            $('#partner').append(div);
+                        });
+
+                    } else {
+                        alert(data.msg)
+                    }
+                }
+            });
+        }
+        function PartnerContent() {
+            $.ajax({
+                url: '/home/PartnerContent',
+                type: 'get',
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#partnercontent').empty();
+                        $.each(data.w, function (k, v) {
+                            let p = '' + v.content + ''
+                            $('#partnercontent').append(p);
+                        });
+
+                    } else {
+                        alert(data.msg)
+                    }
+                }
+            });
+        }
+        function Solution() {
+            $.ajax({
+                url: '/solutionhome/Solution',
+                type: 'get',
+                success: function (data) {
+                    $('#imgsolution').empty();
+                    if (data.code == 200) {
+                        $.each(data.dmsp, function (k, v) {
+                            let div = '<li>'
+                            div += ' <div class="h-product-item">'
+                            div += ' <div  class="h-product-item-img wow fadeInDown animated">';
+                            div += '<a  href="/ProductDetail/39934/may-in-ma-vach">';
+                            div += '<img src="/Images/' + v.image + '" title="' + v.title + '" />';
+                            div += '</a>';
+                            div += '</div>';
+                            div += '</div>';
+                            div += '</li>';
+                            $('#imgsolution').append(div);
+                        });
+
+                    } else {
+                        alert(data.msg)
+                    }
+                }
+            });
+        }
+    </script>
+}  

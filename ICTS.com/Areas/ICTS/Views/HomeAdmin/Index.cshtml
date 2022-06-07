@@ -1,0 +1,1800 @@
+﻿@model IEnumerable<ICTS.com.Models.Content>
+@{
+    ViewBag.Title = "Quản Trị";
+    Layout = "~/Areas/ICTS/Views/Shared/_Layout_Admin.cshtml";
+}
+<div>
+    <ul class="pagination" id="pagepartner">
+    </ul>
+    <div id="seachpartnerinput" class="input-group">
+        <div class="form-outline">
+            <input type="search" id="seachpartner" class="form-control" placeholder="Tìm Kiếm " />
+        </div>
+        <button type="button" id="btnSeachpartner" class="btn btn-primary">
+            <i class="fas fa-search"></i>
+        </button>
+    </div>
+</div>
+<table class="table Logo Phone Category Slider Why
+       Footerleft Footercenter Footerright Partner
+       PartnerContent">
+</table>
+@*-----------------modal logo-----------------------------------*@
+<div id="modallogo" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div style="color:red;text-align:center" class="panel-heading" id="modalTitle"></div>
+                <input type="text" hidden id="idlogo" value="" />
+                <div class="form-inline">
+                    <label>Chọn ảnh</label>
+                    <input type="text" name="picture" id="picturefilelogo" class="form-control" />
+                    <input type="file" id="fileUploadlogo" name="fileUpload" accept="image/*" style="display:none" />
+                    <input type="button" id="btnUploadlogo" value="..." class="btn-bg-success" />
+                    <img style="width:100px" id="picturelogo" />
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người sửa</label>
+                            <input type="text" class="form-control" id="modifilebylogo" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày sửa</label>
+                            <input type="text" class="form-control" id="modifiledatelogo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="btnSubmitLogo">Xác Nhận</button>
+                <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*-----------------modal slider-----------------------------------*@
+<div id="modalslider" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div style="color: red;text-align:center" class="panel-heading" id="modalTitleslider"></div>
+                <input type="text" hidden id="idslider" value="" />
+                <div class="form-group" style="margin-left:20px">
+                    <label>Name</label>
+                    <input type="text" class="form-control" id="nameslider" placeholder="Tên Slider">
+                    <input type="text" class="form-control" hidden id="titleslider" placeholder="Tên Slider">
+                </div>
+                <div class="form-inline">
+                    <label>Chọn ảnh</label>
+                    <input type="text" name="picture" id="picturefileslider" class="form-control" />
+                    <input type="file" id="fileUploadslider" name="fileUpload" accept="image/*" style="display:none" />
+                    <input type="button" id="btnUploadslider" value="..." class="btn-bg-success" />
+                    <img style="width:100px" id="pictureslider" />
+                </div>
+                <div style="text-align:center" class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="statusslider" checked>
+                    <label class="form-check-label" for="flexCheckChecked">
+                        Hiển Thị
+                    </label>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày tạo</label>
+                            <input type="text" class="form-control" id="createdateslider">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày sửa</label>
+                            <input type="text" class="form-control" id="modifiledateslider">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người tạo</label>
+                            <input type="text" class="form-control" id="createbyslider" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người sửa</label>
+                            <input type="text" class="form-control" id="modifilebyslider" placeholder="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="btnSubmitslider">Xác Nhận</button>
+                <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*-----------------modal phone-----------------------------------*@
+<div class="modal CSKH" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div style="color: red; text-align: center" class="panel-heading" id="modalTitlephone"></div>
+                <input type="text" hidden id="idcskh" value="" />
+                <div class="form-group" style="margin-left:20px">
+                    <label>Tên</label>
+                    <input type="text" class="form-control" id="namecskh" placeholder="Tên">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label>Thẻ Url</label>
+                    <input type="text" class="form-control" id="metacskh" placeholder="Meta">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label>Số điện thoại</label>
+                    <input type="text" class="form-control" id="phonecskh" placeholder="Số Điện Thoại">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="btnSubmitcskh">Xác Nhận</button>
+                <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*-----------------modal wwhy------------------*@
+<div id="why" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div style="color: red; text-align: center" class="panel-heading" id="modalTitlewhy"></div>
+                <input type="text" hidden id="idwhy" value="" />
+                <div style="display:flex">Nhập Dữ Liệu Theo Đúng Form<p style="color:red">(*)</p></div>
+                <!--end::Form-->
+                <div class="form-group" style="margin-left:20px">
+                    <label>Tên</label>
+                    <input type="text" class="form-control" id="namewhy">
+                </div>
+                <div class="form-group">
+                    <textarea id="contentwhy" class="form-control"></textarea>
+                </div>
+                <!--end::Form-->
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày tạo</label>
+                            <input type="text" class="form-control" id="createdatewhy">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày sửa</label>
+                            <input type="text" class="form-control" id="modifiledatewhy">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người tạo</label>
+                            <input type="text" class="form-control" id="createbywhy" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người sửa</label>
+                            <input type="text" class="form-control" id="modifilebywhy" placeholder="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="btnSubmitwhy">Xác Nhận</button>
+                <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*-----------------modal footerleft------------------*@
+<div id="modalfooterleft" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div style="color: red; text-align: center" class="panel-heading" id="modalTitleleft"></div>
+                <input type="text" hidden id="idfooterleft" value="" />
+                <!--end::Form-->
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" id="namefooterleft" />
+                    <input type="text" class="form-control" hidden id="metafooterleft" />
+                </div>
+                <!--end::Form-->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="btnSubmitfooterleft">Xác Nhận</button>
+                    <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*-----------------modal footercenter------------------*@
+<div id="modalfootercenter" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div style="color: red; text-align: center" class="panel-heading" id="modalTitlecenter"></div>
+                <input type="text" hidden id="idfootercenter" value="" />
+                <!--end::Form-->
+                <div class="form-inline">
+                    <label>Chọn ảnh</label>
+                    <input type="text" name="picture" id="picturefilefootercenter" class="form-control" />
+                    <input type="file" id="fileUploadfootercenter" name="fileUpload" accept="image/*" style="display:none" />
+                    <input type="button" id="btnUploadfootercenter" value="..." class="btn-bg-success" />
+                    <img style="width:100px" id="picturefootercenter" />
+                </div>
+                <!--end::Form-->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="btnSubmitfootercenter">Xác Nhận</button>
+                    <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*-----------------modal footerright------------------*@
+<div id="modalfooterright" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div style="color: red; text-align: center" class="panel-heading" id="modalTitleright"></div>
+                <input type="text" hidden id="idfooterright" value="" />
+                <!--end::Form-->
+                <div class="form-group" style="margin-left:20px">
+                    <label>Tên</label>
+                    <input type="text" class="form-control" id="namefooterright" placeholder="Tên">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label>Số Điện Thoại</label>
+                    <input type="text" class="form-control" id="phonefooterright" placeholder="Số Điện Thoại">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label>Địa Chỉ</label>
+                    <input type="text" class="form-control" id="addressfooterright" placeholder="Địa Chỉ">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label>Email</label>
+                    <input type="text" class="form-control" id="emailfooterright" placeholder="Email">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label>Link</label>
+                    <input type="text" class="form-control" id="linkfooterright" placeholder="Link">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label>Icon</label>
+                    <input type="text" class="form-control" id="decfooterright" placeholder="Icon">
+                    <p>
+                        Lấy Icon tại<a target="_blank" href="https://fontawesome.com/"> Đây</a> với định dạng
+                        <img src="~/Images/i.png" />
+                    </p>
+                </div>
+                <!--end::Form-->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="btnSubmitfooterright">Xác Nhận</button>
+                    <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*-----------------modal partner------------------*@
+<div id="modalpartner" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div style="color: red; text-align: center" class="panel-heading" id="modalTitlepartner"></div>
+                <input type="text" hidden id="idpartner" value="" />
+                <!--end::Form-->
+                <div class="form-group" style="margin-left:20px">
+                    <label>Tên</label>
+                    <input type="text" class="form-control" id="namepartner" placeholder="Tên">
+                    <input type="text" hidden class="form-control" id="titlepartner" placeholder="Tên">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label>Link</label>
+                    <input type="text" class="form-control" id="linkpartner" placeholder="Đường Dẫn">
+                </div>
+                <div class="form-inline">
+                    <label>Chọn ảnh</label>
+                    <input type="text" hidden name="picture" id="picturefilepartner" class="form-control" />
+                    <input type="file" id="fileUploadpartner" name="fileUpload" accept="image/*" style="display:none" />
+                    <input type="button" id="btnUploadpartner" value="..." class="btn-bg-success" />
+                    <img style="width:100px" id="picturepartner" />
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label>Trạng Thái Hiển Thị</label>
+                    <input type="checkbox" class="form-control" id="statuspartner" placeholder="">
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày tạo</label>
+                            <input type="text" class="form-control" id="createdatepartner">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày sửa</label>
+                            <input type="text" class="form-control" id="modifiledatepartner">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người tạo</label>
+                            <input type="text" class="form-control" id="createbypartner" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người sửa</label>
+                            <input type="text" class="form-control" id="modifilebypartner" placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <!--end::Form-->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="btnSubmitpartner">Xác Nhận</button>
+                    <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*-----------------modal partnercontent------------------*@
+<div id="modalpartnercontent" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div style="color: red; text-align: center" class="panel-heading" id="modalTitlepartnercontent"></div>
+                <input type="text" hidden id="idpartnercontent" value="" />
+                <div style="display:flex">Nhập Dữ Liệu Theo Đúng Form<p style="color:red">(*)</p></div>
+                <!--end::Form-->
+                <div class="form-group" style="margin-left:20px">
+                    <label>Tên</label>
+                    <input type="text" class="form-control" id="namepartnercontent">
+                </div>
+                <div class="form-group">
+                    <textarea id="contentpartner" class="form-control"></textarea>
+                </div>
+                <!--end::Form-->
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày tạo</label>
+                            <input type="text" class="form-control" id="createdatepartnercontent">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày sửa</label>
+                            <input type="text" class="form-control" id="modifiledatepartnercontent">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người tạo</label>
+                            <input type="text" class="form-control" id="createbypartnercontent" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người sửa</label>
+                            <input type="text" class="form-control" id="modifilebypartnercontent" placeholder="">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="btnSubmitpartnercontent">Xác Nhận</button>
+                <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        var page = 1;
+        var seach = '';
+    @* -------------------------------------------------------- mLogo-----------------------------------*@
+        $('#btnLogo').click(function () {
+            Logo();
+            $('#pagepartner').hide();
+            $('#seachpartnerinput').hide();
+        });
+        //hien ten hinh
+        $('#btnUploadlogo').click(function () {
+            $('#fileUploadlogo').trigger('click');
+        });
+        //chon file
+        $('#fileUploadlogo').change(function () {
+            if (window.FormData !== undefined) {
+                let fileUpload = $('#fileUploadlogo').get(0);
+                let files = fileUpload.files;
+                let formdata = new FormData();
+                formdata.append('file', files[0]);
+                $.ajax({
+                    type: 'post',
+                    url: '/icts/homeadmin/UploadImage',
+                    contentType: false,
+                    processData: false,
+                    data: formdata,
+                    success: function (urlImage) {
+                        $('#picturelogo').attr('src', urlImage);
+                        $('#picturefilelogo').val(urlImage);
+                    }
+                })
+            }
+
+        });
+        //Edit Logo
+        $(document).on('click', "button[name='updatelogo']", function () {
+            let id = 5;
+            DetailLogo(id);
+            $('#modifilebylogo').prop('readonly', true);
+            $('#modifiledatelogo').prop('readonly', true);
+            $('#btnSubmitLogo').show();
+
+        });
+        //confilm edit logo
+        $('#btnSubmitLogo').click(function () {
+            let image = $('#picturefilelogo').val().trim();
+            //rang buộc dữ liệu
+            if ( image == null) {
+                alert('Vui Long Nhập Đầy Đủ Dữ liệu');
+                return;
+            }
+            let idlogo = $('#idlogo').val().trim();
+            if (idlogo.length != 0) {
+                $.ajax({
+                    url: '/icts/homeadmin/EditLogo',
+                    type: 'post',
+                    data: {
+                        image: image,
+                        id: idlogo
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Sửa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            Logo();
+                            logo();
+                            $('#picturefilelogo').val('');
+                            $('#idlogo').val('');
+                            $('#modallogo').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+        });
+        function DetailLogo(id) {
+            $.ajax({
+                url: '/icts/homeadmin/DetailLogo',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#idlogo').val(data.tv.Id);
+                        $('#picturefilelogo').val("/Images/" + data.tv.Image);
+                        $('#picturelogo').attr('src', $('#picturefilelogo').val())
+                        $('#modifiledatelogo').val(ConvertJsonDateString(data.tv.ModifileDate));
+                        $('#modifilebylogo').val(data.tv.ModifileBy);
+                        $('#modalTitle').text("Sửa Logo");
+                        $('#modallogo').modal();
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function Logo() {
+            $.ajax({
+                url: '/home/Logo',
+                type: 'get',
+                success: function (data) {
+                    if (data.code == 200) {
+                        $.each(data.logo, function (k, v) {
+                            $('.Logo').empty();
+                            let table = '<thead>';
+                            table += '<tr>';
+                            table += '<th>Logo</th>';
+                            table += '<th></th>';
+                            table += '</tr>';
+                            table += '</thead>';
+                            table += '<tbody>';
+                            table += '<tr id="' + v.id + '">';
+                            table += '<td>';
+                            table += '<img id="pictureUpload" style="width:200px" src="/Images/' + v.image + '" alt="' + v.title + '" />';
+                            table += '</td>';
+                            table += '<td>';
+                            table += ' <button class = "btn btn-xs btn-warning" name = "updatelogo" > <i class="fa-thin fa-wrench"></i></button >&nbsp';
+                            /* table += '<a href="/ICTS/HomeAdmins/EditLogo/' + v.id + '">Đổi Logo</a>';*/
+                            table += '</td>';
+                            table += '</tr>';
+                            table += '</tbody>';
+                            $('.Logo').append(table);
+                        });
+                    }
+                }
+            });
+        }
+        // ------------------------------------------------------ phone sp----------------------------------------------------------------------
+        function CSKH() {
+            $.ajax({
+                url: '/icts/homeadmin/CSKH',
+                type: 'get',
+                success: function (data) {
+                    $('.Phone').empty();
+                    if (data.code == 200) {
+                        let table = '<thead>';
+                        table += '<tr>';
+                        table += '<th>Tên</th>';
+                        table += '<th>Thẻ Url</th>';
+                        table += '<th>Số Điện Thoại</th>';
+                        table += '<th></th>';
+                        table += '</tr>';
+                        table += '</thead>';
+                        table += '<tbody>';
+                        $.each(data.ttlh, function (k, v) {
+                            table += '<tr id="' + v.id + '">';
+                            table += '<td>' + v.name + '</td>';
+                            table += '<td>' + v.meta + '</td>';
+                            table += '<td>' + v.phone + '</td>';
+                            table += '<td> <button class = "btn btn-xs btn-warning" name = "updatecskh" > <i class="fa-solid fa-square-pen"></i></button >&nbsp';
+                            table += '</td>';
+                            table += '</tr>';
+                        });
+                        table += '</tbody>';
+                        $('.Phone').append(table);
+                    }
+                }
+            });
+        }
+        $('#btnPhone').click(function () {
+            CSKH();
+            $('#pagepartner').hide();
+            $('#seachpartnerinput').hide();
+        });
+        //edit phone
+        $(document).on('click', "button[name='updatecskh']", function () {
+            let id = $(this).closest('tr').attr('id');
+            $.ajax({
+                url: '/icts/homeadmin/DetailCSKH',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#namecskh').val(data.ttlh.Name);
+                        $('#metacskh').val(data.ttlh.Meta);
+                        $('#phonecskh').val(data.ttlh.Phone);
+                        $('#idcskh').val(id);
+                        $('#btnSubmitcskh').show();
+                        $('#modalTitlephone').text("Cập Nhật");
+                        $('.CSKH').modal();
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        });
+        $('#btnSubmitcskh').click(function () {
+            let id = $('#idcskh').val().trim();
+            let ten = $('#namecskh').val().trim();
+            let meta = $('#metacskh').val().trim();
+            let phone = $('#phonecskh').val().trim();
+            $.ajax({
+                url: '/icts/homeadmin/EditCSKH',
+                type: 'post',
+                data: {
+                    id: id,
+                    ten: ten,
+                    meta: meta,
+                    phone: phone
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        alert(data.msg);
+                        CSKH();
+                        $('#namecskh').val('');
+                        $('#metacskh').val('');
+                        $('#phonecskh').val('');
+                        $('.CSKH').modal('hide');
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        });
+        //cat chuoi
+        $('#namecskh').keyup(function () {
+            $('#metacskh').val(GetChuoi($(this).val()));
+        });
+        //---------------------------------------------------------------slider---------------------------------------------------------------------------------------
+        //all slider
+        $('#btnSlider').click(function () {
+            Slider();
+            $('#pagepartner').hide();
+            $('#seachpartnerinput').hide();
+        })
+        //modal add slider
+        $(document).on('click', "button[name='addslider']", function () {
+            AddSlider();
+            $('#nameslider').val('');
+            $('#picturefileslider').val('');
+            $('#pictureslider').prop('src','');
+            $('#createdateslider').prop('readonly', true);
+            $('#createdateslider').val('');
+            $('#modifiledateslider').prop('readonly', true);
+            $('#modifiledateslider').val('');
+            $('#createbyslider').prop('readonly', true);
+            $('#createbyslider').val('');
+            $('#modifilebyslider').prop('readonly', true);
+            $('#modifilebyslider').val('');
+            $('#statusslider').prop('checked', false);
+            $('#idslider').val('');
+            $('#btnSubmitslider').show();
+        });
+        //hien ten hinh
+        $('#btnUploadslider').click(function () {
+            $('#fileUploadslider').trigger('click');
+        });
+        //chon file
+        $('#fileUploadslider').change(function () {
+            if (window.FormData !== undefined) {
+                let fileUpload = $('#fileUploadslider').get(0);
+                let files = fileUpload.files;
+                let formdata = new FormData();
+                formdata.append('file', files[0]);
+                $.ajax({
+                    type: 'post',
+                    url: '/icts/sliders/UploadImage',
+                    contentType: false,
+                    processData: false,
+                    data: formdata,
+                    success: function (urlImage) {
+                        $('#pictureslider').attr('src', urlImage);
+                        $('#picturefileslider').val(urlImage);
+                    }
+                })
+            }
+
+        });
+        //cat chuoi
+        $('#nameslider').keyup(function () {
+            $('#titleslider').val(GetChuoi($(this).val()));
+        });
+        //confirm add/edit
+        $('#btnSubmitslider').click(function () {
+            let name = $('#nameslider').val().trim();
+            let title = $('#titleslider').val().trim();
+            let image = $('#picturefileslider').val().trim();
+            let status = $('#statusslider').prop('checked');
+            //rang buộc dữ liệu
+            if ( image == null) {
+                alert('Vui Long Nhập Đầy Đủ Dữ liệu');
+                return;
+            }
+            let idslider = $('#idslider').val().trim();
+            if (idslider.length == 0) {
+                $.ajax({
+                    url: '/icts/sliders/Add',
+                    type: 'post',
+                    data: {
+                        name: name,
+                        title: title,
+                        image: image,
+                        status: status
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Thêm Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            Slider();
+                            $('#nameslider').val('');
+                            $('#titleslider').val('');
+                            $('#statusslider').prop('checked', false);
+                            $('#picturefileslider').val('');
+                            $('#modalslider').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/icts/sliders/Edit',
+                    type: 'post',
+                    data: {
+                        name: name,
+                        title: title,
+                        image: image,
+                        status: status,
+                        id: idslider
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Sửa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            Slider();
+                            $('#nameslider').val('');
+                            $('#titleslider').val('');
+                            $('#statusslider').prop('checked', false);
+                            $('#picturefileslider').val('');
+                            $('#modalslider').modal('hide');
+                            $('#idslider').val('');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+        });
+        //Detail
+        $(document).on('click', "button[name='viewslider']", function () {
+            let id = $(this).closest('tr').attr('id');
+            DetailSlider(id);
+            $('#btnSubmitslider').hide();
+            $('#idslider').val('');
+        });
+        //Edit
+        $(document).on('click', "button[name='updateslider']", function () {
+            let id = $(this).closest('tr').attr('id');
+            DetailSlider(id);
+            $('#btnSubmitslider').show();
+            $('#idslider').val('');
+
+        });
+        //delete
+        $(document).on('click', "button[name='deleteslider']", function () {
+            let id = $(this).closest('tr').attr('id');
+            if (confirm("Bạn có muốn xóa dữ liệu này")) {
+                $.ajax({
+                    url: '/icts/sliders/Delete',
+                    type: 'post',
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            alert(data.msg);
+                            Slider();
+                        } else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+
+        });
+        function Slider() {
+            var inum = 1;
+            $.ajax({
+                url: '/icts/sliders/DMSlider',
+                type: 'get',
+                success: function (data) {
+                    $('.Slider').empty();
+                    if (data.code == 200) {
+                        let table = '<thead>';
+                        table += '<tr>';
+                        table += '<th>STT</th>';
+                        table += '<th>Name</th>';
+                        table += '<th>Ảnh</th>';
+                        table += '<th>Trạng thái</th>';
+                        table += '<th> <button class = "btn btn-xs btn-success" name = "addslider" > <i class="fa-solid fa-plus"></i></button >&nbsp</th>';
+                        table += '<th></th>';
+                        table += '</tr>';
+                        table += '</thead>';
+                        table += '<tbody>';
+                        $.each(data.slider, function (k, v) {
+                            table += '<tr id="' + v.id + '">';
+                            table += '<td>' + [inum++] + '</td>';
+                            table += '<td>' + v.name + '</td>';
+                            table += '<td><img id="" style="width:100px" src="/Images/' + v.image + '" alt="' + v.title + '" /></td>';
+                            table += '<td>' + v.status + '</td>';
+                            table += '<td> </td>';
+                            table += '<td>';
+                            table += ' <button class = "btn btn-xs btn-primary" name = "viewslider" > <i class="fa-thin fa-circle-info"></i></button >&nbsp';
+                            table += ' <button class = "btn btn-xs btn-warning" name = "updateslider" ><i class="fa-thin fa-wrench"></i></button >&nbsp';
+                            table += ' <button class = "btn btn-xs btn-danger" name = "deleteslider" > <i class="fa-thin fa-trash-xmark"></i></button >&nbsp';
+                            table += '</td>';
+                            table += '</tr>';
+                        });
+                        table += '</tbody>';
+                        $('.Slider').append(table);
+                    }
+                }
+            });
+        }
+        function AddSlider() {
+            $.ajax({
+                url: '/adminsss/Add',
+                type: 'get',
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#createdateslider').val(ConvertJsonDateString(data.date));
+                        $('#createbyslider').val(data.d);
+                        $('#modalTitle').text("Thêm Slider");
+                        $('#modalslider').modal();
+                    }
+                }
+            });
+        }
+        function DetailSlider(id) {
+            $.ajax({
+                url: '/icts/sliders/Detail',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#idslider').val(data.tv.Id);
+                        $('#nameslider').val(data.tv.Name);
+                        $('#titleslider').val(data.tv.Title);
+                        $('#picturefileslider').val("/Images/" + data.tv.Image);
+                        if (data.tv.Status == true) {
+                            $('#statusslider').prop('checked', true);
+                        } else {
+                            $('#statusslider').prop('checked', false);
+                        }
+                        $('#pictureslider').attr('src', $('#picturefileslider').val())
+                        $('#createdateslider').val(ConvertJsonDateString(data.tv.CreateDate));
+                        $('#modifiledateslider').val(ConvertJsonDateString(data.tv.ModifileDate));
+                        $('#createbyslider').val(data.tv.CreateBy);
+                        $('#modifilebyslider').val(data.tv.ModifileBy);
+                        $('#createdateslider').prop('readonly', true);
+                        $('#createbyslider').prop('readonly', true);
+                        $('#modifiledateslider').prop('readonly', true);
+                        $('#modifilebyslider').prop('readonly', true);
+                        $('#modalTitle').text("Chi Tiết Slider");
+                        Slider();
+                        $('#modalslider').modal();
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        //--------------------------------------------------whychoose-------------------------------------------------------------------------------------------------------
+        $('#btnwhychoose').click(function () {
+            WhyChoose();
+            $('#pagepartner').hide();
+            $('#seachpartnerinput').hide();
+        });
+        //confirm edit name
+        $('#btnSubmitwhy').click(function () {
+            const content = $('#contentwhy').summernote('code')
+            let name = $('#namewhy').val().trim();
+            //rang buộc dữ liệu
+            let idwhy = $('#idwhy').val().trim();
+            if (idwhy.length > 0) {
+                $.ajax({
+                    url: '/icts/homeadmin/EditWhy',
+                    type: 'post',
+                    data: {
+                        content:content,
+                        name: name,
+                        id: idwhy
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Sửa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            WhyChoose();
+                            $('#idwhy').val('');
+                            $('#why').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+        });
+        //Edit name
+        $(document).on('click', "button[name='updatenamewhy']", function () {
+            let id = $(this).closest('tr').attr('id');
+            Detailwhyname(id);
+            $('#createdatewhy').prop('readonly', true);
+            $('#modifiledatewhy').prop('readonly', true);
+            $('#modifilebywhy').prop('readonly', true);
+            $('#createbywhy').prop('readonly', true);
+            $('#btnSubmitwhy').show();
+            /*WhyName();*/
+            $('#idwhy').val('');
+        });
+        function WhyChoose() {
+            var inum = 1;
+            $.ajax({
+                url: '/icts/homeadmin/WhyChoose',
+                type: 'get',
+                success: function (data) {
+                    $('.Why').empty();
+                    if (data.code == 200) {
+                        let table = '<thead>';
+                        table += '<tr>';
+                        table += '<th>STT</th>';
+                        table += '<th>Name</th>';
+                        table += '</tr>';
+                        table += '</thead>';
+                        table += '<tbody>';
+                        $.each(data.ct, function (k, v) {
+                            table += '<tr id="' + v.id + '">';
+                            table += '<td>' + [inum++] + '</td>';
+                            table += '<td>' + v.name + ' <button class = "btn btn-xs btn-warning" name = "updatenamewhy" ><i class="fa-thin fa-wrench"></i></button >&nbsp</td>';
+                            table += '</tr>';
+                        });
+                        table += '</tbody>';
+                        $('.Why').append(table);
+                    }
+                }
+            });
+        }
+        function Detailwhyname(id) {
+            $.ajax({
+                url: '/icts/homeadmin/DetailWhy',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#idwhy').val(data.tv.Id);
+                        $('#contentwhy').summernote('code',data.tv.Content)
+                        $('#namewhy').val(data.tv.Name)
+                        $('#createdatewhy').val(ConvertJsonDateString(data.tv.CreateDate));
+                        $('#modifiledatewhy').val(ConvertJsonDateString(data.tv.ModifileDate));
+                        $('#createbywhy').val(data.tv.CreateBy);
+                        $('#modifilebywhy').val(data.tv.ModifileBy);
+                        $('#modalTitlewhy').text("Sửa");
+                        $('#why').modal();
+                       /* WhyName();*/
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        //--------------------------------------------------footerleft-------------------------------------------------------------------------------------------------------
+        $('#footerleft').click(function () {
+            FooterLeft();
+            $('#pagepartner').hide();
+            $('#seachpartnerinput').hide();
+        });
+        //Edit name
+        $(document).on('click', "button[name='updatefooterleft']", function () {
+            let id = $(this).closest('tr').attr('id');
+            Detailfooterleft(id);
+            $('#btnSubmitfooterleft').show();
+            /*WhyName();*/
+            $('#idfooterleft').val('');
+        });
+        //confirm edit name
+        $('#btnSubmitfooterleft').click(function () {
+            let name = $('#namefooterleft').val().trim();
+            let meta = $('#metafooterleft').val().trim();
+            //rang buộc dữ liệu
+            let idfooterleft = $('#idfooterleft').val().trim();
+            if (idfooterleft.length > 0) {
+                $.ajax({
+                    url: '/icts/footers/Edit',
+                    type: 'post',
+                    data: {
+                        meta: meta,
+                        name: name,
+                        id: idfooterleft
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Sửa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            FooterLeft();
+                            $('#idfooterleft').val('');
+                            $('#modalfooterleft').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+        });
+        //catchuoi
+        $('#namefooterleft').keyup(function () {
+            $('#metafooterleft').val(GetChuoi($(this).val()));
+        });
+        function FooterLeft() {
+            var inum = 1;
+            $.ajax({
+                url: '/icts/footers/FooterLeft',
+                type: 'get',
+                success: function (data) {
+                    $('.Footerleft').empty();
+                    if (data.code == 200) {
+                        let table = '<thead>';
+                        table += '<tr>';
+                        table += '<th>STT</th>';
+                        table += '<th>Name</th>';
+                        table += '<th>Người Sửa</th>';
+                        table += '<th>Ngày Sửa</th>';
+                        table += '<th></th>';
+                        table += '</tr>';
+                        table += '</thead>';
+                        table += '<tbody>';
+                        $.each(data.footerleft, function (k, v) {
+                            table += '<tr id="' + v.id + '">';
+                            table += '<td>' + [inum++] + '</td>';
+                            table += '<td>' + v.name + '</td>';
+                            table += '<td>' + v.modifileBy + '</td>';
+                            table += '<td>' + v.modifileDate + '</td>';
+                            table += '<td> <button class = "btn btn-xs btn-warning" name = "updatefooterleft" > <i class="fa-thin fa-wrench"></i></button >&nbsp</td>';
+                            table += '</tr>';
+                        });
+                        table += '</tbody>';
+                        $('.Footerleft').append(table);
+                    }
+                }
+            });
+        }
+        function Detailfooterleft(id) {
+            $.ajax({
+                url: '/icts/footers/Detail',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#idfooterleft').val(data.tv.Id);
+                        $('#namefooterleft').val(data.tv.Name);
+                        $('#modalTitleleft').text("Sửa");
+                        $('#modalfooterleft').modal();
+                        FooterLeft();
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        //--------------------------------------------------footercenter-------------------------------------------------------------------------------------------------------
+        $('#footercenter').click(function () {
+            FooterCenter();
+            $('#pagepartner').hide();
+            $('#seachpartnerinput').hide();
+        });
+        //Edit name
+        $(document).on('click', "button[name='updatefootercenter']", function () {
+            let id = $(this).closest('tr').attr('id');
+            Detailfootercenter(id);
+            $('#btnSubmitfootercenter').show();
+            /*WhyName();*/
+            $('#idfootercenter').val('');
+        });
+        //confirm edit name
+        $('#btnSubmitfootercenter').click(function () {
+            let image = $('#picturefilefootercenter').val().trim();
+            //rang buộc dữ liệu
+            let idfootercenter = $('#idfootercenter').val().trim();
+            if (idfootercenter.length > 0) {
+                $.ajax({
+                    url: '/icts/footers/EditCenter',
+                    type: 'post',
+                    data: {
+                        image: image,
+                        id: idfootercenter
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Sửa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            FooterCenter();
+                            $('#idfootercenter').val('');
+                            $('#modalfootercenter').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+        });
+        //hien ten hinh
+        $('#btnUploadfootercenter').click(function () {
+            $('#fileUploadfootercenter').trigger('click');
+        });
+        //chon file
+        $('#fileUploadfootercenter').change(function () {
+            if (window.FormData !== undefined) {
+                let fileUpload = $('#fileUploadfootercenter').get(0);
+                let files = fileUpload.files;
+                let formdata = new FormData();
+                formdata.append('file', files[0]);
+                $.ajax({
+                    type: 'post',
+                    url: '/icts/footers/UploadImage',
+                    contentType: false,
+                    processData: false,
+                    data: formdata,
+                    success: function (urlImage) {
+                        $('#picturefootercenter').attr('src', urlImage);
+                        $('#picturefilefootercenter').val(urlImage);
+                    }
+                })
+            }
+
+        });
+        function FooterCenter() {
+            var inum = 1;
+            $.ajax({
+                url: '/icts/footers/FooterCenter',
+                type: 'get',
+                success: function (data) {
+                    $('.Footercenter').empty();
+                    if (data.code == 200) {
+                        let table = '<thead>';
+                        table += '<tr>';
+                        table += '<th>STT</th>';
+                        table += '<th>Image</th>';
+                        table += '<th>Người Sửa</th>';
+                        table += '<th>Ngày Sửa</th>';
+                        table += '<th></th>';
+                        table += '</tr>';
+                        table += '</thead>';
+                        table += '<tbody>';
+                        $.each(data.footercenter, function (k, v) {
+                            table += '<tr id="' + v.id + '">';
+                            table += '<td>' + [inum++] + '</td>';
+                            table += '<td><img style="width:100px" alt="' + v.title + '" src="/Images/' + v.image + '" ></td>';
+                            table += '<td>' + v.modifileBy + '</td>';
+                            table += '<td>' + v.modifileDate + '</td>';
+                            table += '<td> <button class = "btn btn-xs btn-warning" name = "updatefootercenter" > <i class="fa-thin fa-wrench"></i></button >&nbsp</td>';
+                            table += '</tr>';
+                        });
+                        table += '</tbody>';
+                        $('.Footercenter').append(table);
+                    }
+                }
+            });
+        }
+        function Detailfootercenter(id) {
+            $.ajax({
+                url: '/icts/footers/DetailCenter',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#idfootercenter').val(data.tv.Id);
+                        $('#picturefilefootercenter').val(data.tv.Image);
+                        $('#picturefootercenter').prop('src',"/Images/" + data.tv.Image);
+                        $('#modalTitlecenter').text("Sửa");
+                        $('#modalfootercenter').modal();
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        //--------------------------------------------------footerright-------------------------------------------------------------------------------------------------------
+        $('#footerright').click(function () {
+            FooterRight();
+            $('#pagepartner').hide();
+            $('#seachpartnerinput').hide();
+        });
+        //Edit name
+        $(document).on('click', "button[name='updatefooterright']", function () {
+            let id = $(this).closest('tr').attr('id');
+            Detailfooterright(id);
+            $('#btnSubmitfooterright').show();
+            /*WhyName();*/
+            $('#idfooterright').val('');
+        });
+        //confirm edit name
+        $('#btnSubmitfooterright').click(function () {
+            let name = $('#namefooterright').val().trim();
+            let phone = $('#phonefooterright').val().trim();
+            let dec = $('#decfooterright').val();
+            let address = $('#addressfooterright').val().trim();
+            let email = $('#emailfooterright').val().trim();
+            let link = $('#linkfooterright').val().trim();
+            //rang buộc dữ liệu
+            if (!validateEmail(email)) {
+                alert(email + "  Không đúng định dạng")
+                return;
+            }
+            let idfooterright = $('#idfooterright').val().trim();
+            if (idfooterright.length > 0) {
+                $.ajax({
+                    url: '/icts/footers/EditRight',
+                    type: 'post',
+                    data: {
+                        id: idfooterright,
+                        name: name,
+                        phone: phone,
+                        dec: dec,
+                        address: address,
+                        email: email,
+                        link: link
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Sửa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            FooterRight();
+                            $('#idfooterright').val('');
+                            $('#modalfooterright').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+        });
+        function FooterRight() {
+            var inum = 1;
+            $.ajax({
+                url: '/icts/footers/FooterRight',
+                type: 'get',
+                success: function (data) {
+                    $('.Footerright').empty();
+                    if (data.code == 200) {
+                        let table = '<thead>';
+                        table += '<tr>';
+                        table += '<th>STT</th>';
+                        table += '<th>Tên</th>';
+                        table += '<th>Số Điện Thoại</th>';
+                        table += '<th>Icon</th>';
+                        table += '<th>Địa Chỉ</th>';
+                        table += '<th>email</th>';
+                        table += '<th>Link</th>';
+                        table += '<th>Người Sửa</th>';
+                        table += '<th>Ngày Sửa</th>';
+                        table += '<th></th>';
+                        table += '</tr>';
+                        table += '</thead>';
+                        table += '<tbody>';
+                        $.each(data.footerright, function (k, v) {
+                            table += '<tr id="' + v.id + '">';
+                            table += '<td>' + [inum++] + '</td>';
+                            table += '<td>' + v.name + '</td>';
+                            table += '<td>' + v.phone + '</td>';
+                            table += '<td><i class="' + v.description + '"></i></td>';
+                            table += '<td>' + v.address + '</td>';
+                            table += '<td>' + v.email + '</td>';
+                            table += '<td>' + v.link + '</td>';
+                            table += '<td>' + v.modifileBy + '</td>';
+                            table += '<td>' + v.modifileDate + '</td>';
+                            table += '<td> <button class = "btn btn-xs btn-warning" name = "updatefooterright" > <i class="fa-thin fa-wrench"></i></button >&nbsp</td>';
+                            table += '</tr>';
+                        });
+                        table += '</tbody>';
+                        $('.Footerright').append(table);
+                    }
+                }
+            });
+        }
+        function Detailfooterright(id) {
+            $.ajax({
+                url: '/icts/footers/DetailRight',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#idfooterright').val(data.tv.Id);
+                        $('#namefooterright').val(data.tv.Name);
+                        $('#phonefooterright').val(data.tv.Phone);
+                        $('#decfooterright').val(data.tv.Description);
+                        $('#addressfooterright').val(data.tv.Address);
+                        $('#emailfooterright').val(data.tv.Email);
+                        $('#linkfooterright').val(data.tv.Link);
+                        $('#modalTitleright').text("Sửa");
+                        $('#modalfooterright').modal();
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+
+        //--------------------------------------------------partner-------------------------------------------------------------------------------------------------------
+        $('#btnpartner').click(function () {
+            Partner(seach, page);
+            $('#pagepartner').show();
+            $('#seachpartnerinput').show();
+        });
+        //modal add partner
+        $(document).on('click', "button[name='addpartner']", function () {
+            Addpartner();
+            $('#namepartner').val('');
+            $('#titlepartner').val('');
+            $('#linkpartner').val('');
+            $('#picturefilepartner').val('');
+            $('#createdatepartner').prop('readonly', true);
+            $('#createdatepartner').val('');
+            $('#modifiledatepartner').prop('readonly', true);
+            $('#modifiledatepartner').val('');
+            $('#createbypartner').prop('readonly', true);
+            $('#createbypartner').val('');
+            $('#modifilebypartner').prop('readonly', true);
+            $('#modifilebypartner').val('');
+            $('#statuspartner').prop('checked', false);
+            $('#idpartner').val('');
+            $('#btnSubmitpartner').show();
+        });
+        //hien ten hinh
+        $('#btnUploadpartner').click(function () {
+            $('#fileUploadpartner').trigger('click');
+        });
+        //chon file
+        $('#fileUploadpartner').change(function () {
+            if (window.FormData !== undefined) {
+                let fileUpload = $('#fileUploadpartner').get(0);
+                let files = fileUpload.files;
+                let formdata = new FormData();
+                formdata.append('file', files[0]);
+                $.ajax({
+                    type: 'post',
+                    url: '/icts/partners/UploadImage',
+                    contentType: false,
+                    processData: false,
+                    data: formdata,
+                    success: function (urlImage) {
+                        $('#picturepartner').attr('src', urlImage);
+                        $('#picturefilepartner').val(urlImage);
+                    }
+                })
+            }
+
+        });
+        //confirm add/edit
+        $('#btnSubmitpartner').click(function () {
+            let name = $('#namepartner').val().trim();
+            let link = $('#linkpartner').val().trim();
+            let title = $('#titlepartner').val().trim();
+            let image = $('#picturefilepartner').val().trim();
+            let status = $('#statuspartner').prop('checked');
+            //rang buộc dữ liệu
+            if (image.length == 0) {
+                Swal.fire("Bạn chưa Chọn ảnh!");
+                return;
+            }
+            let idpartner = $('#idpartner').val().trim();
+            if (idpartner.length == 0) {
+                $.ajax({
+                    url: '/icts/partners/Add',
+                    type: 'post',
+                    data: {
+                        name: name,
+                        link: link,
+                        title: title,
+                        image: image,
+                        status: status
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Thêm Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            Partner(seach, page);
+                            $('#namepartner').val('');
+                            $('#linkpartner').val('');
+                            $('#titlepartner').val('');
+                            $('#statuspartner').prop('checked', false);
+                            $('#picturefilepartner').val('');
+                            $('#modalpartner').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/icts/partners/Edit',
+                    type: 'post',
+                    data: {
+                        name: name,
+                        link: link,
+                        title: title,
+                        image: image,
+                        status: status,
+                        id: idpartner
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Sửa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            Partner(seach, page);
+                            $('#namepartner').val('');
+                            $('#linkpartner').val('');
+                            $('#titlepartner').val('');
+                            $('#statuspartner').prop('checked', false);
+                            $('#picturefilepartner').val('');
+                            $('#idpartner').val('');
+                            $('#modalpartner').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+
+
+        });
+        //phan trang
+        $('#pagepartner').on('click', 'li', function (e) {
+            e.preventDefault();
+            page = $(this).attr('id');
+            Partner(seach, page);
+        });
+        ////tim kiem
+        $('#btnSeachpartner').click(function () {
+            page = 1;
+            seach = $('#seachpartner').val();
+            Partner(seach, page);
+        });
+        $('#seachpartner').on('keypress', function (e) {
+            if (e.which == 13) {
+                $('#btnSeachpartner').click();
+            }
+        });
+        //catchuoi
+        $('#namepartner').keyup(function () {
+            $('#titlepartner').val($(this).val());
+        });
+        //Detail
+        $(document).on('click', "button[name='viewpartner']", function () {
+            let id = $(this).closest('tr').attr('id');
+            Detailpartner(id);
+            $('#createdatepartner').prop('readonly', true);
+            $('#modifiledatepartner').prop('readonly', true);
+            $('#modifilebypartner').prop('readonly', true);
+            $('#createbypartner').prop('readonly', true);
+            $('#btnSubmitpartner').hide();
+            $('#idpartner').val('');
+        });
+        //Edit
+        $(document).on('click', "button[name='updatepartner']", function () {
+            let id = $(this).closest('tr').attr('id');
+            Detailpartner(id);
+            $('#createdatepartner').prop('readonly', true);
+            $('#createbypartner').prop('readonly', true);
+            $('#modifiledatepartner').prop('readonly', true);
+            $('#modifilebypartner').prop('readonly', true);
+            $('#modalTitlepartner').text("Sửa");
+            $('#btnSubmitpartner').show();
+            $('#idpartner').val('');
+
+        });
+        //delete
+        $(document).on('click', "button[name='deletepartner']", function () {
+            let id = $(this).closest('tr').attr('id');
+            if (confirm("Bạn có muốn xóa dữ liệu này")) {
+                $.ajax({
+                    url: '/icts/partners/Delete',
+                    type: 'post',
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            alert(data.msg);
+                            Partner(seach, page)
+                        } else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+
+        });
+        function Partner(seach, page) {
+            $.ajax({
+                url: '/icts/partners/Partner',
+                type: 'get',
+                data: {
+                    page: page,
+                    seach: seach
+                },
+                success: function (data) {
+                    $('.Partner').empty();
+                    if (data.code == 200) {
+                        let table = '<thead>';
+                        table += '<tr>';
+                        table += '<th>Tên Đối tác</th>';
+                        table += '<th>Đường Dẫn</th>';
+                        table += '<th>Ảnh</th>';
+                        table += '<th>Người Tạo/Sửa</th>';
+                        table += '<th>Ngày Tạo/Sửa</th>';
+                        table += '<th>Trạng thái</th>';
+                        table += '<th></th>';
+                        table += '<th> <button class = "btn btn-xs btn-success" name = "addpartner" > <i class="fa-solid fa-plus"></i></button >&nbsp</th>';
+                        table += '</tr>';
+                        table += '</thead>';
+                        table += '<tbody>';
+                        $.each(data.pnt, function (k, v) {
+                            table += '<tr id="' + v.id + '">';
+                            table += '<td>' + v.name + '</td>';
+                            table += '<td>' + v.link + '</td>';
+                            table += '<td><img style="width:100px" src="/Images/' + v.image + '"</td>';
+                            table += '<td>' + v.createby + '</td>';
+                            table += '<td>' + v.createdate + '</td>';
+                            table += '<td>' + v.status + '</td>';
+                            table += '<td> <button class = "btn btn-xs btn-primary" name = "viewpartner" > <i class="fa-thin fa-circle-info"></i></button >&nbsp';
+                            table += ' <button class = "btn btn-xs btn-warning" name = "updatepartner" > <i class="fa-thin fa-wrench"></i></button >&nbsp';
+                            table += ' <button class = "btn btn-xs btn-danger" name = "deletepartner" > <i class="fa-thin fa-trash-xmark"></i></button >&nbsp';
+                            table += '</td>';
+                            table += '<td></td>';
+                            table += '</tr>';
+                        });
+                        table += '</tbody>';
+                        $('.Partner').append(table);
+                        $('#pagepartner').empty();
+                        for (i = 1; i <= data.pages; i++) {
+                           let li = '<li class="page-item" id="' + i + '"><a class="page-link" href="#">' + i + '</a></li>';
+                            $('#pagepartner').append(li);
+                        }
+                        let a = $('#pagepartner li#' + page + '');
+                        $(a).addClass('active')
+                        let next = '<li class="page-item" id="' + (parseInt(page) + 1) + '"><a class="page-link" href="#">Next</a></li>';
+                        $('#pagepartner').append(next);
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function Detailpartner(id) {
+            $.ajax({
+                url: '/icts/partners/Detail',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#idpartner').val(data.tv.Id);
+                        $('#namepartner').val(data.tv.Name);
+                        $('#linkpartner').val(data.tv.Link);
+                        $('#picturefilepartner').val("/Images/" + data.tv.Image);
+                        if (data.tv.Status == true) {
+                            $('#statuspartner').prop('checked', true);
+                        } else {
+                            $('#statuspartner').prop('checked', false);
+                        }
+                        $('#picturepartner').attr('src', $('#picturefilepartner').val())
+                        $('#createdatepartner').val(ConvertJsonDateString(data.tv.CreateDate));
+                        $('#modifiledatepartner').val(ConvertJsonDateString(data.tv.ModifileDate));
+                        $('#createbypartner').val(data.tv.CreateBy);
+                        $('#modifilebypartner').val(data.tv.ModifileBy);
+
+                        $('#modalTitlepartner').text("Chi Tiết");
+                        $('#modalpartner').modal();
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function Addpartner() {
+            $.ajax({
+                url: '/adminsss/Add',
+                type: 'get',
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#createdatepartner').val(ConvertJsonDateString(data.date));
+                        $('#createbypartner').val(data.d);
+                        $('#modalTitlepartner').text("Thêm");
+                        $('#modalpartner').modal();
+                    }
+                }
+            });
+        }
+        //--------------------------------------------------partner content-------------------------------------------------------------------------------------------------------
+        $('#btnpartnercontent').click(function () {
+            PartnerContent();
+            $('#pagepartner').hide();
+            $('#seachpartnerinput').hide();
+        });
+        //confirm edit name
+        $('#btnSubmitpartnercontent').click(function () {
+            let name = $('#namepartnercontent').val().trim();
+            let content = $('#contentpartner').summernote('code');
+            //rang buộc dữ liệu
+            let idpartnercontent = $('#idpartnercontent').val().trim();
+            if (idpartnercontent.length > 0) {
+                $.ajax({
+                    url: '/icts/contents/EditPartnerContent',
+                    type: 'post',
+                    data: {
+                        content: content,
+                        name: name,
+                        id: idpartnercontent
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Sửa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            PartnerContent();
+                            $('#idpartnercontent').val('');
+                            $('#modalpartnercontent').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+        });
+        //Edit name
+        $(document).on('click', "button[name='updatenamepartnercontent']", function () {
+            let id = $(this).closest('tr').attr('id');
+            DetailPartnerContent(id);
+            $('#createdatepartnercontent').prop('readonly', true);
+            $('#modifiledatepartnercontent').prop('readonly', true);
+            $('#modifilebypartnercontent').prop('readonly', true);
+            $('#createbypartnercontent').prop('readonly', true);
+            $('#btnSubmitpartnercontent').show();
+            $('#idpartnercontent').val('');
+        });
+        function PartnerContent() {
+            var inum = 1;
+            $.ajax({
+                url: '/icts/contents/PartnerContent',
+                type: 'get',
+                success: function (data) {
+                    $('.PartnerContent').empty();
+                    if (data.code == 200) {
+                        let table = '<thead>';
+                        table += '<tr>';
+                        table += '<th>STT</th>';
+                        table += '<th>Name</th>';
+                        table += '</tr>';
+                        table += '</thead>';
+                        table += '<tbody>';
+                        $.each(data.ct, function (k, v) {
+                            table += '<tr id="' + v.id + '">';
+                            table += '<td>' + [inum++] + '</td>';
+                            table += '<td>' + v.name + ' <button class = "btn btn-xs btn-warning" name = "updatenamepartnercontent" ><i class="fa-thin fa-wrench"></i></button >&nbsp</td>';
+                            table += '</tr>';
+                        });
+                        table += '</tbody>';
+                        $('.PartnerContent').append(table);
+                    }
+                }
+            });
+        }
+        function DetailPartnerContent(id) {
+            $.ajax({
+                url: '/icts/contents/DetailPartnerContent',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#idpartnercontent').val(data.tv.Id);
+                        $('#namepartnercontent').val(data.tv.Name)
+                        $('#contentpartner').summernote('code', data.tv.Content);
+                        $('#createdatepartnercontent').val(ConvertJsonDateString(data.tv.CreateDate));
+                        $('#modifiledatepartnercontent').val(ConvertJsonDateString(data.tv.ModifileDate));
+                        $('#createbypartnercontent').val(data.tv.CreateBy);
+                        $('#modifilebypartnercontent').val(data.tv.ModifileBy);
+                        $('#modalTitlepartnercontent').text("Sửa");
+                        $('#modalpartnercontent').modal();
+
+                        PartnerContentText();
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        //convert date string
+        function ConvertJsonDateString(jsonDate) {
+            var shortDate = null;
+            if (jsonDate) {
+                var regex = /-?\d+/;
+                var matches = regex.exec(jsonDate);
+                var dt = new Date(parseInt(matches[0]));
+                var month = dt.getMonth() + 1;
+                var monthString = month > 9 ? month : '0' + month;
+                var day = dt.getDate();
+                var dayString = day > 9 ? day : '0' + day;
+                var year = dt.getFullYear();
+                shortDate = monthString + '/' + dayString + '/' + year;
+            }
+            return shortDate;
+        };
+        $(document).ready(function () {
+            $('#seachpartnerinput').hide();
+            $('#contentwhy').summernote();
+            $('#contentpartner').summernote();
+            document.getElementById("trangchu").style.visibility = "visible";
+            document.getElementById("giaiphap").style.visibility = "hidden";
+            document.getElementById("sanpham").style.visibility = "hidden";
+        });
+
+    </script>
+}
+
+
+
+

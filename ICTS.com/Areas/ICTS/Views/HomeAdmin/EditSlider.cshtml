@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "EditSlider";
+    Layout = "~/Areas/ICTS/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h2>Sửa Slide</h2>
+
+<form action="/ICTS/HomeAdmin/EditSlider" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label>Chọn Ảnh 1</label>
+        <input type="file" id="uploadhinh1" name="uploadhinh1" accept="image/*" />
+
+    </div>
+    <div class="form-group">
+        <label>Chọn Ảnh 2</label>
+        <input type="file" id="uploadhinh2" name="uploadhinh2" accept="image/*" />
+    </div>
+    <div class="form-group">
+        <label>Chọn Ảnh 3</label>
+        <input type="file" id="uploadhinh3" name="uploadhinh3" accept="image/*" />
+    </div>
+    <button id="btnOk" class="btn btn-success" type="submit">Xác Nhận Đổi Slider</button>
+</form>
+@section scripts{
+    <script>
+        $("#btnOk").click(function (e) {
+                Swal.fire({
+                    title: "Đã đổi slide",
+                    timer: 3000,
+                    onOpen: function () {
+                        Swal.showLoading()
+                    }
+                })
+            Slider();
+        });
+    </script>
+}
+
+

@@ -1,0 +1,122 @@
+.nav-wp .h-search-wp .search-bl .dropdown-menu button
+{
+    position: absolute;
+    right: 10px;
+    top: 0px;
+    bottom: 0;
+    width: 40px;
+    text-align: center;
+    border: 0;
+    background: transparent;
+    color: #555;
+    cursor: pointer;
+}
+.product-detail-tab .tab-content .tab-info table
+{
+    border-collapse: collapse;
+}
+.product-detail-tab .tab-content .tab-info table
+{
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+}
+.product-detail-tab .tab-content .tab-info table td, .product-detail-tab .tab-content .tab-info table th
+{
+    padding: .75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+.product-detail-tab .tab-content .tab-info table thead th
+{
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+}
+.product-detail-tab .tab-content .tab-info table tbody + tbody
+{
+    border-top: 2px solid #dee2e6;
+}
+.product-detail-tab .tab-content .tab-info table
+{
+    background-color: #fff;
+}
+.product-detail-tab .tab-content .tab-info table
+{
+    border: 1px solid #dee2e6;
+}
+.product-detail-tab .tab-content .tab-info table td, .product-detail-tab .tab-content .tab-info table th
+{
+    border: 1px solid #dee2e6;
+}
+.product-detail-tab .tab-content .tab-info table thead td, .product-detail-tab .tab-content .tab-info table thead th
+{
+    border-bottom-width: 2px;
+}
+.product-detail-tab .tab-content .tab-info table tbody tr:nth-of-type(odd)
+{
+    background-color: rgba(0,0,0,.05);
+}
+/*slider doi tac*/
+
+@-webkit-keyframes scroll {
+	0% {
+		transform: translateX(0);
+	}
+
+	100% {
+		transform: translateX(calc(-250px * 7));
+	}
+}
+
+@keyframes scroll {
+	0% {
+		transform: translateX(0);
+	}
+
+	100% {
+		transform: translateX(calc(-250px * 7));
+	}
+}
+
+.slider {
+	background: white;
+	box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.125);
+	height: 100px;
+	margin-top: 100px;
+	overflow: hidden;
+	position: relative;
+	width: auto
+	;
+}
+
+	.slider::before, .slider::after {
+		background: linear-gradient(to right, white 0%, rgba(255, 255, 255, 0) 100%);
+		content: "";
+		height: 100px;
+		position: absolute;
+		width: 200px;
+		z-index: 2;
+	}
+
+	.slider::after {
+		right: 0;
+		top: 0;
+		transform: rotateZ(180deg);
+	}
+
+	.slider::before {
+		left: 0;
+		top: 0;
+	}
+
+	.slider .slide-track {
+		-webkit-animation: scroll 40s linear infinite;
+		animation: scroll 40s linear infinite;
+		display: flex;
+		width: calc(250px * 14);
+	}
+
+	.slider .slide {
+		height: 100px;
+		width: 250px;
+	}
