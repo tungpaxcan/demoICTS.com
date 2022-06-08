@@ -82,7 +82,6 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdDetailSolution" Type="int" />
           <Property Name="Image" Type="nvarchar" MaxLength="250" />
           <Property Name="Name" Type="nvarchar" MaxLength="250" />
           <Property Name="Meta" Type="varchar" MaxLength="100" />
@@ -152,7 +151,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="250" />
           <Property Name="Meta" Type="varchar" MaxLength="100" />
-          <Property Name="Title" Type="varchar" MaxLength="200" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" />
           <Property Name="Description" Type="ntext" />
           <Property Name="Content" Type="nvarchar(max)" />
           <Property Name="Image" Type="nvarchar" MaxLength="250" />
@@ -163,18 +162,6 @@
           <Property Name="StatusImage" Type="bit" />
           <Property Name="Status" Type="bit" />
         </EntityType>
-        <Association Name="FK_DetailSolution_Images">
-          <End Role="Images" Type="Self.Images" Multiplicity="0..1" />
-          <End Role="DetailSolution" Type="Self.DetailSolution" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Images">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="DetailSolution">
-              <PropertyRef Name="ImageAdd" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DetailSolution_Solution">
           <End Role="Solution" Type="Self.Solution" Multiplicity="0..1" />
           <End Role="DetailSolution" Type="Self.DetailSolution" Multiplicity="*" />
@@ -197,10 +184,6 @@
           <EntitySet Name="Partner" EntityType="Self.Partner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Slider" EntityType="Self.Slider" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Solution" EntityType="Self.Solution" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_DetailSolution_Images" Association="Self.FK_DetailSolution_Images">
-            <End Role="Images" EntitySet="Images" />
-            <End Role="DetailSolution" EntitySet="DetailSolution" />
-          </AssociationSet>
           <AssociationSet Name="FK_DetailSolution_Solution" Association="Self.FK_DetailSolution_Solution">
             <End Role="Solution" EntitySet="Solution" />
             <End Role="DetailSolution" EntitySet="DetailSolution" />
@@ -282,7 +265,6 @@
           <Property Name="ModifileBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="StatusImage" Type="Boolean" />
           <Property Name="Status" Type="Boolean" />
-          <NavigationProperty Name="Image1" Relationship="Self.FK_DetailSolution_Images" FromRole="DetailSolution" ToRole="Images" />
           <NavigationProperty Name="Solution" Relationship="Self.FK_DetailSolution_Solution" FromRole="DetailSolution" ToRole="Solution" />
         </EntityType>
         <EntityType Name="Image">
@@ -290,7 +272,6 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdDetailSolution" Type="Int32" />
           <Property Name="Image1" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Meta" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -300,7 +281,6 @@
           <Property Name="ModifileDate" Type="DateTime" Precision="3" />
           <Property Name="ModifileBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Boolean" />
-          <NavigationProperty Name="DetailSolutions" Relationship="Self.FK_DetailSolution_Images" FromRole="Images" ToRole="DetailSolution" />
         </EntityType>
         <EntityType Name="Module">
           <Key>
@@ -361,7 +341,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Meta" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Image" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
@@ -373,18 +353,6 @@
           <Property Name="Status" Type="Boolean" />
           <NavigationProperty Name="DetailSolutions" Relationship="Self.FK_DetailSolution_Solution" FromRole="Solution" ToRole="DetailSolution" />
         </EntityType>
-        <Association Name="FK_DetailSolution_Images">
-          <End Role="Images" Type="Self.Image" Multiplicity="0..1" />
-          <End Role="DetailSolution" Type="Self.DetailSolution" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Images">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="DetailSolution">
-              <PropertyRef Name="ImageAdd" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DetailSolution_Solution">
           <End Role="Solution" Type="Self.Solution" Multiplicity="0..1" />
           <End Role="DetailSolution" Type="Self.DetailSolution" Multiplicity="*" />
@@ -407,10 +375,6 @@
           <EntitySet Name="Partners" EntityType="Self.Partner" />
           <EntitySet Name="Sliders" EntityType="Self.Slider" />
           <EntitySet Name="Solutions" EntityType="Self.Solution" />
-          <AssociationSet Name="FK_DetailSolution_Images" Association="Self.FK_DetailSolution_Images">
-            <End Role="Images" EntitySet="Images" />
-            <End Role="DetailSolution" EntitySet="DetailSolutions" />
-          </AssociationSet>
           <AssociationSet Name="FK_DetailSolution_Solution" Association="Self.FK_DetailSolution_Solution">
             <End Role="Solution" EntitySet="Solutions" />
             <End Role="DetailSolution" EntitySet="DetailSolutions" />
@@ -502,7 +466,6 @@
             <EntityTypeMapping TypeName="ICTS.COMModel.Image">
               <MappingFragment StoreEntitySet="Images">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="IdDetailSolution" ColumnName="IdDetailSolution" />
                 <ScalarProperty Name="Image1" ColumnName="Image" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Meta" ColumnName="Meta" />

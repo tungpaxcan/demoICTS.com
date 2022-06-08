@@ -29,7 +29,6 @@ namespace ICTS.com.Models
         public Nullable<bool> StatusImage { get; set; }
         public Nullable<bool> Status { get; set; }
     
-        public virtual Image Image1 { get; set; }
         public virtual Solution Solution { get; set; }
     }
 }

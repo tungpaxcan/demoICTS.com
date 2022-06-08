@@ -16,7 +16,19 @@
         <i class="fas fa-search"></i>
     </button>
 </div>
-<table class="table Solution">
+<div>
+    <ul class="pagination" id="pagedetail">
+    </ul>
+</div>
+<div id="seachinputdetail" class="input-group">
+    <div class="form-outline">
+        <input type="search" id="seachdetail" class="form-control" placeholder="Chi Tiết Giải Pháp" />
+    </div>
+    <button type="button" id="btnSeachdetail" class="btn btn-primary">
+        <i class="fas fa-search"></i>
+    </button>
+</div>
+<table class="table Solution Detail">
 </table>
 @*-----------------modal solution------------------*@
 <div id="modalsolution" class="modal" tabindex="-1" role="dialog">
@@ -33,9 +45,9 @@
                 </div>
                 <div class="form-inline">
                     <label>Chọn ảnh</label>
-                    <input type="text" name="picture" id="picturefilesolution" class="form-control" />
+                    <input type="text" hidden name="picture" id="picturefilesolution" class="form-control" />
                     <input type="file" id="fileUploadsolution" name="fileUpload" accept="image/*" style="display:none" />
-                    <input type="button" id="btnUploadsolution" value="..." class="btn-bg-success" />
+                    <input type="button" id="btnUploadsolution" value="File" class="btn-bg-success" />
                     <img style="width:100px" id="picturesolution" />
                 </div>
                 <div class="form-group">
@@ -92,13 +104,88 @@
         </div>
     </div>
 </div>
+
+@*-----------------modal detailsolution------------------*@
+<div id="modaldetail" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div style="color: red; text-align: center" class="panel-heading" id="modalTitledetail"></div>
+                <input type="text" hidden id="iddetail" value="" />
+                <div class="form-group" style="margin-left:20px">
+                    <label>Tên Giải Pháp</label>
+                    <div>
+                        <select class="browser-default custom-select" id="namedetail">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <label>Chọn ảnh</label>
+                    <input type="text" hidden name="picture" id="picturefiledetail" class="form-control" />
+                    <input type="file" id="fileUploaddetail" name="fileUpload" accept="image/*" style="display:none" />
+                    <input type="button" id="btnUploaddetail" value="File" class="btn-bg-success" />
+                    <img style="width:100px" id="picturedetail" />
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" id="contentdetail"></textarea>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Trạng thái</label>
+                            <input type="checkbox" class="form-control" id="statusdetail" placeholder="Trạng thái">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày tạo</label>
+                            <input type="text" class="form-control" id="createdatedetail">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày sửa</label>
+                            <input type="text" class="form-control" id="modifiledatedetail">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người tạo</label>
+                            <input type="text" class="form-control" id="createbydetail" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người sửa</label>
+                            <input type="text" class="form-control" id="modifilebydetail" placeholder="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="btnSubmitdetail">Xác Nhận</button>
+                <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section scripts{
     <script>
         var page = 1;
         var seach = '';
-        //--------------------------------------------------category-------------------------------------------------------------------------------------------------------
+        //--------------------------------------------------solution-------------------------------------------------------------------------------------------------------
         $('#btnsolution').click(function () {
             Solution(seach, page);
+            $('#pagesolution').show();
+            $('#seachinput').show();
+            $('#seachinputdetail').hide();
+            $('#pagedetail').hide();
         });
         //modal add category
         $(document).on('click', "button[name='addsolution']", function () {
@@ -139,7 +226,7 @@
                     processData: false,
                     data: formdata,
                     success: function (urlImage) {
-                       
+
                         $('#picturesolution').attr('src', urlImage);
                         $('#picturefilesolution').val(urlImage);
                     }
@@ -157,7 +244,7 @@
             let status = $('#statussolution').prop('checked');
             let statusimage = $('#statusimagesolution').prop('checked');
             //rang buộc dữ liệu
-            if (name.length == 0 || image == null) {
+            if (name.length == 0 || image.length == 0) {
                 alert('Vui Long Nhập Đầy Đủ Dữ liệu');
                 return;
             }
@@ -261,7 +348,7 @@
         });
         //catchuoi
         $('#namesolution').keyup(function () {
-            $('#metadsolution').val(GetChuoi($(this).val()));
+            $('#metasolution').val(GetChuoi($(this).val()));
             $('#titlesolution').val($(this).val());
         });
         //Detail
@@ -303,7 +390,13 @@
                     },
                     success: function (data) {
                         if (data.code == 200) {
-                            alert(data.msg);
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Xóa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             Solution(seach, page)
                         } else {
                             alert(data.msg);
@@ -382,7 +475,7 @@
                         $('#namesolution').val(data.tv.Name);
                         $('#urlsolution').val(data.tv.Meta);
                         $('#titlesolution').val(data.tv.Title);
-                        $('#contentsolution').summernote('code',data.tv.Content);
+                        $('#contentsolution').summernote('code', data.tv.Content);
                         $('#picturefilesolution').val("/Images/" + data.tv.Image);
                         if (data.tv.Status == true) {
                             $('#statussolution').prop('checked', true);
@@ -422,6 +515,325 @@
                 }
             });
         }
+        //--------------------------------------------------detailsolution-------------------------------------------------------------------------------------------------------
+        $('#btndetail').click(function () {
+            DetailSolution(seach, page);
+            $('#pagesolution').hide();
+            $('#seachinput').hide();
+            $('#seachinputdetail').show();
+            $('#pagedetail').show();
+        });
+        //modal add category
+        $(document).on('click', "button[name='adddetail']", function () {
+            Adddetail();
+            SolutionById();
+            $('#namedetail').val('');
+            $('#contentdetail').summernote('code','');
+            $('#picturefiledetail').val('');
+            $('#createdatedetail').prop('readonly', true);
+            $('#createdatedetail').val('');
+            $('#modifiledatedetail').prop('readonly', true);
+            $('#modifiledatedetail').val('');
+            $('#createbydetail').prop('readonly', true);
+            $('#createbydetail').val('');
+            $('#modifilebydetail').prop('readonly', true);
+            $('#modifilebydetail').val('');
+            $('#statusdetail').prop('checked', false);
+            $('#iddetail').val('');
+            $('#btnSubmitdetail').show();
+        });
+        //hien ten hinh
+        $('#btnUploaddetail').click(function () {
+            $('#fileUploaddetail').trigger('click');
+        });
+        //chon file
+        $('#fileUploaddetail').change(function () {
+            if (window.FormData !== undefined) {
+                let fileUpload = $('#fileUploaddetail').get(0);
+                let files = fileUpload.files;
+                let formdata = new FormData();
+                formdata.append('file', files[0]);
+                $.ajax({
+                    type: 'post',
+                    url: '/icts/detailsolutions/UploadImage',
+                    contentType: false,
+                    processData: false,
+                    data: formdata,
+                    success: function (urlImage) {
+
+                        $('#picturedetail').attr('src', urlImage);
+                        $('#picturefiledetail').val(urlImage);
+                    }
+                })
+            }
+
+        });
+        //confirm add/edit
+        $('#btnSubmitdetail').click(function () {
+            let name = $('#namedetail').val();
+            let content = $('#contentdetail').summernote('code');
+            let image = $('#picturefiledetail').val().trim();
+            let status = $('#statusdetail').prop('checked');
+            //rang buộc dữ liệu
+            if (name == null || image.length == 0) {
+                alert('Vui Long Nhập Đầy Đủ Dữ liệu');
+                return;
+            }
+            let iddetail = $('#iddetail').val().trim();
+            if (iddetail.length == 0) {
+                $.ajax({
+                    url: '/icts/detailsolutions/Add',
+                    type: 'post',
+                    data: {
+                        name: name,
+                        content: content,
+                        image: image,
+                        status: status
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Thêm Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            DetailSolution(seach, page);
+                            $('#namedetail').val('');
+                            $('#contentdetail').val('');
+                            $('#statusdetail').prop('checked', false);
+                            $('#picturefiledetail').val('');
+                            $('#modaldetail').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/icts/detailsolutions/Edit',
+                    type: 'post',
+                    data: {
+                        name: name,
+                        content: content,
+                        image: image,
+                        status: status,
+                        id: iddetail
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Sửa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            DetailSolution(seach, page);
+                            $('#namedetail').val('');
+                            $('#contentdetail').val('');
+                            $('#statusdetail').prop('checked', false);
+                            $('#picturefiledetail').val('');
+                            $('#iddetail').val('');
+                            $('#modaldetail').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+
+
+        });
+        //phan trang
+        $('#pagedetail').on('click', 'li', function (e) {
+            e.preventDefault();
+            page = $(this).attr('id');
+            DetailSolution(seach, page);
+        });
+        ////tim kiem
+        $('#btnSeachdetail').click(function () {
+            page = 1;
+            seach = $('#seachdetail').val();
+            DetailSolution(seach, page);
+        });
+        $('#seachdetail').on('keypress', function (e) {
+            if (e.which == 13) {
+                $('#btnSeachdetail').click();
+            }
+        });
+        //Detail
+        $(document).on('click', "button[name='viewdetail']", function () {
+            let id = $(this).closest('tr').attr('id');
+            Detaildetail(id);
+            SolutionById()
+            $('#createdatedetail').prop('readonly', true);
+            $('#modifiledatedetail').prop('readonly', true);
+            $('#modifilebydetail').prop('readonly', true);
+            $('#createbydetail').prop('readonly', true);
+            $('#modifiledatedetail').show();
+            $('#modifilebydetail').show();
+            $('#btnSubmitdetail').hide();
+            $('#modalTitledetail').text("Chi Tiết Giải Pháp");
+            $('#iddetail').val('');
+        });
+        //Edit
+        $(document).on('click', "button[name='updatedetail']", function () {
+            let id = $(this).closest('tr').attr('id');
+            Detaildetail(id);
+            SolutionById()
+            $('#createdatedetail').prop('readonly', true);
+            $('#createbydetail').prop('readonly', true);
+            $('#modifiledatedetail').prop('readonly', true);
+            $('#modifilebydetail').prop('readonly', true);
+            $('#modalTitledetail').text("Sửa Giải Pháp");
+            $('#btnSubmitdetail').show();
+            $('#iddetail').val('');
+
+        });
+        //delete
+        $(document).on('click', "button[name='deletedetail']", function () {
+            let id = $(this).closest('tr').attr('id');
+            if (confirm("Bạn có muốn xóa dữ liệu này")) {
+                $.ajax({
+                    url: '/icts/detailsolutions/Delete',
+                    type: 'post',
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Xóa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            DetailSolution(seach, page)
+                        } else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+
+        });
+        function DetailSolution(seach, page) {
+            $.ajax({
+                url: '/icts/detailsolutions/DetailSolution',
+                type: 'get',
+                data: {
+                    page: page,
+                    seach: seach
+                },
+                success: function (data) {
+                    $('.Detail').empty();
+                    if (data.code == 200) {
+                        let table = '<thead>';
+                        table += '<tr>';
+                        table += '<th>Tên Giải Pháp</th>';
+                        table += '<th>Ảnh</th>';
+                        table += '<th>Trạng thái</th>';
+                        table += '<th></th>';
+                        table += '<th> <button class = "btn btn-xs btn-success" name = "adddetail" > <i class="fa-solid fa-plus"></i></button >&nbsp</th>';
+                        table += '</tr>';
+                        table += '</thead>';
+                        table += '<tbody>';
+                        $.each(data.dmsp, function (k, v) {
+                            table += '<tr id="' + v.id + '">';
+                            table += '<td>' + v.name + '</td>';
+                            table += '<td><img style="width:100px" src="/Images/' + v.image + '"</td>';
+                            table += '<td>' + v.status + '</td>';
+                            table += '<td> <button class = "btn btn-xs btn-primary" name = "viewdetail" > <i class="fa-thin fa-circle-info"></i></button >&nbsp';
+                            table += ' <button class = "btn btn-xs btn-warning" name = "updatedetail" > <i class="fa-thin fa-wrench"></i></button >&nbsp';
+                            table += ' <button class = "btn btn-xs btn-danger" name = "deletedetail" > <i class="fa-thin fa-trash-xmark"></i></button >&nbsp';
+                            table += '</td>';
+                            table += '<td></td>';
+                            table += '</tr>';
+                        });
+                        table += '</tbody>';
+                        $('.Detail').append(table);
+                        $('#pagedetail').empty();
+                        for (i = 1; i <= data.pages; i++) {
+                            let li = '<li class="page-item" id="' + i + '"><a class="page-link" href="#">' + i + '</a></li>';
+                            $('#pagedetail').append(li);
+                        }
+                        let next = '<li class="page-item" id="' + (parseInt(page) + 1) + '"><a class="page-link" href="#">Next</a></li>';
+                        $('#pagedetail').append(next);
+                        let li = $('#pagedetail li#' + page + '');
+                        $(li).addClass('active')
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function Detaildetail(id) {
+            $.ajax({
+                url: '/icts/detailsolutions/Detail',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#iddetail').val(data.tv.Id);
+                        $('#namedetail').val(data.tv.IdSolution);
+                        $('#contentdetail').summernote('code', data.tv.Content);
+                        $('#picturefiledetail').val("/Images/" + data.tv.Image);
+                        if (data.tv.Status == true) {
+                            $('#statusdetail').prop('checked', true);
+                        } else {
+                            $('#statusdetail').prop('checked', false);
+                        }
+                        $('#picturedetail').attr('src', $('#picturefiledetail').val())
+                        $('#createdatedetail').val(ConvertJsonDateString(data.tv.CreateDate));
+                        $('#modifiledatedetail').val(ConvertJsonDateString(data.tv.ModifileDate));
+                        $('#createbydetail').val(data.tv.CreateBy);
+                        $('#modifilebydetail').val(data.tv.ModifileBy);
+
+                        $('#modalTitledetail').text("Chi Tiết Giải Pháp");
+                        $('#modaldetail').modal();
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function Adddetail() {
+            $.ajax({
+                url: '/adminsss/Add',
+                type: 'get',
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#createdatedetail').val(ConvertJsonDateString(data.date));
+                        $('#createbydetail').val(data.d);
+                        $('#modalTitledetail').text("Thêm Giải Pháp");
+                        $('#modaldetail').modal();
+                    }
+                }
+            });
+        }
+        function SolutionById() {
+            $.ajax({
+                url: '/icts/detailsolutions/SolutionById',
+                type: 'get',
+                success: function (data) {
+                    $('#namedetail').empty();
+                    if (data.code == 200) {
+                        
+                        $.each(data.dmsp, function (k, v) {
+                            let option = '<option id="' + v.id + '" value="' + v.id + '">' + v.name + '</option>';
+                            $('#namedetail').append(option);
+                        })
+                    }
+                }
+            });
+        }
         //convert date string
         function ConvertJsonDateString(jsonDate) {
             var shortDate = null;
@@ -440,7 +852,12 @@
         };
         $(document).ready(function () {
             $('#contentsolution').summernote();
+            $('#contentdetail').summernote();
             Solution(seach, page)
+            $('#pagesolution').show();
+            $('#seachinput').show();
+            $('#seachinputdetail').hide();
+            $('#pagedetail').hide();
             document.getElementById("trangchu").style.visibility = "hidden";
             document.getElementById("giaiphap").style.visibility = "visible";
             document.getElementById("sanpham").style.visibility = "hidden";

@@ -120,3 +120,144 @@
 		height: 100px;
 		width: 250px;
 	}
+.solution img {
+	width: 100%;
+	height: 100%;
+}
+.solution .form-solution {
+	width: 50%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	align-items: center;
+	padding: 3%;
+}
+.solution {
+	display: flex;
+	flex-direction: row;
+	align-content: stretch;
+	flex-wrap: wrap;
+}
+.h-addressa img {
+	width: 100%;
+	height: 100%;
+}
+.solution h1 {
+	font-size: 100%;
+}
+
+.solution .contentsolution {
+	font-size: 100%;
+}
+.Detail-solution img{
+	width:100%;
+}
+.Detail-Name-Solution{
+	padding:3%;
+	background-color:#fbfbfb
+}
+.Detail-Name-Solution img{
+	width:100%;
+}
+.img-detailsolution{
+	background-color:white;
+	text-align:center;
+}
+	.img-detailsolution b {
+		width: 100%;
+		font-size: x-large;
+	}
+.textdetailsolution p{
+	width:100%;
+}
+.Detail-Name-Solution p iframe {
+	width: 100%;
+}
+@media only screen and (max-width: 1700px) {
+	.solution img {
+		width: 100%;
+		height: 100%;
+	}
+	.solution .form-solution {
+		width: 50%;
+		height: 100%;
+	}
+	.solution {
+		display: flex;
+	}
+	.solution h1{
+		font-size:100%;
+	}
+		.solution .contentsolution {
+			font-size: 100%;
+		}
+}
+@media only screen and (max-width: 672px) {
+
+	.solution {
+		display: flex;
+		flex-direction: row;
+		align-content: stretch;
+		flex-wrap: wrap;
+	}
+		.solution h1 {
+			font-size: 100%;
+		}
+
+		.solution .contentsolution {
+			font-size: 100%;
+		}
+	.img-detailsolution b {
+		width: 100%;
+		font-size: large;
+	}
+	.Detail-Name-Solution img {
+		width: 100%;
+	}
+}
+@media only screen and (max-width: 375px) {
+
+	.solution {
+		display: flex;
+		flex-direction: row;
+		align-content: stretch;
+		flex-wrap: wrap;
+	}
+		.solution .form-solution {
+			width: 50%;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			flex-wrap: wrap;
+			align-items: center;
+			padding:3%;
+		}
+		.solution img {
+			width: 100%;
+			height: 100%;
+		}
+		.solution h1 {
+			font-size: 100%;
+		}
+
+		.solution .contentsolution {
+			font-size: 100%;
+		}
+	.img-detailsolution b {
+		width: 100%;
+		font-size: small;
+	}
+	.Detail-Name-Solution p iframe {
+		width: 100%;
+		height:100%;
+	}
+}
+@media only screen and (max-width: 576px)  {
+	.col-sm-6{
+-ms-flex: 0 0 50%;
+	flex: 0 0 50%;
+	max-width: 50%;
+	}
+	
+}

@@ -55,7 +55,7 @@
         })(window, document, 'script', 'dataLayer', 'GTM-MNP92D4');
     </script>
     <title>
-        @ViewBag.Title Trang chủ | Ha Phan JSC
+        @ViewBag.Title  | Ha Phan JSC
     </title>
 </head>
 <body>
@@ -75,6 +75,7 @@
         <img src="~/Images/loading.gif" alt="" id="ctl0_loadingImage"
              style="position: absolute; z-index: 110; top: 50%; left: 50%;" />
     </div>
+    @*----logo-----*@
     <div class="header-wp">
         <div class="container">
             <div class="row">
@@ -115,6 +116,7 @@
                                 Về chúng tôi
                             </a>
                         </li>
+                        @*----sanpham------*@
                         <li class="nav-sub">
                             <a class="smooth" href="/CategoriesHome/Index" title="">
                                 Sản phẩm
@@ -125,7 +127,7 @@
                             </ul>
                         </li>
                         <li class="nav-sub">
-                            <a class="smooth" href="/Solution" title="">
+                            <a class="smooth" href="/giai-phap" title="">
                                 Giải pháp
                             </a>
                         </li>
@@ -277,12 +279,12 @@
                         margin-bottom: 50px;
                     }
                 </style>
-                <div id="footerleft" class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-xs-12 col-12 address-ft">
+                <div id="footerleft" class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12 col-12 address-ft">
                 
                 </div>
                 <div  id="footercenter" class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12 col-12 address-ft">
                 </div>
-                <div  class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-xs-12 col-12 contact-ft">
+                <div  class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12 col-12 contact-ft">
                    <div id="footerright"></div>
                     <div id="emaillayout" class="h-contact">
                     </div>
@@ -462,7 +464,7 @@
                 if (data.code == 200) {
                     $.each(data.footercenter, function (k, v) {
                         let div = '<div id="' + v.id + '" class="h-addressa">';
-                        div += '<img style="width: 300px;height: 350px;margin-left: -100px;" src="/Images/' + v.image + '" />';
+                        div += '<img  src="/Images/' + v.image + '" />';
                         div += '</div>';
                         $('#footercenter').append(div);
                     });

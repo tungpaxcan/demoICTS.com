@@ -51,7 +51,6 @@
             PartnerContent();
             Solution();
         });
-        /*    ---------------------category---------------------------*/
         function ImgCategory() {
             $.ajax({
                 url: '/home/DanhMucTheoAnh',
@@ -141,16 +140,16 @@
         }
         function Solution() {
             $.ajax({
-                url: '/solutionhome/Solution',
+                url: '/home/Solution',
                 type: 'get',
                 success: function (data) {
                     $('#imgsolution').empty();
                     if (data.code == 200) {
-                        $.each(data.dmsp, function (k, v) {
+                        $.each(data.left, function (k, v) {
                             let div = '<li>'
                             div += ' <div class="h-product-item">'
                             div += ' <div  class="h-product-item-img wow fadeInDown animated">';
-                            div += '<a  href="/ProductDetail/39934/may-in-ma-vach">';
+                            div += '<a  href="">';
                             div += '<img src="/Images/' + v.image + '" title="' + v.title + '" />';
                             div += '</a>';
                             div += '</div>';

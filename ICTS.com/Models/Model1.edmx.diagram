@@ -4,17 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4d13078b97d74a8db579c856e3708aaa" Name="Diagram1">
+      <Diagram DiagramId="f3dcc5ab109e4ff8ae0122475afdb86f" Name="Diagram1">
         <EntityTypeShape EntityType="ICTS.COMModel.Admin" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.Category" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.Content" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.Category" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.Content" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ICTS.COMModel.DetailSolution" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.Image" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.Module" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.Partner" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.Slider" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.Solution" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
-        <AssociationConnector Association="ICTS.COMModel.FK_DetailSolution_Images" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ICTS.COMModel.Image" Width="1.5" PointX="4.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.Module" Width="1.5" PointX="6.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.Partner" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.Slider" Width="1.5" PointX="8.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.Solution" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
         <AssociationConnector Association="ICTS.COMModel.FK_DetailSolution_Solution" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>

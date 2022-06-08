@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ICTS.com.Models.Solution>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="solutionall" class="solution">
+   
+</div>
+    @section scripts{
+        <script>   
+           /* ---------hienthisolution---------------*/
+            $.ajax({
+                url: '/solutionhome/Solution',
+                type: 'get',
+                success: function (data) {
+                    $('#solutionall').empty();
+                    if (data.code == 200) {
+                        $.each(data.left, function (k, v) {
+                            let div = '<div class="form-solution">';
+                            div += '<div id="' + v.id + '"><a name="a"><img alt="' + v.title + '" src="/Images/' + v.image + '" /></a></div>';
+                            div += '<h1>' + v.name + '</h1>';
+                            div += '<div id="' + v.id + '"class="contentsolution">' + v.content + '<a href="" name="a" >  xem thêm...</a></div>';
+                            div += '</div>';
+                            $('#solutionall').append(div);
+                        });
+                    } else {
+                        alert(data.msg)
+                    }
+                }
+            });
+            /* ---------addlink---------------*/
+            $(document).on('click', "a[name='a']", function () {
+                let id = $(this).closest('div').attr('id')
+                $.ajax({
+                    url: '/solutionhome/DetailSolution',
+                    type: 'get',
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            $.each(data.left, function (k, v) {
+                                window.location.href = data.Url + v.meta+"/"+ + v.id
+                            })
+                            
+                        }
+                    }
+                })
+            })
+
+        </script>
+}

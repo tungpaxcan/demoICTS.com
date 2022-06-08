@@ -14,14 +14,7 @@ namespace ICTS.com.Models
     
     public partial class Image
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Image()
-        {
-            this.DetailSolutions = new HashSet<DetailSolution>();
-        }
-    
         public int Id { get; set; }
-        public Nullable<int> IdDetailSolution { get; set; }
         public string Image1 { get; set; }
         public string Name { get; set; }
         public string Meta { get; set; }
@@ -31,8 +24,5 @@ namespace ICTS.com.Models
         public Nullable<System.DateTime> ModifileDate { get; set; }
         public string ModifileBy { get; set; }
         public Nullable<bool> Status { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DetailSolution> DetailSolutions { get; set; }
     }
 }

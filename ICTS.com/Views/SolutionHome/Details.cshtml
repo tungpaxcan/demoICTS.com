@@ -1,0 +1,88 @@
+﻿@model ICTS.com.Models.DetailSolution
+
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="Detail-solution">
+    <img src="~/Images/@Model.Image" />
+    </div>
+<div class="Detail-Name-Solution">
+    <div class="row">
+        <div class="col-sm-6 img-detailsolution">
+            <input hidden type="text" id="iddetailsolution" value="@Model.IdSolution" />
+            <h1 id="idname"></h1>
+            <div id="p"></div>
+        </div>
+        
+        <div id="imagedetailsolution" class="col-sm-6 img-detailsolution">
+ 
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        let id = $('#iddetailsolution').val().trim();
+        /* ---------solutionview---------------*/
+        $.ajax({
+            url: '/solutionhome/DetailSolution',
+            type: 'get',
+            data: {
+                id: id
+            },
+            success: function (data) {
+                $('#p').empty();
+                $('#idname').empty();
+                if (data.code == 200) {
+                    $.each(data.left, function (k, v) {
+                        let div = '<div>' + v.content + '</div><div style="text-aligt:center"><button class="btn btn-primary" type="button"><a href="#" style="color:red">Liên hệ ngay với chúng tôi</a></button></div>';
+                        $('#p').append(div);
+                        let h1 = '' + v.name + '';
+                        $('#idname').append(h1);
+                    });
+                } else {
+                    alert(data.msg)
+                }
+            }
+        });
+        /* ---------solutionkhac---------------*/
+        $.ajax({
+            url: '/solutionhome/DetailSolutionExcept',
+            type: 'get',
+            data: {
+                id: id
+            },
+            success: function (data) {
+                $('#imagedetailsolution').empty();
+                if (data.code == 200) {
+                    $.each(data.left, function (k, v) {
+                        let h1 = '<div id="' + v.idsolution + '"><a name="a"><img src="/Images/' + v.image + '" /></a></div>';
+                        h1 += '<div id="' + v.idsolution + '"><a style="color:black" href="" name="a"><b>' + v.name + ' </b></a></div>';
+                        $('#imagedetailsolution').append(h1);
+                    });
+                } else {
+                    alert(data.msg)
+                }
+            }
+        });
+        /* ---------addlink---------------*/
+        $(document).on('click', "a[name='a']", function () {
+            let id = $(this).closest('div').attr('id')
+            $.ajax({
+                url: '/solutionhome/DetailSolution',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $.each(data.left, function (k, v) {
+                            window.location.href = data.Url + v.meta + "/" + + v.id
+                        })
+
+                    }
+                }
+            })
+        })
+    </script>
+    }

@@ -164,6 +164,28 @@ namespace ICTS.com.Controllers
                 return Json(new { code = 500, msg = "Hiểm thị dữ liệu thất bại" + e.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+        [HttpGet]
+        public JsonResult Solution()
+        {
+            try
+            {
+                var left = (from s in db.Solutions.Where(x => x.Status != false)
+                            select new
+                            {
+                                id = s.Id,
+                                title = s.Title,
+                                meta = s.Meta,
+                                name = s.Name,
+                                content = s.Content,
+                                image = s.Image
+                            }).Take(4).ToList();
+                return Json(new { code = 200, left = left, msg = "Hiển thị dữ liệu " }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { code = 500, msg = "Hiểm thị dữ liệu thất bại" + e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

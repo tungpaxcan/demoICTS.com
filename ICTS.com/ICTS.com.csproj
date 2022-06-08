@@ -133,6 +133,7 @@
     <Compile Include="Areas\ICTS\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\ICTS\Controllers\ContentsController.cs" />
     <Compile Include="Areas\ICTS\Controllers\DefaultController.cs" />
+    <Compile Include="Areas\ICTS\Controllers\DetailSolutionsController.cs" />
     <Compile Include="Areas\ICTS\Controllers\FootersController.cs" />
     <Compile Include="Areas\ICTS\Controllers\HomeAdminController.cs" />
     <Compile Include="Areas\ICTS\Controllers\PartnersController.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Areas\ICTS\ICTSAreaRegistration.cs" />
     <Compile Include="Controllers\AdminsssController.cs" />
     <Compile Include="Controllers\CategoriesHomeController.cs" />
+    <Compile Include="Controllers\DetailSolutionHomeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PartnerController.cs" />
     <Compile Include="Controllers\SlidersController.cs" />
@@ -2667,16 +2669,17 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\CategoriesHome\Index.cshtml" />
+    <Content Include="Views\SolutionHome\Details.cshtml" />
+    <Content Include="Views\SolutionHome\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\ICTS\Data\" />
     <Folder Include="Areas\ICTS\Views\Base\" />
-    <Folder Include="Areas\ICTS\Views\Contents\" />
     <Folder Include="Views\Adminsss\" />
+    <Folder Include="Views\DetailSolutionHome\" />
     <Folder Include="Views\Partner\" />
     <Folder Include="Views\Sliders\" />
-    <Folder Include="Views\SolutionHome\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

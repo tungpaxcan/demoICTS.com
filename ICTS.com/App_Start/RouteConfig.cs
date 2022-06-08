@@ -14,10 +14,22 @@ namespace ICTS.com
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+            name: "DetailSolutionHome",
+            url: "giai-phap/chi-tiet-giai-phap/{meta}/{id}",
+            defaults: new { controller = "SolutionHome", action = "Details", id = UrlParameter.Optional }
+        );
+            routes.MapRoute(
+               name: "SolutionHome",
+               url: "giai-phap/{action}/{id}",
+               defaults: new { controller = "SolutionHome", action = "Index", id = UrlParameter.Optional }
+           );
+           
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+            
         }
     }
 }
