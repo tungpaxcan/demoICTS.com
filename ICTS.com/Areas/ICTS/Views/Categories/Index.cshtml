@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<ICTS.com.Models.Category>
 @{
-    ViewBag.Title = "k";
+    ViewBag.Title = "Sản Phẩm";
     Layout = "~/Areas/ICTS/Views/Shared/_Layout_Admin.cshtml";
 }
 <div>
@@ -15,10 +15,46 @@
         <i class="fas fa-search"></i>
     </button>
 </div>
-<table class="table Category">
+<div>
+    <ul class="pagination" id="pageproductcategory">
+    </ul>
+</div>
+<div id="seachinputproductcategory" class="input-group">
+    <div class="form-outline">
+        <input type="search" id="seachproductcategory" class="form-control" placeholder="Loại Sản Phẩm" />
+    </div>
+    <button type="button" id="btnSeachproductcategory" class="btn btn-primary">
+        <i class="fas fa-search"></i>
+    </button>
+</div>
+<div>
+    <ul class="pagination" id="pageproduct">
+    </ul>
+</div>
+<div id="seachinputproduct" class="input-group">
+    <div class="form-outline">
+        <input type="search" id="seachproduct" class="form-control" placeholder="Sản Phẩm" />
+    </div>
+    <button type="button" id="btnSeachproduct" class="btn btn-primary">
+        <i class="fas fa-search"></i>
+    </button>
+</div>
+<div>
+    <ul class="pagination" id="pagebrand">
+    </ul>
+</div>
+<div id="seachinputbrand" class="input-group">
+    <div class="form-outline">
+        <input type="search" id="seachbrand" class="form-control" placeholder="Thương Hiệu" />
+    </div>
+    <button type="button" id="btnSeachbrand" class="btn btn-primary">
+        <i class="fas fa-search"></i>
+    </button>
+</div>
+<table class="table Category Productcategory Brand Product">
 </table>
 @*-----------------modal category------------------*@
-<div id="dmsp" class="modal" tabindex="-1" role="dialog">
+    <div id="dmsp" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="panel panel-primary">
@@ -37,7 +73,7 @@
 
                 <div class="form-inline">
                     <label>Chọn ảnh</label>
-                    <input type="text" name="picture" id="picturefile" class="form-control" />
+                    <input type="text" hidden name="picture" id="picturefile" class="form-control" />
                     <input type="file" id="fileUpload" name="fileUpload" accept="image/*" style="display:none" />
                     <input type="button" id="btnUpload" value="..." class="btn-bg-success" />
                     <img style="width:100px" id="picture" />
@@ -55,7 +91,7 @@
                             <input type="checkbox" class="form-control" id="statusimagedmsp" placeholder="Trạng thái">
                         </div>
                     </div>
-                </div>          
+                </div>
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group" style="margin-left:20px">
@@ -93,6 +129,231 @@
         </div>
     </div>
 </div>
+@*-----------------modal productcategory------------------*@
+<div id="modalproductcategory" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div style="color: red; text-align: center" class="panel-heading" id="modalTitleproductcategory"></div>
+                <input type="text" hidden id="idproductcategory" value="" />
+                <div class="form-group" style="margin-left:20px">
+                    <label>Tên Danh Mục</label>
+                    <div>
+                        <select class="browser-default custom-select" id="namecategory">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label>Tên Loại sản phẩm</label>
+                    <input type="text" class="form-control" id="nameproductcategory" placeholder="Tên danh mục">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <input type="text" class="form-control" hidden id="urlproductcategory" placeholder="url">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <input type="text" class="form-control hidden" hidden id="titleproductcategory" placeholder="title">
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Trạng thái</label>
+                            <input type="checkbox" class="form-control" id="statusproductcategory" placeholder="Trạng thái">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày tạo</label>
+                            <input type="text" class="form-control" id="createdateproductcategory">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày sửa</label>
+                            <input type="text" class="form-control" id="modifiledateproductcategory">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người tạo</label>
+                            <input type="text" class="form-control" id="createbyproductcategory" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người sửa</label>
+                            <input type="text" class="form-control" id="modifilebyproductcategory" placeholder="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="btnSubmitproductcategory">Xác Nhận</button>
+                <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*-----------------modal brand------------------*@
+<div id="modalbrand" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div style="color: red; text-align: center" class="panel-heading" id="modalTitlebrand"></div>
+                <input type="text" hidden id="idbrand" value="" />
+                <div class="form-group" style="margin-left:20px">
+                    <label>Tên Thương hiệu</label>
+                    <input type="text" class="form-control" id="namebrand" placeholder="Tên Thương Hiệu">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <input type="text" class="form-control" hidden id="urlbrand" placeholder="url">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <input type="text" class="form-control hidden" hidden id="titlebrand" placeholder="title">
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Trạng thái</label>
+                            <input type="checkbox" class="form-control" id="statusbrand" placeholder="Trạng thái">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày tạo</label>
+                            <input type="text" class="form-control" id="createdatebrand">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày sửa</label>
+                            <input type="text" class="form-control" id="modifiledatebrand">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người tạo</label>
+                            <input type="text" class="form-control" id="createbybrand" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người sửa</label>
+                            <input type="text" class="form-control" id="modifilebybrand" placeholder="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="btnSubmitbrand">Xác Nhận</button>
+                <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*-----------------modal product------------------*@
+<div id="modalproduct" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div style="color: red; text-align: center" class="panel-heading" id="modalTitleproduct"></div>
+                <input type="text" hidden id="idproduct" value="" />
+                <div class="form-group" style="margin-left:20px">
+                    <label>Tên Danh Mục</label>
+                    <div>
+                        <select class="browser-default custom-select" id="namecategoryid">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label>Tên Loại Sản Phẩm</label>
+                    <div>
+                        <select class="browser-default custom-select" id="nameproductcategoryid">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label>Tên Thương Hiệu</label>
+                    <div>
+                        <select class="browser-default custom-select" id="namebrandid">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label>Tên sản phẩm</label>
+                    <input type="text" class="form-control" id="nameproduct" placeholder="Tên Sản Phẩm">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <input type="text" class="form-control" hidden id="urlproduct" placeholder="url">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <input type="text" class="form-control hidden" hidden id="titleproduct" placeholder="title">
+                </div>
+                <div class="form-inline">
+                    <label>Chọn ảnh</label>
+                    <input type="text" hidden name="picture" id="picturefileproduct" class="form-control" />
+                    <input type="file" id="fileUploadproduct" name="fileUpload" accept="image/*" style="display:none" />
+                    <input type="button" id="btnUploadproduct" value="..." class="btn-bg-success" />
+                    <img style="width:100px" id="pictureproduct" />
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label>Thông Số Cơ Bản</label>
+                    <input type="text" class="form-control" id="decproduct" placeholder="Thông Số Cơ bản">
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Trạng thái</label>
+                            <input type="checkbox" class="form-control" id="statusproduct" placeholder="Trạng thái">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày tạo</label>
+                            <input type="text" class="form-control" id="createdateproduct">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày sửa</label>
+                            <input type="text" class="form-control" id="modifiledateproduct">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người tạo</label>
+                            <input type="text" class="form-control" id="createbyproduct" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người sửa</label>
+                            <input type="text" class="form-control" id="modifilebyproduct" placeholder="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="btnSubmitproduct">Xác Nhận</button>
+                <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section scripts{
     <script>
         var page = 1;
@@ -100,12 +361,20 @@
         //--------------------------------------------------category-------------------------------------------------------------------------------------------------------
         $('#btndanhmuc').click(function () {
             DanhMucSanPham(seach, page);
+            $('#pageproductcategory').hide();
+            $('#categorypage').show();
+            $('#seachinputproductcategory').hide();
+            $('#seachinput').show();
+            $('#seachinputbrand').hide();
+            $('#pagebrand').hide();
+            $('#pageproduct').hide();
+            $('#seachinputproduct').hide();
         });
         //modal add category
         $(document).on('click', "button[name='add']", function () {
             Add();
             $('#namedmsp').val('');
-            $('#urldmsp').prop('file', false);
+            $('#urldmsp').val('');
             $('#titledmsp').val('');
             $('#picturefile').val('');
             $('#createdate').prop('readonly', true);
@@ -296,7 +565,13 @@
                     },
                     success: function (data) {
                         if (data.code == 200) {
-                            alert(data.msg);
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Xóa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             DanhMucSanPham(seach, page)
                         } else {
                             alert(data.msg);
@@ -414,6 +689,956 @@
                 }
             });
         }
+        //--------------------------------------------------productcategory-------------------------------------------------------------------------------------------------------
+        $('#btndanhmucsanpham').click(function () {
+            ProductCategory(seach, page);
+            $('#pageproductcategory').show();
+            $('#categorypage').hide();
+            $('#seachinputproductcategory').show();
+            $('#seachinput').hide();
+            $('#seachinputbrand').hide();
+            $('#pagebrand').hide();
+            $('#pageproduct').hide();
+            $('#seachinputproduct').hide();
+        });
+        //modal add category
+        $(document).on('click', "button[name='addproductcategory']", function () {
+            AddProductcategory();
+            $('#nameproductcategory').val('');
+            $('#urlproductcategory').val('')
+            $('#titleproductcategory').val('');
+            $('#createdateproductcategory').prop('readonly', true);
+            $('#createdateproductcategory').val('');
+            $('#modifiledateproductcategory').prop('readonly', true);
+            $('#modifiledateproductcategory').val('');
+            $('#createbyproductcategory').prop('readonly', true);
+            $('#createbyproductcategory').val('');
+            $('#modifilebyproductcategory').prop('readonly', true);
+            $('#modifilebyproductcategory').val('');
+            $('#statusproductcategory').prop('checked', false);
+            $('#idproductcategory').val('');
+            $('#btnSubmitproductcategory').show();
+        });
+        //confirm add/edit
+        $('#btnSubmitproductcategory').click(function () {
+            let name = $('#nameproductcategory').val().trim();
+            let url = $('#urlproductcategory').val().trim();
+            let title = $('#titleproductcategory').val().trim();
+            let namecategory = $('#namecategory').val();
+            let status = $('#statusproductcategory').prop('checked');
+            //rang buộc dữ liệu
+            if (name.length == 0) {
+                alert('Vui Long Nhập Đầy Đủ Dữ liệu');
+                return;
+            }
+            let idproductcategory = $('#idproductcategory').val().trim();
+            if (idproductcategory.length == 0) {
+                $.ajax({
+                    url: '/icts/productcategories/Add',
+                    type: 'post',
+                    data: {
+                        name: name,
+                        url: url,
+                        title: title,
+                        namecategory: namecategory,
+                        status: status
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Thêm Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            ProductCategory(seach, page);
+                            $('#nameproductcategory').val('');
+                            $('#urlproductcategory').val('');
+                            $('#titleproductcategory').val('');
+                            $('#modalproductcategory').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/icts/productcategories/Edit',
+                    type: 'post',
+                    data: {
+                        name: name,
+                        url: url,
+                        title: title,
+                        namecategory: namecategory,
+                        status: status,
+                        id: idproductcategory
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Sửa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            ProductCategory(seach, page);
+                            $('#nameproductcategory').val('');
+                            $('#urlproductcategory').val('');
+                            $('#titleproductcategory').val('');
+                            $('#idproductcategory').val('');
+                            $('#modalproductcategory').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+        });
+        //phan trang
+        $('#pageproductcategory').on('click', 'li', function (e) {
+            e.preventDefault();
+            page = $(this).attr('id');
+            ProductCategory(seach, page);
+        });
+        ////tim kiem
+        $('#btnSeachproductcategory').click(function () {
+            page = 1;
+            seach = $('#seachproductcategory').val();
+            ProductCategory(seach, page);
+        });
+        $('#seachproductcategory').on('keypress', function (e) {
+            if (e.which == 13) {
+                $('#btnSeachproductcategory').click();
+            }
+        });
+        //catchuoi
+        $('#nameproductcategory').keyup(function () {
+            $('#urlproductcategory').val(GetChuoi($(this).val()));
+            $('#titleproductcategory').val($(this).val());
+        });
+        //Detail
+        $(document).on('click', "button[name='viewproductcategory']", function () {
+            let id = $(this).closest('tr').attr('id');
+            DetailProductcategory(id);
+            $('#createdateproductcategory').prop('readonly', true);
+            $('#modifiledateproductcategory').prop('readonly', true);
+            $('#modifilebyproductcategory').prop('readonly', true);
+            $('#createbyproductcategory').prop('readonly', true);
+            $('#btnSubmitproductcategory').hide();
+            $('#idproductcategory').val('');
+        });
+        //Edit
+        $(document).on('click', "button[name='updateproductcategory']", function () {
+            let id = $(this).closest('tr').attr('id');
+            DetailProductcategory(id);
+            $('#createdateproductcategory').prop('readonly', true);
+            $('#createbyproductcategory').prop('readonly', true);
+            $('#modifiledateproductcategory').prop('readonly', true);
+            $('#modifilebyproductcategory').prop('readonly', true);
+            $('#modalTitleproductcategory').text("Sửa Loại Sản Phẩm");
+            $('#btnSubmitproductcategory').show();
+            $('#idproductcategory').val('');
+
+        });
+        //delete
+        $(document).on('click', "button[name='deleteproductcategory']", function () {
+            let id = $(this).closest('tr').attr('id');
+            if (confirm("Bạn có muốn xóa dữ liệu này")) {
+                $.ajax({
+                    url: '/icts/productcategories/Delete',
+                    type: 'post',
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Xóa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            ProductCategory(seach, page)
+                        } else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+
+        });
+        function ProductCategory(seach, page) {
+            $.ajax({
+                url: '/icts/productcategories/ProductCategory',
+                type: 'get',
+                data: {
+                    page: page,
+                    seach: seach
+                },
+                success: function (data) {
+                    $('.Productcategory').empty();
+                    if (data.code == 200) {
+                        let table = '<thead>';
+                        table += '<tr>';
+                        table += '<th>Tên Danh Mục</th>';
+                        table += '<th>Tên Loại Sản Phẩm</th>';
+                        table += '<th>Trạng thái</th>';
+                        table += '<th></th>';
+                        table += '<th> <button class = "btn btn-xs btn-success" name = "addproductcategory" > <i class="fa-solid fa-plus"></i></button >&nbsp</th>';
+                        table += '</tr>';
+                        table += '</thead>';
+                        table += '<tbody>';
+                        $.each(data.dmsp, function (k, v) {
+                            table += '<tr id="' + v.id + '">';
+                            table += '<td>' + v.namecategory + '</td>';
+                            table += '<td>' + v.name + '</td>';
+                            table += '<td>' + v.status + '</td>';
+                            table += '<td> <button class = "btn btn-xs btn-primary" name = "viewproductcategory" > <i class="fa-thin fa-circle-info"></i></button >&nbsp';
+                            table += ' <button class = "btn btn-xs btn-warning" name = "updateproductcategory" > <i class="fa-thin fa-wrench"></i></button >&nbsp';
+                            table += ' <button class = "btn btn-xs btn-danger" name = "deleteproductcategory" > <i class="fa-thin fa-trash-xmark"></i></button >&nbsp';
+                            table += '</td>';
+                            table += '<td></td>';
+                            table += '</tr>';
+                        });
+                        table += '</tbody>';
+                        $('.Productcategory').append(table);
+                        $('#pageproductcategory').empty();
+                        for (i = 1; i <= data.pages; i++) {
+                            let li = '<li class="page-item" id="' + i + '"><a class="page-link" href="#">' + i + '</a></li>';
+                            $('#pageproductcategory').append(li);
+                        }
+                        let next = '<li class="page-item" id="' + (parseInt(page) + 1) + '"><a class="page-link" href="#">Next</a></li>';
+                        $('#pageproductcategory').append(next);
+                        let li = $('#pageproductcategory li#' + page + '');
+                        $(li).addClass('active')
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function DetailProductcategory(id) {
+            $.ajax({
+                url: '/icts/productcategories/Detail',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#idproductcategory').val(data.tv.Id);
+                        $('#nameproductcategory').val(data.tv.Name);
+                        $('#namecategory').val(data.tv.IdCategory);
+                        if (data.tv.Status == true) {
+                            $('#statusproductcategory').prop('checked', true);
+                        } else {
+                            $('#statusproductcategory').prop('checked', false);
+                        }
+                        $('#createdateproductcategory').val(ConvertJsonDateString(data.tv.CreateDate));
+                        $('#modifiledateproductcategory').val(ConvertJsonDateString(data.tv.ModifileDate));
+                        $('#createbyproductcategory').val(data.tv.CreateBy);
+                        $('#modifilebyproductcategory').val(data.tv.ModifileBy);
+
+                        $('#modalTitleproductcategory').text("Chi Tiết Loại Sản Phẩm");
+                        $('#modalproductcategory').modal();
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function AddProductcategory() {
+            $.ajax({
+                url: '/adminsss/Add',
+                type: 'get',
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#createdateproductcategory').val(ConvertJsonDateString(data.date));
+                        $('#createbyproductcategory').val(data.d);
+                        $('#modalTitleproductcategory').text("Thêm Loại Sản Phẩm");
+                        $('#modalproductcategory').modal();
+                    }
+                }
+            });
+        }
+        function ProductCategoryId() {
+            $.ajax({
+                url: '/icts/categories/ProductCategoryById',
+                type: 'get',
+                success: function (data) {
+                    $('#namecategory').empty();
+                    if (data.code == 200) {
+                        $.each(data.dmsp, function (k, v) {
+                            let option = '<option id="' + v.id + '" value="' + v.id + '">' + v.name + '</option>';
+                            $('#namecategory').append(option);
+                        })
+                    }
+                }
+            });
+        }
+        //--------------------------------------------------brand-------------------------------------------------------------------------------------------------------
+        $('#btnthuonghieu').click(function () {
+            Brand(seach, page);
+            $('#pageproductcategory').hide();
+            $('#categorypage').hide();
+            $('#seachinputproductcategory').hide();
+            $('#seachinput').hide();
+            $('#seachinputbrand').show();
+            $('#pagebrand').show();
+            $('#pageproduct').hide();
+            $('#seachinputproduct').hide();
+        });
+        //modal add category
+        $(document).on('click', "button[name='addbrand']", function () {
+            AddBrand();
+            $('#namebrand').val('');
+            $('#urlbrand').val('');
+            $('#titlebrand').val('');
+            $('#createbrand').prop('readonly', true);
+            $('#createdatebrand').val('');
+            $('#modifiledatebrand').prop('readonly', true);
+            $('#modifiledatebrand').val('');
+            $('#createbybrand').prop('readonly', true);
+            $('#createbybrand').val('');
+            $('#modifilebybrand').prop('readonly', true);
+            $('#modifilebybrand').val('');
+            $('#statusbrand').prop('checked', false);
+            $('#idbrand').val('');
+            $('#btnSubmitbrand').show();
+        });
+        //confirm add/edit
+        $('#btnSubmitbrand').click(function () {
+            let name = $('#namebrand').val().trim();
+            let url = $('#urlbrand').val().trim();
+            let title = $('#titlebrand').val().trim();
+            let status = $('#statusbrand').prop('checked');
+            //rang buộc dữ liệu
+            if (name.length == 0) {
+                alert('Vui Long Nhập Đầy Đủ Dữ liệu');
+                return;
+            }
+            let idbrand = $('#idbrand').val().trim();
+            if (idbrand.length == 0) {
+                $.ajax({
+                    url: '/icts/brands/Add',
+                    type: 'post',
+                    data: {
+                        name: name,
+                        url: url,
+                        title: title,
+                        status: status
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Thêm Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            Brand(seach, page);
+                            $('#namebrand').val('');
+                            $('#urlbrand').val('');
+                            $('#titlebrand').val('');
+                            $('#modalbrand').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/icts/brands/Edit',
+                    type: 'post',
+                    data: {
+                        name: name,
+                        url: url,
+                        title: title,
+                        status: status,
+                        id: idbrand
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Sửa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            Brand(seach, page);
+                            $('#namebrand').val('');
+                            $('#urlbrand').val('');
+                            $('#titlebrand').val('');
+                            $('#idbrand').val('');
+                            $('#modalbrand').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+        });
+        //phan trang
+        $('#pagebrand').on('click', 'li', function (e) {
+            e.preventDefault();
+            page = $(this).attr('id');
+            Brand(seach, page);
+        });
+        ////tim kiem
+        $('#btnSeachbrand').click(function () {
+            page = 1;
+            seach = $('#seachbrand').val();
+            Brand(seach, page);
+        });
+        $('#seachbrand').on('keypress', function (e) {
+            if (e.which == 13) {
+                $('#btnSeachbrand').click();
+            }
+        });
+        //catchuoi
+        $('#namebrand').keyup(function () {
+            $('#urlbrand').val(GetChuoi($(this).val()));
+            $('#titlebrand').val($(this).val());
+        });
+        //Detail
+        $(document).on('click', "button[name='viewbrand']", function () {
+            let id = $(this).closest('tr').attr('id');
+            DetailBrand(id);
+            $('#createdatebrand').prop('readonly', true);
+            $('#modifiledatebrand').prop('readonly', true);
+            $('#modifilebybrand').prop('readonly', true);
+            $('#createbybrand').prop('readonly', true);
+            $('#btnSubmitbrand').hide();
+            $('#idbrand').val('');
+        });
+        //Edit
+        $(document).on('click', "button[name='updatebrand']", function () {
+            let id = $(this).closest('tr').attr('id');
+            DetailBrand(id);
+            $('#createdatebrand').prop('readonly', true);
+            $('#createbybrand').prop('readonly', true);
+            $('#modifiledatebrand').prop('readonly', true);
+            $('#modifilebybrand').prop('readonly', true);
+            $('#modalTitlebrand').text("Sửa Thương Hiệu");
+            $('#btnSubmitbrand').show();
+            $('#idbrand').val('');
+
+        });
+        //delete
+        $(document).on('click', "button[name='deletebrand']", function () {
+            let id = $(this).closest('tr').attr('id');
+            if (confirm("Bạn có muốn xóa dữ liệu này")) {
+                $.ajax({
+                    url: '/icts/brands/Delete',
+                    type: 'post',
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Xóa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            Brand(seach, page)
+                        } else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+
+        });
+        function Brand(seach, page) {
+            $.ajax({
+                url: '/icts/brands/Brand',
+                type: 'get',
+                data: {
+                    page: page,
+                    seach: seach
+                },
+                success: function (data) {
+                    $('.Brand').empty();
+                    if (data.code == 200) {
+                        let table = '<thead>';
+                        table += '<tr>';
+                        table += '<th>Tên Thương Hiệu</th>';
+                        table += '<th>Trạng thái</th>';
+                        table += '<th></th>';
+                        table += '<th> <button class = "btn btn-xs btn-success" name = "addbrand" > <i class="fa-solid fa-plus"></i></button >&nbsp</th>';
+                        table += '</tr>';
+                        table += '</thead>';
+                        table += '<tbody>';
+                        $.each(data.dmsp, function (k, v) {
+                            table += '<tr id="' + v.id + '">';
+                            table += '<td>' + v.name + '</td>';
+                            table += '<td>' + v.status + '</td>';
+                            table += '<td> <button class = "btn btn-xs btn-primary" name = "viewbrand" > <i class="fa-thin fa-circle-info"></i></button >&nbsp';
+                            table += ' <button class = "btn btn-xs btn-warning" name = "updatebrand" > <i class="fa-thin fa-wrench"></i></button >&nbsp';
+                            table += ' <button class = "btn btn-xs btn-danger" name = "deletebrand" > <i class="fa-thin fa-trash-xmark"></i></button >&nbsp';
+                            table += '</td>';
+                            table += '<td></td>';
+                            table += '</tr>';
+                        });
+                        table += '</tbody>';
+                        $('.Brand').append(table);
+                        $('#pagebrand').empty();
+                        for (i = 1; i <= data.pages; i++) {
+                            let li = '<li class="page-item" id="' + i + '"><a class="page-link" href="#">' + i + '</a></li>';
+                            $('#pagebrand').append(li);
+                        }
+                        let next = '<li class="page-item" id="' + (parseInt(page) + 1) + '"><a class="page-link" href="#">Next</a></li>';
+                        $('#pagebrand').append(next);
+                        let li = $('#pagebrand li#' + page + '');
+                        $(li).addClass('active')
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function DetailBrand(id) {
+            $.ajax({
+                url: '/icts/brands/Detail',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#idbrand').val(data.tv.Id);
+                        $('#namebrand').val(data.tv.Name);
+                        if (data.tv.Status == true) {
+                            $('#statusbrand').prop('checked', true);
+                        } else {
+                            $('#statusbrand').prop('checked', false);
+                        }
+                        $('#createdatebrand').val(ConvertJsonDateString(data.tv.CreateDate));
+                        $('#modifiledatebrand').val(ConvertJsonDateString(data.tv.ModifileDate));
+                        $('#createbybrand').val(data.tv.CreateBy);
+                        $('#modifilebybrand').val(data.tv.ModifileBy);
+
+                        $('#modalTitlebrand').text("Chi Tiết Thương Hiệu");
+                        $('#modalbrand').modal();
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function AddBrand() {
+            $.ajax({
+                url: '/adminsss/Add',
+                type: 'get',
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#createdatebrand').val(ConvertJsonDateString(data.date));
+                        $('#createbybrand').val(data.d);
+                        $('#modalTitlebrand').text("Thêm Thương Hiệu");
+                        $('#modalbrand').modal();
+                    }
+                }
+            });
+        }
+        //--------------------------------------------------product-------------------------------------------------------------------------------------------------------
+        $('#btnsanpham').click(function () {
+            Product(seach, page);
+            $('#pageproductcategory').hide();
+            $('#categorypage').hide();
+            $('#seachinputproductcategory').hide();
+            $('#seachinput').hide();
+            $('#seachinputbrand').hide();
+            $('#pagebrand').hide();
+            $('#pageproduct').show();
+            $('#seachinputproduct').show();
+        });
+        //modal add category
+        $(document).on('click', "button[name='addproduct']", function () {
+            AddProduct();
+            $('#nameproduct').val('');
+            $('#urlproduct').val('');
+            $('#titleproduct').val('');
+            $('#decproduct').val('');
+            $('#picturefileproduct').val('');
+            $('#createdateproduct').prop('readonly', true);
+            $('#createdateproduct').val('');
+            $('#modifiledateproduct').prop('readonly', true);
+            $('#modifiledateproduct').val('');
+            $('#createbyproduct').prop('readonly', true);
+            $('#createbyproduct').val('');
+            $('#modifilebyproduct').prop('readonly', true);
+            $('#modifilebyproduct').val('');
+            $('#statusproduct').prop('checked', false);
+            $('#idproduct').val('');
+            $('#btnSubmitproduct').show();
+        });
+        //hien ten hinh
+        $('#btnUploadproduct').click(function () {
+            $('#fileUploadproduct').trigger('click');
+        });
+        //chon file
+        $('#fileUploadproduct').change(function () {
+            if (window.FormData !== undefined) {
+                let fileUpload = $('#fileUploadproduct').get(0);
+                let files = fileUpload.files;
+                let formdata = new FormData();
+                formdata.append('file', files[0]);
+                $.ajax({
+                    type: 'post',
+                    url: '/icts/products/UploadImage',
+                    contentType: false,
+                    processData: false,
+                    data: formdata,
+                    success: function (urlImage) {
+                        $('#pictureproduct').attr('src', urlImage);
+                        $('#picturefileproduct').val(urlImage);
+                    }
+                })
+            }
+
+        });
+        //confirm add/edit
+        $('#btnSubmitproduct').click(function () {
+            let name = $('#nameproduct').val().trim();
+            let nameproductcategoryid = $('#nameproductcategoryid').val();
+            let namebrandid = $('#namebrandid').val();
+            let dec = $('#decproduct').val().trim();
+            let url = $('#urlproduct').val().trim();
+            let title = $('#titleproduct').val().trim();
+            let image = $('#picturefileproduct').val().trim();
+            let status = $('#statusproduct').prop('checked');
+            //rang buộc dữ liệu
+            if (name.length == 0 || image == null) {
+                alert('Vui Long Nhập Đầy Đủ Dữ liệu');
+                return;
+            }
+            let idproduct = $('#idproduct').val().trim();
+            if (idproduct.length == 0) {
+                $.ajax({
+                    url: '/icts/products/Add',
+                    type: 'post',
+                    data: {
+                        name: name,
+                        nameproductcategory: nameproductcategoryid,
+                        namebrand: namebrandid,
+                        dec: dec,
+                        url: url,
+                        title: title,
+                        image: image,
+                        status: status
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Thêm Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            Product(seach, page);
+                            $('#nameproduct').val('');
+                            $('#urlproduct').val('');
+                            $('#titleproduct').val('');
+                            $('#decproduct').val('');
+                            $('#statusproduct').prop('checked', false);
+                            $('#picturefileproduct').val('');
+                            $('#modalproduct').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/icts/products/Edit',
+                    type: 'post',
+                    data: {
+                        name: name,
+                        nameproductcategory: nameproductcategoryid,
+                        namebrand: namebrandid,
+                        dec: dec,
+                        url: url,
+                        title: title,
+                        image: image,
+                        status: status,
+                        id: idproduct
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Sửa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            Product(seach, page);
+                            $('#nameproduct').val('');
+                            $('#urlproduct').val('');
+                            $('#titleproduct').val('');
+                            $('#decproduct').val('');
+                            $('#statusproduct').prop('checked', false);
+                            $('#picturefileproduct').val('');
+                            $('#modalproduct').modal('hide');
+                            $('#idproduct').val('');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+
+
+        });
+        //phan trang
+        $('#pageproduct').on('click', 'li', function (e) {
+            e.preventDefault();
+            page = $(this).attr('id');
+            Product(seach, page);
+        });
+        ////tim kiem
+        $('#btnSeachproduct').click(function () {
+            page = 1;
+            seach = $('#seachproduct').val();
+            Product(seach, page);
+        });
+        $('#seachproduct').on('keypress', function (e) {
+            if (e.which == 13) {
+                $('#btnSeachproduct').click();
+            }
+        });
+        //catchuoi
+        $('#nameproduct').keyup(function () {
+            $('#urlproduct').val(GetChuoi($(this).val()));
+            $('#titleproduct').val($(this).val());
+        });
+        //Detail
+        $(document).on('click', "button[name='viewproduct']", function () {
+            let id = $(this).closest('tr').attr('id');
+            DetailProduct(id);
+            $('#createdateproduct').prop('readonly', true);
+            $('#modifiledateproduct').prop('readonly', true);
+            $('#modifilebyproduct').prop('readonly', true);
+            $('#createbyproduct').prop('readonly', true);
+            $('#modifiledateproduct').show();
+            $('#modifilebyproduct').show();
+            $('#btnSubmitproduct').hide();
+            $('#idproduct').val('');
+        });
+        //Edit
+        $(document).on('click', "button[name='updateproduct']", function () {
+            let id = $(this).closest('tr').attr('id');
+            DetailProduct(id);
+            $('#createdateproduct').prop('readonly', true);
+            $('#createbyproduct').prop('readonly', true);
+            $('#modifiledateproduct').prop('readonly', true);
+            $('#modifilebyproduct').prop('readonly', true);
+            $('#modalTitleproduct').text("Sửa Sản Phẩm");
+            $('#btnSubmitproduct').show();
+            $('#idproduct').val('');
+
+        });
+        //delete
+        $(document).on('click', "button[name='deleteproduct']", function () {
+            let id = $(this).closest('tr').attr('id');
+            if (confirm("Bạn có muốn xóa dữ liệu này")) {
+                $.ajax({
+                    url: '/icts/products/Delete',
+                    type: 'post',
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Xóa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            Product(seach, page)
+                        } else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+
+        });
+        function Product(seach, page) {
+            $.ajax({
+                url: '/icts/products/Product',
+                type: 'get',
+                data: {
+                    page: page,
+                    seach: seach
+                },
+                success: function (data) {
+                    $('.Product').empty();
+                    if (data.code == 200) {
+                        let table = '<thead>';
+                        table += '<tr>';
+                        table += '<th>Tên Loại Sản Phẩm</th>';
+                        table += '<th>Tên Thương Hiệu</th>';
+                        table += '<th>Tên Sản Phẩm</th>';
+                        table += '<th>Thông Số Cơ Bản</th>';
+                        table += '<th>Ảnh</th>';
+                        table += '<th>Trạng thái</th>';
+                        table += '<th></th>';
+                        table += '<th> <button class = "btn btn-xs btn-success" name = "addproduct" > <i class="fa-solid fa-plus"></i></button >&nbsp</th>';
+                        table += '</tr>';
+                        table += '</thead>';
+                        table += '<tbody>';
+                        $.each(data.dmsp, function (k, v) {
+                            table += '<tr id="' + v.id + '">';
+                            table += '<td>' + v.nameproductcategory + '</td>';
+                            table += '<td>' + v.namebrand + '</td>';
+                            table += '<td>' + v.name + '</td>';
+                            table += '<td>' + v.dec + '</td>';
+                            table += '<td><img style="width:100px" src="/Images/' + v.image + '"</td>';
+                            table += '<td>' + v.status + '</td>';
+                            table += '<td> <button class = "btn btn-xs btn-primary" name = "viewproduct" > <i class="fa-thin fa-circle-info"></i></button >&nbsp';
+                            table += ' <button class = "btn btn-xs btn-warning" name = "updateproduct" > <i class="fa-thin fa-wrench"></i></button >&nbsp';
+                            table += ' <button class = "btn btn-xs btn-danger" name = "deleteproduct" > <i class="fa-thin fa-trash-xmark"></i></button >&nbsp';
+                            table += '</td>';
+                            table += '<td></td>';
+                            table += '</tr>';
+                        });
+                        table += '</tbody>';
+                        $('.Product').append(table);
+                        $('#pageproduct').empty();
+                        for (i = 1; i <= data.pages; i++) {
+                            let li = '<li class="page-item" id="' + i + '"><a class="page-link" href="#">' + i + '</a></li>';
+                            $('#pageproduct').append(li);
+                        }
+                        let next = '<li class="page-item" id="' + (parseInt(page) + 1) + '"><a class="page-link" href="#">Next</a></li>';
+                        $('#pageproduct').append(next);
+                        let li = $('#pageproduct li#' + page + '');
+                        $(li).addClass('active')
+                       
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function DetailProduct(id) {
+            $.ajax({
+                url: '/icts/products/Detail',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#idproduct').val(data.tv.Id);
+                        $('#nameproduct').val(data.tv.Name);
+                        $('#nameproductcategoryid').val(data.tv.IdProductCategory);
+                        $('#namebrandid').val(data.tv.IdBrand);
+                        $('#urlproduct').val(data.tv.Meta);
+                        $('#titleproduct').val(data.tv.Title);
+                        $('#decproduct').val(data.tv.Description);
+                        $('#picturefileproduct').val("/Images/" + data.tv.Image);
+                        if (data.tv.Status == true) {
+                            $('#statusproduct').prop('checked', true);
+                        } else {
+                            $('#statusproduct').prop('checked', false);
+                        }
+                        $('#pictureproduct').attr('src', $('#picturefileproduct').val())
+                        $('#createdateproduct').val(ConvertJsonDateString(data.tv.CreateDate));
+                        $('#modifiledateproduct').val(ConvertJsonDateString(data.tv.ModifileDate));
+                        $('#createbyproduct').val(data.tv.CreateBy);
+                        $('#modifilebyproduct').val(data.tv.ModifileBy);
+
+                        $('#modalTitleproduct').text("Chi Tiết Sản Phẩm");
+                        $('#modalproduct').modal();
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function AddProduct() {
+            $.ajax({
+                url: '/adminsss/Add',
+                type: 'get',
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#createdateproduct').val(ConvertJsonDateString(data.date));
+                        $('#createbyproduct').val(data.d);
+                        $('#modalTitle').text("Thêm Sản Phẩm");
+                        $('#modalproduct').modal();
+                    }
+                }
+            });
+        }
+        function ProductCategoryById() {
+            $.ajax({
+                url: '/icts/categories/ProductCategoryById',
+                type: 'get',
+                success: function (data) {
+                    $('#namecategoryid').empty();
+                    if (data.code == 200) {
+                        $.each(data.dmsp, function (k, v) {
+                            let option = '<option id="' + v.id + '" value="' + v.id + '">' + v.name + '</option>';
+                            $('#namecategoryid').append(option);
+                        })
+                    }
+                }
+            });
+        }
+        function ProductId() {
+            $('#namecategoryid').change(function () {
+                var id = $(this).find(':selected')[0].id;           
+            $.ajax({
+                url: '/icts/products/ProductById',
+                type: 'get',
+                data: {
+                    id:id
+                },
+                success: function (data) {
+                    $('#nameproductcategoryid').empty();
+                    if (data.code == 200) {
+                        $.each(data.dmsp, function (k, v) {
+                            let option = '<option id="' + v.id + '" value="' + v.id + '">' + v.name + '</option>';
+                            $('#nameproductcategoryid').append(option);
+                        })
+                    }
+                }
+            });
+            });
+        }
+        function BrandById() {
+            $.ajax({
+                url: '/icts/products/BrandById',
+                type: 'get',
+                success: function (data) {                  
+                    if (data.code == 200) {
+                        $('#namebrandid').empty();
+                        $.each(data.dmsp, function (k, v) {
+                            let option = '<option id="' + v.id + '" value="' + v.id + '">' + v.name + '</option>';
+                            $('#namebrandid').append(option);
+                        })
+                    }
+                }
+            });
+        }
         //convert date string
         function ConvertJsonDateString(jsonDate) {
             var shortDate = null;
@@ -432,7 +1657,18 @@
         };
         $(document).ready(function () {
             $('.summernote').summernote();
-            DanhMucSanPham(seach, page)
+            DanhMucSanPham(seach, page);
+            ProductCategoryId()
+            Product(seach, page)
+            ProductCategoryById()
+            ProductId()
+            BrandById()
+            $('#pageproductcategory').hide();
+            $('#seachinputproductcategory').hide();
+            $('#seachinputbrand').hide();
+            $('#pagebrand').hide();
+            $('#pageproduct').hide();
+            $('#seachinputproduct').hide();
             document.getElementById("trangchu").style.visibility = "hidden";
             document.getElementById("giaiphap").style.visibility = "hidden";
             document.getElementById("sanpham").style.visibility = "visible";

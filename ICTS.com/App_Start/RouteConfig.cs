@@ -23,7 +23,11 @@ namespace ICTS.com
                url: "giai-phap/{action}/{id}",
                defaults: new { controller = "SolutionHome", action = "Index", id = UrlParameter.Optional }
            );
-           
+            routes.MapRoute(
+               name: "Category",
+               url: "san-pham/{action}/{id}",
+               defaults: new { controller = "CategoriesHome", action = "Index", id = UrlParameter.Optional }
+           );
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

@@ -1,8 +1,133 @@
-﻿
+﻿@model IEnumerable<ICTS.com.Models.Category> 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Danh Mục Sản Phẩm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="home-backround">
+    <div class="input-box">
+        <input type="text" class="form-control" placeholder="Seach">
+        <i class="fa fa-search"></i>
+    </div>
 
-<h2>Index</h2>
+    <div class="menu-categgory" id="mymenu">
 
+        <div id="menu-category">
+            @foreach (var item in Model)
+            {
+            <div id="@Html.DisplayFor(modelitem=>item.Id)" class="dropdown-category">
+                <button name="idpro-cate" class="dropbtn-category">
+                    @Html.DisplayFor(modelitem => item.Name)
+                </button>
+            </div>
+                
+            }
+
+        </div>
+        <a href="javascript:void(0);" style="font-size:100% ;" class="icon" onclick="myFunction()">&#9776;</a>
+    </div>
+    <div class="button-cate">
+        <button  style="" class="dropdown-category detail-drop">
+           <div id="namebuttonshow"></div>
+            <div id="pro-cate" class="dropdown-content-category">
+
+            </div>
+        </button>
+    </div>
+    
+    <div class="product-container">
+        <div class="product-">
+            <a href="hottub">
+                <div class="product--display">
+                    <img src="~/Images/logo.jpg" />
+                </div>
+                <div class="product--hover">
+                    <h2>Hot Tub Time Machine</h2>
+                </div>
+            </a>
+            <div class="product--border"></div>
+            <a href="hottub">
+                <div class="product--display">
+                    <img src="~/Images/logo.jpg" />
+                </div>
+                <div class="product--hover">
+                    <h2>Hot Tub Time Machine</h2>
+                </div>
+            </a>
+            <div class="product--border"></div>
+            <a href="hottub">
+                <div class="product--display">
+                    <img src="~/Images/logo.jpg" />
+                </div>
+                <div class="product--hover">
+                    <h2>Hot Tub Time Machine</h2>
+                </div>
+            </a>
+            <div class="product--border"></div>
+            <a href="hottub">
+                <div class="product--display">
+                    <img src="~/Images/logo.jpg" />
+                </div>
+                <div class="product--hover">
+                    <h2>Hot Tub Time Machine</h2>
+                </div>
+            </a>
+            <div class="product--border"></div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+    <script>
+        function myFunction() {
+            var x = document.getElementById("mymenu");
+            if (x.className === "menu-categgory") {
+                x.className += " responsive";
+            } else {
+                x.className = "menu-categgory";
+            }
+        }
+            /* ----------------------------danhmuc----------------------*/
+        $(document).on('click', "button[name='idpro-cate']", function () {
+            let id = $(this).closest('div').attr('id');
+            $.ajax({
+                url: '/categorieshome/Cate/',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    $('#namebuttonshow').empty();
+                    if (data.code == 200) {
+                        $.each(data.dmsp, function (k, v) {
+                            let but = '' + v.name + '';
+                            $('#namebuttonshow').append(but);
+                        });
+                    }
+
+                }
+            });
+        });
+                    /* ----------------------------loaisanpham----------------------*/
+        $(document).on('click', "button[name='idpro-cate']", function () {
+            let id = $(this).closest('div').attr('id');
+                $.ajax({
+                    url: '/categorieshome/ProductCategory/',
+                    type: 'get',
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        $('#pro-cate').empty();
+                        if (data.code == 200) {
+                            $.each(data.dmsp, function (k, v) {
+                                let li = '<a>' + v.name + '</a>';
+                                $('#pro-cate').append(li);
+                            });
+                        }
+
+                    }
+                });
+        });
+    </script>
+}

@@ -23,6 +23,21 @@
           <Property Name="ModifileBy" Type="nvarchar" MaxLength="200" />
           <Property Name="ModifileDate" Type="datetime" />
           <Property Name="Role" Type="bit" />
+          <Property Name="StatusImage" Type="bit" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Meta" Type="varchar" MaxLength="100" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="ModifileDate" Type="datetime" />
+          <Property Name="ModifileBy" Type="nvarchar" MaxLength="200" />
           <Property Name="Status" Type="bit" />
         </EntityType>
         <EntityType Name="Category">
@@ -32,7 +47,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Meta" Type="varchar" MaxLength="100" />
           <Property Name="Name" Type="nvarchar" MaxLength="250" />
-          <Property Name="Title" Type="varchar" MaxLength="200" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="CreateBy" Type="nvarchar" MaxLength="200" />
           <Property Name="ModifileDate" Type="datetime" />
@@ -56,6 +71,24 @@
           <Property Name="CreateBy" Type="nvarchar" MaxLength="200" />
           <Property Name="ModifileDate" Type="datetime" />
           <Property Name="ModifileBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="DetailProduct">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdProduct" Type="int" />
+          <Property Name="Application" Type="nvarchar" MaxLength="250" />
+          <Property Name="[content]Dec" Type="nvarchar(max)" />
+          <Property Name="[content]DecTech" Type="nvarchar(max)" />
+          <Property Name="Image" Type="nvarchar" MaxLength="250" />
+          <Property Name="ImageAdd" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="ModifileDate" Type="datetime" />
+          <Property Name="ModifileBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="StatusImage" Type="bit" />
           <Property Name="Status" Type="bit" />
         </EntityType>
         <EntityType Name="DetailSolution">
@@ -130,6 +163,42 @@
           <Property Name="ModifileDate" Type="datetime" />
           <Property Name="Status" Type="bit" />
         </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdProductCategory" Type="int" />
+          <Property Name="IdBrand" Type="int" />
+          <Property Name="Meta" Type="varchar" MaxLength="100" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Title" Type="varchar" MaxLength="200" />
+          <Property Name="Description" Type="ntext" />
+          <Property Name="Content" Type="nvarchar(max)" />
+          <Property Name="Image" Type="nvarchar" MaxLength="250" />
+          <Property Name="ImageAdd" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="ModifileDate" Type="datetime" />
+          <Property Name="ModifileBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="StatusImage" Type="bit" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCategory" Type="int" />
+          <Property Name="Meta" Type="varchar" MaxLength="100" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="ModifileDate" Type="datetime" />
+          <Property Name="ModifileBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
         <EntityType Name="Slider">
           <Key>
             <PropertyRef Name="Id" />
@@ -162,6 +231,18 @@
           <Property Name="StatusImage" Type="bit" />
           <Property Name="Status" Type="bit" />
         </EntityType>
+        <Association Name="FK_DetailProduct_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="DetailProduct" Type="Self.DetailProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DetailProduct">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DetailSolution_Solution">
           <End Role="Solution" Type="Self.Solution" Multiplicity="0..1" />
           <End Role="DetailSolution" Type="Self.DetailSolution" Multiplicity="*" />
@@ -174,19 +255,75 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Product_Brand">
+          <End Role="Brand" Type="Self.Brand" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="IdBrand" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductCategory">
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="IdProductCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductCategory_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductCategory">
+              <PropertyRef Name="IdCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ICTSCOMModelStoreContainer">
           <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Brand" EntityType="Self.Brand" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Content" EntityType="Self.Content" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetailProduct" EntityType="Self.DetailProduct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetailSolution" EntityType="Self.DetailSolution" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Images" EntityType="Self.Images" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Modules" EntityType="Self.Modules" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Partner" EntityType="Self.Partner" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Slider" EntityType="Self.Slider" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Solution" EntityType="Self.Solution" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DetailProduct_Product" Association="Self.FK_DetailProduct_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="DetailProduct" EntitySet="DetailProduct" />
+          </AssociationSet>
           <AssociationSet Name="FK_DetailSolution_Solution" Association="Self.FK_DetailSolution_Solution">
             <End Role="Solution" EntitySet="Solution" />
             <End Role="DetailSolution" EntitySet="DetailSolution" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Brand" Association="Self.FK_Product_Brand">
+            <End Role="Brand" EntitySet="Brand" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductCategory" Association="Self.FK_Product_ProductCategory">
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCategory_Category" Association="Self.FK_ProductCategory_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -212,7 +349,23 @@
           <Property Name="ModifileBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="ModifileDate" Type="DateTime" Precision="3" />
           <Property Name="Role" Type="Boolean" />
+          <Property Name="StatusImage" Type="Boolean" />
           <Property Name="Status" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Meta" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ModifileDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifileBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_Brand" FromRole="Brand" ToRole="Product" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -221,7 +374,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Meta" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="CreateBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="ModifileDate" Type="DateTime" Precision="3" />
@@ -229,6 +382,7 @@
           <Property Name="ModifileBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="StatusImage" Type="Boolean" />
           <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="ProductCategories" Relationship="Self.FK_ProductCategory_Category" FromRole="Category" ToRole="ProductCategory" />
         </EntityType>
         <EntityType Name="Content">
           <Key>
@@ -246,6 +400,25 @@
           <Property Name="ModifileDate" Type="DateTime" Precision="3" />
           <Property Name="ModifileBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="DetailProduct">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdProduct" Type="Int32" />
+          <Property Name="Application" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="C_content_Dec" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="C_content_DecTech" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ImageAdd" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ModifileDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifileBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StatusImage" Type="Boolean" />
+          <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_DetailProduct_Product" FromRole="DetailProduct" ToRole="Product" />
         </EntityType>
         <EntityType Name="DetailSolution">
           <Key>
@@ -320,6 +493,47 @@
           <Property Name="ModifileDate" Type="DateTime" Precision="3" />
           <Property Name="Status" Type="Boolean" />
         </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdProductCategory" Type="Int32" />
+          <Property Name="IdBrand" Type="Int32" />
+          <Property Name="Meta" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ImageAdd" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ModifileDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifileBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StatusImage" Type="Boolean" />
+          <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="Brand" Relationship="Self.FK_Product_Brand" FromRole="Product" ToRole="Brand" />
+          <NavigationProperty Name="DetailProducts" Relationship="Self.FK_DetailProduct_Product" FromRole="Product" ToRole="DetailProduct" />
+          <NavigationProperty Name="ProductCategory" Relationship="Self.FK_Product_ProductCategory" FromRole="Product" ToRole="ProductCategory" />
+        </EntityType>
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCategory" Type="Int32" />
+          <Property Name="Meta" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ModifileDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifileBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_ProductCategory_Category" FromRole="ProductCategory" ToRole="Category" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_ProductCategory" FromRole="ProductCategory" ToRole="Product" />
+        </EntityType>
         <EntityType Name="Slider">
           <Key>
             <PropertyRef Name="Id" />
@@ -353,6 +567,42 @@
           <Property Name="Status" Type="Boolean" />
           <NavigationProperty Name="DetailSolutions" Relationship="Self.FK_DetailSolution_Solution" FromRole="Solution" ToRole="DetailSolution" />
         </EntityType>
+        <Association Name="FK_Product_Brand">
+          <End Role="Brand" Type="Self.Brand" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="IdBrand" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductCategory_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductCategory">
+              <PropertyRef Name="IdCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetailProduct_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="DetailProduct" Type="Self.DetailProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DetailProduct">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DetailSolution_Solution">
           <End Role="Solution" Type="Self.Solution" Multiplicity="0..1" />
           <End Role="DetailSolution" Type="Self.DetailSolution" Multiplicity="*" />
@@ -365,19 +615,51 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Product_ProductCategory">
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="IdProductCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Admins" EntityType="Self.Admin" />
+          <EntitySet Name="Brands" EntityType="Self.Brand" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Contents" EntityType="Self.Content" />
+          <EntitySet Name="DetailProducts" EntityType="Self.DetailProduct" />
           <EntitySet Name="DetailSolutions" EntityType="Self.DetailSolution" />
           <EntitySet Name="Images" EntityType="Self.Image" />
           <EntitySet Name="Modules" EntityType="Self.Module" />
           <EntitySet Name="Partners" EntityType="Self.Partner" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="ProductCategories" EntityType="Self.ProductCategory" />
           <EntitySet Name="Sliders" EntityType="Self.Slider" />
           <EntitySet Name="Solutions" EntityType="Self.Solution" />
+          <AssociationSet Name="FK_Product_Brand" Association="Self.FK_Product_Brand">
+            <End Role="Brand" EntitySet="Brands" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCategory_Category" Association="Self.FK_ProductCategory_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="ProductCategory" EntitySet="ProductCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetailProduct_Product" Association="Self.FK_DetailProduct_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="DetailProduct" EntitySet="DetailProducts" />
+          </AssociationSet>
           <AssociationSet Name="FK_DetailSolution_Solution" Association="Self.FK_DetailSolution_Solution">
             <End Role="Solution" EntitySet="Solutions" />
             <End Role="DetailSolution" EntitySet="DetailSolutions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductCategory" Association="Self.FK_Product_ProductCategory">
+            <End Role="ProductCategory" EntitySet="ProductCategories" />
+            <End Role="Product" EntitySet="Products" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -403,6 +685,22 @@
                 <ScalarProperty Name="ModifileBy" ColumnName="ModifileBy" />
                 <ScalarProperty Name="ModifileDate" ColumnName="ModifileDate" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="StatusImage" ColumnName="StatusImage" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Brands">
+            <EntityTypeMapping TypeName="ICTS.COMModel.Brand">
+              <MappingFragment StoreEntitySet="Brand">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Meta" ColumnName="Meta" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="ModifileDate" ColumnName="ModifileDate" />
+                <ScalarProperty Name="ModifileBy" ColumnName="ModifileBy" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -438,6 +736,25 @@
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="ModifileDate" ColumnName="ModifileDate" />
                 <ScalarProperty Name="ModifileBy" ColumnName="ModifileBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetailProducts">
+            <EntityTypeMapping TypeName="ICTS.COMModel.DetailProduct">
+              <MappingFragment StoreEntitySet="DetailProduct">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+                <ScalarProperty Name="Application" ColumnName="Application" />
+                <ScalarProperty Name="C_content_Dec" ColumnName="[content]Dec" />
+                <ScalarProperty Name="C_content_DecTech" ColumnName="[content]DecTech" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="ImageAdd" ColumnName="ImageAdd" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="ModifileDate" ColumnName="ModifileDate" />
+                <ScalarProperty Name="ModifileBy" ColumnName="ModifileBy" />
+                <ScalarProperty Name="StatusImage" ColumnName="StatusImage" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -514,6 +831,44 @@
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="ModifileDate" ColumnName="ModifileDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="ICTS.COMModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdProductCategory" ColumnName="IdProductCategory" />
+                <ScalarProperty Name="IdBrand" ColumnName="IdBrand" />
+                <ScalarProperty Name="Meta" ColumnName="Meta" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="ImageAdd" ColumnName="ImageAdd" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="ModifileDate" ColumnName="ModifileDate" />
+                <ScalarProperty Name="ModifileBy" ColumnName="ModifileBy" />
+                <ScalarProperty Name="StatusImage" ColumnName="StatusImage" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductCategories">
+            <EntityTypeMapping TypeName="ICTS.COMModel.ProductCategory">
+              <MappingFragment StoreEntitySet="ProductCategory">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />
+                <ScalarProperty Name="Meta" ColumnName="Meta" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="ModifileDate" ColumnName="ModifileDate" />
+                <ScalarProperty Name="ModifileBy" ColumnName="ModifileBy" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>

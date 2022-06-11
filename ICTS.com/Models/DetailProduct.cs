@@ -12,23 +12,22 @@ namespace ICTS.com.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Admin
+    public partial class DetailProduct
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Users { get; set; }
-        public string Pass { get; set; }
-        public string Email { get; set; }
-        public Nullable<System.DateTime> Birth { get; set; }
-        public Nullable<int> Phone { get; set; }
-        public string Address { get; set; }
-        public Nullable<bool> Sex { get; set; }
-        public Nullable<System.DateTime> CreateAt { get; set; }
+        public Nullable<int> IdProduct { get; set; }
+        public string Application { get; set; }
+        public string C_content_Dec { get; set; }
+        public string C_content_DecTech { get; set; }
+        public string Image { get; set; }
+        public Nullable<int> ImageAdd { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
         public string CreateBy { get; set; }
-        public string ModifileBy { get; set; }
         public Nullable<System.DateTime> ModifileDate { get; set; }
-        public Nullable<bool> Role { get; set; }
+        public string ModifileBy { get; set; }
         public Nullable<bool> StatusImage { get; set; }
         public Nullable<bool> Status { get; set; }
+    
+        public virtual Product Product { get; set; }
     }
 }

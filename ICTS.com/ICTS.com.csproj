@@ -130,6 +130,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\ICTS\Controllers\BaseController.cs" />
+    <Compile Include="Areas\ICTS\Controllers\BrandsController.cs" />
     <Compile Include="Areas\ICTS\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\ICTS\Controllers\ContentsController.cs" />
     <Compile Include="Areas\ICTS\Controllers\DefaultController.cs" />
@@ -137,6 +138,8 @@
     <Compile Include="Areas\ICTS\Controllers\FootersController.cs" />
     <Compile Include="Areas\ICTS\Controllers\HomeAdminController.cs" />
     <Compile Include="Areas\ICTS\Controllers\PartnersController.cs" />
+    <Compile Include="Areas\ICTS\Controllers\ProductCategoriesController.cs" />
+    <Compile Include="Areas\ICTS\Controllers\ProductsController.cs" />
     <Compile Include="Areas\ICTS\Controllers\SlidersController.cs" />
     <Compile Include="Areas\ICTS\Controllers\SolutionsController.cs" />
     <Compile Include="Areas\ICTS\ICTSAreaRegistration.cs" />
@@ -153,10 +156,16 @@
     <Compile Include="Models\Admin.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Brand.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Category.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Content.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DetailProduct.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DetailSolution.cs">
@@ -184,6 +193,12 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Partner.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Product.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductCategory.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Slider.cs">

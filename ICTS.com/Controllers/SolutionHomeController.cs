@@ -23,7 +23,7 @@ namespace ICTS.com.Controllers
         }
         public  ActionResult Details(string meta,int id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }

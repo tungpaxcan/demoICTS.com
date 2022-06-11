@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<ICTS.com.Models.Slider>
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "";
 }
+<div class="home-backround">
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-
     <div id="slidehome" class="carousel-inner">
         <div class="carousel-item active">
             <img class="d-block w-100" src="~/Images/05052022114041_39.jpg" alt="First slide">
@@ -17,11 +17,11 @@
     </div>
 </div>
 <div class="h-product-wp" >
-    <div style="text-align:center" class="h-product-block">
-        <ul id="imgcategory">
+    <div style="text-align:center" class="h-product-block ">
+        <ul id="imgcategory" class="home-imageproduct">
         </ul>
     </div>
-    <div class="title-big  wow fadeInUp animated">
+    <div  class="title-big  wow fadeInUp animated">
         <div id="h1why">
         </div>
         <div id="pwhy">
@@ -32,15 +32,16 @@
     <div id="partner" class="slide-track">
     </div>
 </div>
-<div class="title-big  wow fadeInUp animated">
-    <div style="margin-top:100px" id="partnercontent">
+<div style="padding:3%;margin-top:1%" class="title-big  wow fadeInUp animated">
+    <div  id="partnercontent">
     </div>
 </div>
 <div class="h-product-wp">
-    <div style="text-align:center" class="h-product-block">
-        <ul id="imgsolution">
+    <div style="text-align:center" class="h-product-block ">
+        <ul id="imgsolution" class="home-imageproduct">
         </ul>
     </div>
+</div>
 </div>
 @section scripts{
     <script>
@@ -61,8 +62,8 @@
                         $.each(data.dmsp, function (k, v) {
                             let div = '<li>'
                             div += ' <div class="h-product-item">'
-                            div += ' <div  class="h-product-item-img wow fadeInDown animated">';
-                            div += '<a  href="/ProductDetail/39934/may-in-ma-vach">';
+                            div += ' <div  class="h-product-item-img wow fadeInDown animated perspective">';
+                            div += '<a class="image-product image-product-3d image-product-3da">';
                             div += '<img src="/Images/' + v.image + '" title="' + v.title + '" />';
                             div += '</a>';
                             div += '</div>';
@@ -146,23 +147,42 @@
                     $('#imgsolution').empty();
                     if (data.code == 200) {
                         $.each(data.left, function (k, v) {
-                            let div = '<li>'
+                            let div = '<li class="">'
                             div += ' <div class="h-product-item">'
-                            div += ' <div  class="h-product-item-img wow fadeInDown animated">';
-                            div += '<a  href="">';
-                            div += '<img src="/Images/' + v.image + '" title="' + v.title + '" />';
+                            div += ' <div id="' + v.id + '" class="h-product-item-img wow fadeInDown animated perspective">';
+                            div += '<a href="" name="a" class="image-product image-product-3d image-product-3da">';
+                            div += '<img class="" src="/Images/' + v.image + '" title="' + v.title + '" />';
                             div += '</a>';
                             div += '</div>';
                             div += '</div>';
                             div += '</li>';
                             $('#imgsolution').append(div);
                         });
-
                     } else {
                         alert(data.msg)
                     }
                 }
             });
         }
+        /* --------------addlink-----------*/
+        $(document).on('click', "a[name='a']", function () {
+            let id = $(this).closest('div').attr('id')
+            $.ajax({
+                url: '/solutionhome/DetailSolution',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $.each(data.left, function (k, v) {
+                            window.location.href = data.Url + v.meta + "/" + + v.id
+                        })
+
+                    }
+                }
+            })
+        })
+
     </script>
 }  

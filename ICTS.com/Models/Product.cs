@@ -12,27 +12,34 @@ namespace ICTS.com.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Category
+    public partial class Product
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Category()
+        public Product()
         {
-            this.ProductCategories = new HashSet<ProductCategory>();
+            this.DetailProducts = new HashSet<DetailProduct>();
         }
     
         public int Id { get; set; }
+        public Nullable<int> IdProductCategory { get; set; }
+        public Nullable<int> IdBrand { get; set; }
         public string Meta { get; set; }
         public string Name { get; set; }
         public string Title { get; set; }
+        public string Description { get; set; }
+        public string Content { get; set; }
+        public string Image { get; set; }
+        public Nullable<int> ImageAdd { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string CreateBy { get; set; }
         public Nullable<System.DateTime> ModifileDate { get; set; }
-        public string ImageId { get; set; }
         public string ModifileBy { get; set; }
         public Nullable<bool> StatusImage { get; set; }
         public Nullable<bool> Status { get; set; }
     
+        public virtual Brand Brand { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProductCategory> ProductCategories { get; set; }
+        public virtual ICollection<DetailProduct> DetailProducts { get; set; }
+        public virtual ProductCategory ProductCategory { get; set; }
     }
 }
