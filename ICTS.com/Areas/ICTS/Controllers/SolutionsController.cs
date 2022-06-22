@@ -11,6 +11,7 @@ using ICTS.com.Models;
 
 namespace ICTS.com.Areas.ICTS.Controllers
 {
+    [HandleError]
     public class SolutionsController : BaseController
     {
         private Entities db = new Entities();

@@ -1,0 +1,416 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/ICTS/Views/Shared/_Layout_Admin.cshtml";
+}
+<div id="seachinput" class="input-group">
+    <div class="form-outline">
+        <input type="search" id="seachdownload" class="form-control" placeholder="Download" />
+    </div>
+    <button type="button" id="btnSeachdownload" class="btn btn-primary">
+        <i class="fas fa-search"></i>
+    </button>
+</div>
+<table class="table Download">
+</table>
+<div>
+    <ul class="pagination" id="pagedownload">
+    </ul>
+</div>
+
+@*-----------------modal product------------------*@
+<div id="modaldownload" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div style="color: red; text-align: center" class="panel-heading" id="modalTitledownload"></div>
+                <input type="text" hidden id="iddownload" value="" />
+                <div class="form-group" style="margin-left:20px">
+                    <label>Tên </label>
+                    <input type="text" class="form-control" id="namedownload" placeholder="Tên">
+                </div>
+                <div class="form-inline">
+                    <label>Chọn file</label>
+                    <input type="text"  id="picturefiledownload" class="form-control"  />
+                    <input type="file" id="fileUploaddownload" name="fileUploaddownload" accept="all/*" style="display:none" multiple/>
+                    <input type="button" id="btnUploaddownload" value="..." class="btn-bg-success" />
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Trạng thái</label>
+                            <input type="checkbox" class="form-control" id="statusdownload" placeholder="Trạng thái">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày tạo</label>
+                            <input type="text" class="form-control" id="createdatedownload">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày sửa</label>
+                            <input type="text" class="form-control" id="modifiledatedownload">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người tạo</label>
+                            <input type="text" class="form-control" id="createbydownload" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người sửa</label>
+                            <input type="text" class="form-control" id="modifilebydownload" placeholder="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="btnSubmitdownload">Xác Nhận</button>
+                <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+  
+@section scripts{
+    <script>
+        var page = 1;
+        var seach = '';
+        $('#btndownload').click(function () {
+            Download(seach, page);
+        });
+        //modal add category
+        $(document).on('click', "button[name='adddownload']", function () {
+            Adddownload();
+            $('#namedownload').val('');
+            $('#picturefiledownload').val('');
+            $('#createdatedownload').prop('readonly', true);
+            $('#createdatedownload').val('');
+            $('#modifiledatedownload').prop('readonly', true);
+            $('#modifiledatedownload').val('');
+            $('#createbydownload').prop('readonly', true);
+            $('#createbydownload').val('');
+            $('#modifilebydownload').prop('readonly', true);
+            $('#modifilebydownload').val('');
+            $('#statusdownload').prop('checked', false);
+            $('#iddownload').val('');
+            $('#btnSubmitdownload').show();
+        });
+        //hien ten hinh
+        $('#btnUploaddownload').click(function () {
+            $('#fileUploaddownload').trigger('click');
+        });
+        //chon file
+        $('#fileUploaddownload').change(function () {
+            if (window.FormData !== undefined) {
+                let fileUpload = $('#fileUploaddownload').get(0);
+                let files = fileUpload.files;
+                let formdata = new FormData();
+                formdata.append('file', files[0]);
+                console.log(files[0].size)
+                $.ajax({
+                    type: 'post',
+                    url: '/icts/downloads/UploadDownload',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: formdata,
+                    success: function (urlImage) {
+                        $('#picturefiledownload').val(urlImage);
+                    }
+                })
+            }
+
+        });
+        //confirm add/edit
+           $('#btnSubmitdownload').click(function () {
+            let name = $('#namedownload').val().trim();
+            let download = $('#picturefiledownload').val().trim();
+            let status = $('#statusdownload').prop('checked');
+            //rang buộc dữ liệu
+            if (name.length == 0 || download == null) {
+                alert('Vui Long Nhập Đầy Đủ Dữ liệu');
+                return;
+            }
+            let iddownload = $('#iddownload').val().trim();
+            if (iddownload.length == 0) {
+                $.ajax({
+                    url: '/icts/downloads/Add',
+                    type: 'post',
+                    data: {
+                        name: name,
+                        download: download,
+                        status: status
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Thêm Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            Download(seach, page);
+                            $('#namedownload').val('');
+                            $('#statusdownload').prop('checked', false);
+                            $('#picturefiledownload').val('');
+                            $('#modaldownload').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/icts/downloads/Edit',
+                    type: 'post',
+                    data: {
+                        name: name,
+                        download: download,
+                        status: status,
+                        id: iddownload
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Sửa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            Download(seach, page);
+                            $('#namedownload').val('');
+                            $('#statusdownload').prop('checked', false);
+                            $('#picturefiledownload').val('');
+                            $('#modaldownload').modal('hide');
+                            $('#iddownload').val('');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+
+
+        });
+        //phan trang
+        $('#pagedownload').on('click', 'li', function (e) {
+            e.preventDefault();
+            page = $(this).attr('id');
+            Download(seach, page);
+        });
+        ////tim kiem
+        $('#btnSeachdownload').click(function () {
+            page = 1;
+            seach = $('#seachdownload').val();
+            Download(seach, page);
+        });
+        $('#seachdownload').on('keypress', function (e) {
+            if (e.which == 13) {
+                $('#btnSeachdownload').click();
+            }
+        });
+        //Detail
+        $(document).on('click', "button[name='viewdownload']", function () {
+            let id = $(this).closest('tr').attr('id');
+            Detaildownload(id);
+            $('#createdatedownload').prop('readonly', true);
+            $('#modifiledatedownload').prop('readonly', true);
+            $('#modifilebydownload').prop('readonly', true);
+            $('#createbydownload').prop('readonly', true);
+            $('#modifiledatedownload').show();
+            $('#modifilebydownload').show();
+            $('#btnSubmitdownload').hide();
+            $('#iddownload').val('');
+        });
+        //Edit
+        $(document).on('click', "button[name='updatedownload']", function () {
+            let id = $(this).closest('tr').attr('id');
+            Detaildownload(id);
+            $('#createdatedownload').prop('readonly', true);
+            $('#createbydownload').prop('readonly', true);
+            $('#modifiledatedownload').prop('readonly', true);
+            $('#modifilebydownload').prop('readonly', true);
+            $('#modalTitledownload').text("Sửa Sản Phẩm");
+            $('#btnSubmitdownload').show();
+            $('#iddownload').val('');
+
+        });
+        //delete
+        $(document).on('click', "button[name='deletedownload']", function () {
+            let id = $(this).closest('tr').attr('id');
+            if (confirm("Bạn có muốn xóa dữ liệu này")) {
+                $.ajax({
+                    url: '/icts/downloads/Delete',
+                    type: 'post',
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Xóa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            Download(seach, page)
+                        } else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+
+        });
+        function Download(seach, page) {
+            $.ajax({
+                url: '/icts/downloads/Download',
+                type: 'get',
+                data: {
+                    page: page,
+                    seach: seach
+                },
+                success: function (data) {
+                    $('.Download').empty();
+                    if (data.code == 200) {
+                        let table = '<thead>';
+                        table += '<tr>';
+                        table += '<th>Tên </th>';
+                        table += '<th>Trạng thái</th>';
+                        table += '<th></th>';
+                        table += '<th> <button class = "btn btn-xs btn-success" name = "adddownload" > <i class="fa-solid fa-plus"></i></button >&nbsp</th>';
+                        table += '</tr>';
+                        table += '</thead>';
+                        table += '<tbody>';
+                        $.each(data.dmsp, function (k, v) {
+                            table += '<tr id="' + v.id + '">';
+                            table += '<td>' + v.name + '</td>';
+                            table += '<td>' + v.status + '</td>';
+                            table += '<td> <button class = "btn btn-xs btn-primary" name = "viewdownload" > <i class="fa-thin fa-circle-info"></i></button >&nbsp';
+                            table += ' <button class = "btn btn-xs btn-warning" name = "updatedownload" > <i class="fa-thin fa-wrench"></i></button >&nbsp';
+                            table += ' <button class = "btn btn-xs btn-danger" name = "deletedownload" > <i class="fa-thin fa-trash-xmark"></i></button >&nbsp';
+                            table += '</td>';
+                            table += '<td></td>';
+                            table += '</tr>';
+                        });
+                        table += '</tbody>';
+                        $('.Download').append(table);
+                        $('#pagedownload').empty();
+
+                        for (let i = 1; i <= data.pages; i++) {
+                            $('#pagedownload').empty();
+                            for (let j = page; j <= (parseInt(page) + 4); j++) {
+                                if (j <= data.pages) {
+                                    let li = '<li class="page-item" id="' + j + '"><a class="page-link" href="#">' + j + '</a></li>';
+                                    $('#pagedownload').append(li);
+                                }
+
+                            }
+                        }
+                        if (parseInt(page) > 1) {
+                            let Previous = '<li class="page-item" id="' + (parseInt(page) - 1) + '"><a  class="page-link" href="#">Previous</a></li>';
+                            $('#pagedownload').append(Previous);
+                        }
+
+                        let next = '<li class="page-item" id="' + (parseInt(page) + 1) + '"><a name="nextpage" class="page-link" href="#">Next</a></li>';
+                        $('#pagedownload').append(next);
+                        let li = $('#pagedownload li#' + page + '');
+                        $(li).addClass('active')
+
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function Detaildownload(id) {
+            $.ajax({
+                url: '/icts/downloads/Detail',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#iddownload').val(data.tv.Id);
+                        $('#namedownload').val(data.tv.Name);
+                        $('#picturefiledownload').val("/Images/" + data.tv.Download1);
+                        if (data.tv.Status == true) {
+                            $('#statusdownload').prop('checked', true);
+                        } else {
+                            $('#statusdownload').prop('checked', false);
+                        }
+                        $('#createdatedownload').val(ConvertJsonDateString(data.tv.CreateDate));
+                        $('#modifiledatedownload').val(ConvertJsonDateString(data.tv.ModifileDate));
+                        $('#createbydownload').val(data.tv.CreateBy);
+ 
+                        $('#modifilebydownload').val(data.tv.ModifileBy);
+                        $('#modalTitledownload').text("Chi Tiết Download");
+                        $('#modaldownload').modal();
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function Adddownload() {
+            $.ajax({
+                url: '/adminsss/Add',
+                type: 'get',
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#createdatedownload').val(ConvertJsonDateString(data.date));
+                        $('#createbydownload').val(data.d);
+                        $('#modalTitledownload').text("Thêm Sản Phẩm");
+                        $('#modaldownload').modal();
+                    }
+                }
+            });
+        }
+        //convert date string
+        function ConvertJsonDateString(jsonDate) {
+            var shortDate = null;
+            if (jsonDate) {
+                var regex = /-?\d+/;
+                var matches = regex.exec(jsonDate);
+                var dt = new Date(parseInt(matches[0]));
+                var month = dt.getMonth() + 1;
+                var monthString = month > 9 ? month : '0' + month;
+                var day = dt.getDate();
+                var dayString = day > 9 ? day : '0' + day;
+                var year = dt.getFullYear();
+                shortDate = monthString + '/' + dayString + '/' + year;
+            }
+            return shortDate;
+        };
+        $(document).ready(function () {
+            Download(seach, page);
+            document.getElementById("trangchu").style.visibility = "hidden";
+            document.getElementById("giaiphap").style.visibility = "hidden";
+            document.getElementById("sanpham").style.visibility = "hidden";
+            document.getElementById("thuonghieu").style.visibility = "hidden";
+            document.getElementById("chitietsanpham").style.visibility = "hidden";
+            document.getElementById("download").style.visibility = "visible";
+            document.getElementById("service").style.visibility = "hidden";
+
+        });
+    </script>
+    }
+

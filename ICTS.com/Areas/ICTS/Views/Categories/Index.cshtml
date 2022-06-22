@@ -3,10 +3,7 @@
     ViewBag.Title = "Sản Phẩm";
     Layout = "~/Areas/ICTS/Views/Shared/_Layout_Admin.cshtml";
 }
-<div>
-    <ul class="pagination" id="categorypage">
-    </ul>
-</div>
+
 <div id="seachinput" class="input-group">
     <div class="form-outline">
         <input type="search" id="seach" class="form-control" placeholder="Danh Mục Sản Phẩm" />
@@ -15,10 +12,7 @@
         <i class="fas fa-search"></i>
     </button>
 </div>
-<div>
-    <ul class="pagination" id="pageproductcategory">
-    </ul>
-</div>
+
 <div id="seachinputproductcategory" class="input-group">
     <div class="form-outline">
         <input type="search" id="seachproductcategory" class="form-control" placeholder="Loại Sản Phẩm" />
@@ -27,10 +21,7 @@
         <i class="fas fa-search"></i>
     </button>
 </div>
-<div>
-    <ul class="pagination" id="pageproduct">
-    </ul>
-</div>
+
 <div id="seachinputproduct" class="input-group">
     <div class="form-outline">
         <input type="search" id="seachproduct" class="form-control" placeholder="Sản Phẩm" />
@@ -39,10 +30,7 @@
         <i class="fas fa-search"></i>
     </button>
 </div>
-<div>
-    <ul class="pagination" id="pagebrand">
-    </ul>
-</div>
+
 <div id="seachinputbrand" class="input-group">
     <div class="form-outline">
         <input type="search" id="seachbrand" class="form-control" placeholder="Thương Hiệu" />
@@ -53,8 +41,24 @@
 </div>
 <table class="table Category Productcategory Brand Product">
 </table>
+<div>
+    <ul class="pagination" id="pageproduct">
+    </ul>
+</div>
+<div>
+    <ul class="pagination" id="pageproductcategory">
+    </ul>
+</div>
+<div>
+    <ul class="pagination" id="categorypage">
+    </ul>
+</div>
+<div>
+    <ul class="pagination" id="pagebrand">
+    </ul>
+</div>
 @*-----------------modal category------------------*@
-    <div id="dmsp" class="modal" tabindex="-1" role="dialog">
+<div id="dmsp" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="panel panel-primary">
@@ -267,20 +271,20 @@
             <div class="panel panel-primary">
                 <div style="color: red; text-align: center" class="panel-heading" id="modalTitleproduct"></div>
                 <input type="text" hidden id="idproduct" value="" />
-                <div class="form-group" style="margin-left:20px">
-                    <label>Tên Danh Mục</label>
-                    <div>
-                        <select class="browser-default custom-select" id="namecategoryid">
-                        </select>
+                    <div class="form-group" style="margin-left:20px">
+                        <label>Tên Danh Mục</label>
+                        <div>
+                            <select class="browser-default custom-select" id="namecategoryid">
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group" style="margin-left:20px">
-                    <label>Tên Loại Sản Phẩm</label>
-                    <div>
-                        <select class="browser-default custom-select" id="nameproductcategoryid">
-                        </select>
+                    <div class="form-group" style="margin-left:20px">
+                        <label>Tên Loại Sản Phẩm</label>
+                        <div>
+                            <select class="browser-default custom-select" id="nameproductcategoryid">
+                            </select>
+                        </div>
                     </div>
-                </div>
                 <div class="form-group" style="margin-left:20px">
                     <label>Tên Thương Hiệu</label>
                     <div>
@@ -305,10 +309,11 @@
                     <input type="button" id="btnUploadproduct" value="..." class="btn-bg-success" />
                     <img style="width:100px" id="pictureproduct" />
                 </div>
-                <div class="form-group" style="margin-left:20px">
-                    <label>Thông Số Cơ Bản</label>
-                    <input type="text" class="form-control" id="decproduct" placeholder="Thông Số Cơ bản">
+                <div class="form-group">
+                    <textarea class="form-control" id="thongso"></textarea>
                 </div>
+
+
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group" style="margin-left:20px">
@@ -348,11 +353,47 @@
             </div>
 
             <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="btnSubmitdetailproduct">Chỉnh Sửa Chi Tiết Sản Phẩm</button>
                 <button type="submit" class="btn btn-primary" id="btnSubmitproduct">Xác Nhận</button>
                 <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
             </div>
         </div>
     </div>
+</div>
+@*-----------------modal detailproduct------------------*@
+<div id="modaldetailproduct" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div style="color: red; text-align: center" class="panel-heading" id="modalTitledetailproduct"></div>
+                <input type="text" hidden id="idproduct" value="" />
+                <div  id="id">
+
+                </div>
+                
+                <div class="form-group">
+                    <label>Ứng Dụng</label>
+                    <textarea class="form-control" id="applicationdetailproduct"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Thông Tin</label>
+                    <textarea class="form-control" id="decdetailproduct"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Thông Số Kĩ Thuật</label>
+                    <textarea class="form-control" id="dectechdetailproduct"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>mô tả</label>
+                    <textarea class="form-control" id="optiondetailproduct"></textarea>
+                </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="btnSubmitOK">Xác Nhận</button>
+                <button type="submit" class="btn btn-secondary" id="dong" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 @section scripts{
     <script>
@@ -1270,7 +1311,7 @@
             $('#nameproduct').val('');
             $('#urlproduct').val('');
             $('#titleproduct').val('');
-            $('#decproduct').val('');
+            $('#thongso').summernote('code', '');
             $('#picturefileproduct').val('');
             $('#createdateproduct').prop('readonly', true);
             $('#createdateproduct').val('');
@@ -1283,6 +1324,7 @@
             $('#statusproduct').prop('checked', false);
             $('#idproduct').val('');
             $('#btnSubmitproduct').show();
+            $('#hide').show();
         });
         //hien ten hinh
         $('#btnUploadproduct').click(function () {
@@ -1314,7 +1356,7 @@
             let name = $('#nameproduct').val().trim();
             let nameproductcategoryid = $('#nameproductcategoryid').val();
             let namebrandid = $('#namebrandid').val();
-            let dec = $('#decproduct').val().trim();
+            let thongso = $('#thongso').summernote('code');
             let url = $('#urlproduct').val().trim();
             let title = $('#titleproduct').val().trim();
             let image = $('#picturefileproduct').val().trim();
@@ -1333,7 +1375,7 @@
                         name: name,
                         nameproductcategory: nameproductcategoryid,
                         namebrand: namebrandid,
-                        dec: dec,
+                        thongso: thongso,
                         url: url,
                         title: title,
                         image: image,
@@ -1352,7 +1394,6 @@
                             $('#nameproduct').val('');
                             $('#urlproduct').val('');
                             $('#titleproduct').val('');
-                            $('#decproduct').val('');
                             $('#statusproduct').prop('checked', false);
                             $('#picturefileproduct').val('');
                             $('#modalproduct').modal('hide');
@@ -1370,7 +1411,7 @@
                         name: name,
                         nameproductcategory: nameproductcategoryid,
                         namebrand: namebrandid,
-                        dec: dec,
+                        thongso: thongso,
                         url: url,
                         title: title,
                         image: image,
@@ -1390,7 +1431,6 @@
                             $('#nameproduct').val('');
                             $('#urlproduct').val('');
                             $('#titleproduct').val('');
-                            $('#decproduct').val('');
                             $('#statusproduct').prop('checked', false);
                             $('#picturefileproduct').val('');
                             $('#modalproduct').modal('hide');
@@ -1492,12 +1532,13 @@
                 success: function (data) {
                     $('.Product').empty();
                     if (data.code == 200) {
+
                         let table = '<thead>';
                         table += '<tr>';
+                        table += '<th>Tên Danh Mục Sản Phẩm</th>';
                         table += '<th>Tên Loại Sản Phẩm</th>';
                         table += '<th>Tên Thương Hiệu</th>';
                         table += '<th>Tên Sản Phẩm</th>';
-                        table += '<th>Thông Số Cơ Bản</th>';
                         table += '<th>Ảnh</th>';
                         table += '<th>Trạng thái</th>';
                         table += '<th></th>';
@@ -1507,11 +1548,11 @@
                         table += '<tbody>';
                         $.each(data.dmsp, function (k, v) {
                             table += '<tr id="' + v.id + '">';
+                            table += '<td>' + v.namecategory + '</td>';
                             table += '<td>' + v.nameproductcategory + '</td>';
                             table += '<td>' + v.namebrand + '</td>';
                             table += '<td>' + v.name + '</td>';
-                            table += '<td>' + v.dec + '</td>';
-                            table += '<td><img style="width:100px" src="/Images/' + v.image + '"</td>';
+                            table += '<td><img style="width:100px" src="/Images/' + v.image + '"/></td>';
                             table += '<td>' + v.status + '</td>';
                             table += '<td> <button class = "btn btn-xs btn-primary" name = "viewproduct" > <i class="fa-thin fa-circle-info"></i></button >&nbsp';
                             table += ' <button class = "btn btn-xs btn-warning" name = "updateproduct" > <i class="fa-thin fa-wrench"></i></button >&nbsp';
@@ -1523,15 +1564,27 @@
                         table += '</tbody>';
                         $('.Product').append(table);
                         $('#pageproduct').empty();
-                        for (i = 1; i <= data.pages; i++) {
-                            let li = '<li class="page-item" id="' + i + '"><a class="page-link" href="#">' + i + '</a></li>';
-                            $('#pageproduct').append(li);
+
+                        for (let i = 1; i <= data.pages; i++) {
+                            $('#pageproduct').empty();
+                            for (let j = page; j <= (parseInt(page) + 4); j++) {
+                                if (j <= data.pages) {
+                                    let li = '<li class="page-item" id="' + j + '"><a class="page-link" href="#">' + j + '</a></li>';
+                                    $('#pageproduct').append(li);
+                                }
+
+                            }
                         }
-                        let next = '<li class="page-item" id="' + (parseInt(page) + 1) + '"><a class="page-link" href="#">Next</a></li>';
+                        if (parseInt(page) > 1) {
+                            let Previous = '<li class="page-item" id="' + (parseInt(page) - 1) + '"><a  class="page-link" href="#">Previous</a></li>';
+                            $('#pageproduct').append(Previous);
+                        }
+
+                        let next = '<li class="page-item" id="' + (parseInt(page) + 1) + '"><a name="nextpage" class="page-link" href="#">Next</a></li>';
                         $('#pageproduct').append(next);
                         let li = $('#pageproduct li#' + page + '');
                         $(li).addClass('active')
-                       
+
                     } else {
                         alert(data.msg);
                     }
@@ -1549,11 +1602,10 @@
                     if (data.code == 200) {
                         $('#idproduct').val(data.tv.Id);
                         $('#nameproduct').val(data.tv.Name);
-                        $('#nameproductcategoryid').val(data.tv.IdProductCategory);
                         $('#namebrandid').val(data.tv.IdBrand);
                         $('#urlproduct').val(data.tv.Meta);
                         $('#titleproduct').val(data.tv.Title);
-                        $('#decproduct').val(data.tv.Description);
+                        $('#thongso').summernote('code', data.tv.Content);
                         $('#picturefileproduct').val("/Images/" + data.tv.Image);
                         if (data.tv.Status == true) {
                             $('#statusproduct').prop('checked', true);
@@ -1565,7 +1617,6 @@
                         $('#modifiledateproduct').val(ConvertJsonDateString(data.tv.ModifileDate));
                         $('#createbyproduct').val(data.tv.CreateBy);
                         $('#modifilebyproduct').val(data.tv.ModifileBy);
-
                         $('#modalTitleproduct').text("Chi Tiết Sản Phẩm");
                         $('#modalproduct').modal();
                     } else {
@@ -1605,30 +1656,30 @@
         }
         function ProductId() {
             $('#namecategoryid').change(function () {
-                var id = $(this).find(':selected')[0].id;           
-            $.ajax({
-                url: '/icts/products/ProductById',
-                type: 'get',
-                data: {
-                    id:id
-                },
-                success: function (data) {
-                    $('#nameproductcategoryid').empty();
-                    if (data.code == 200) {
-                        $.each(data.dmsp, function (k, v) {
-                            let option = '<option id="' + v.id + '" value="' + v.id + '">' + v.name + '</option>';
-                            $('#nameproductcategoryid').append(option);
-                        })
+                var id = $(this).find(':selected')[0].id;
+                $.ajax({
+                    url: '/icts/products/ProductById',
+                    type: 'get',
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        $('#nameproductcategoryid').empty();
+                        if (data.code == 200) {
+                            $.each(data.dmsp, function (k, v) {
+                                let option = '<option id="' + v.id + '" value="' + v.id + '">' + v.name + '</option>';
+                                $('#nameproductcategoryid').append(option);
+                            })
+                        }
                     }
-                }
-            });
+                });
             });
         }
         function BrandById() {
             $.ajax({
                 url: '/icts/products/BrandById',
                 type: 'get',
-                success: function (data) {                  
+                success: function (data) {
                     if (data.code == 200) {
                         $('#namebrandid').empty();
                         $.each(data.dmsp, function (k, v) {
@@ -1639,6 +1690,133 @@
                 }
             });
         }
+        //--------------------------------------------------detailproduct-------------------------------------------------------------------------------------------------------
+        //modal add category
+        $('#btnSubmitdetailproduct').on('click', function () {
+            let id = $('#idproduct').val().trim();
+            $('#modalproduct').hide();
+            $.ajax({
+                url: '/detailproducts/Id',
+                type: 'get',
+                success: function (data) {
+                    $('#id').empty();
+                    if (data.code == 200) {
+                        $.each(data.dmsp, function (k, v) {                          
+                            let div = '<input hidden type="text"  class="iddetailproduct" id="' + v.idproduct + '" />';
+                            $('#id').append(div)
+                        })                      
+                    }
+                }
+            })
+            DetailProductDetail(id)
+        });
+        //confirm add/edit
+        $('#btnSubmitOK').click(function () {
+            let application = $('#applicationdetailproduct').summernote('code');
+            let dec = $('#decdetailproduct').summernote('code');
+            let dectech = $('#dectechdetailproduct').summernote('code');
+            let option = $('#optiondetailproduct').summernote('code');
+            var ids = $('.iddetailproduct').map(function (_, x) { return x.id; }).get();
+            let id = $('#idproduct').val().trim();
+            var c = ids.includes('' + id + '')
+            if (c == true) {
+                $.ajax({
+                    url: '/detailproducts/Edit',
+                    type: 'post',
+                    data: {
+                        application: application,
+                        dec: dec,
+                        dectech: dectech,
+                        option: option,
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Sửa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        
+                        }
+                    }
+                })
+            } else {
+                $.ajax({
+                    url: '/detailproducts/Add',
+                    type: 'post',
+                    data: {
+                        application: application,
+                        dec: dec,
+                        dectech: dectech,
+                        option: option,
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Thêm Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+                    }
+                })
+            }
+           
+        }); 
+        function DetailProductDetail(id) {
+            var ids = $('.iddetailproduct').map(function (_, x) { return x.id; }).get();
+            var c = ids.includes('' + id + '')
+            if (c == true) {
+                $.ajax({
+                    url: '/icts/detailproducts/Detail',
+                    type: 'get',
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            $('#applicationdetailproduct').summernote('code', data.tv.C_content_Application);
+                            $('#decdetailproduct').summernote('code', data.tv.C_content_Dec);
+                            $('#dectechdetailproduct').summernote('code', data.tv.C_content_DecTech);
+                            $('#optiondetailproduct').summernote('code', data.tv.C_content_Option);
+                            $('#modalTitledetailproduct').text("Chi Tiết Sản Phẩm");
+                            $('#modaldetailproduct').modal();
+                        } else {
+                        }
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/icts/detailproducts/Detail',
+                    type: 'get',
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            $('#applicationdetailproduct').summernote('code','');
+                            $('#decdetailproduct').summernote('code','');
+                            $('#dectechdetailproduct').summernote('code','');
+                            $('#optiondetailproduct').summernote('code','');
+                            $('#modalTitledetailproduct').text("Chi Tiết Sản Phẩm");
+                            $('#modaldetailproduct').modal();
+                        } else {
+                        }
+                    }
+                });
+            }
+           
+        }
+        $('#dong').click(function () {
+            $('#modalproduct').show()
+            $('#modaldetailproduct').hide()
+        })
         //convert date string
         function ConvertJsonDateString(jsonDate) {
             var shortDate = null;
@@ -1657,6 +1835,10 @@
         };
         $(document).ready(function () {
             $('.summernote').summernote();
+            $('#applicationdetailproduct').summernote();
+            $('#decdetailproduct').summernote();
+            $('#dectechdetailproduct').summernote();
+            $('#optiondetailproduct').summernote();
             DanhMucSanPham(seach, page);
             ProductCategoryId()
             Product(seach, page)
@@ -1671,7 +1853,11 @@
             $('#seachinputproduct').hide();
             document.getElementById("trangchu").style.visibility = "hidden";
             document.getElementById("giaiphap").style.visibility = "hidden";
+            document.getElementById("download").style.visibility = "hidden";
+            document.getElementById("service").style.visibility = "hidden";
             document.getElementById("sanpham").style.visibility = "visible";
+            document.getElementById("thuonghieu").style.visibility = "visible";
+            document.getElementById("chitietsanpham").style.visibility = "visible";
         });
     </script>
 }

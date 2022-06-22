@@ -17,6 +17,7 @@ namespace ICTS.com.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
+            this.Contacts = new HashSet<Contact>();
             this.DetailProducts = new HashSet<DetailProduct>();
         }
     
@@ -38,6 +39,8 @@ namespace ICTS.com.Models
         public Nullable<bool> Status { get; set; }
     
         public virtual Brand Brand { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Contact> Contacts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetailProduct> DetailProducts { get; set; }
         public virtual ProductCategory ProductCategory { get; set; }

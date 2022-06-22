@@ -4,11 +4,33 @@
     ViewBag.Title = "Giải Pháp";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div id="solutionall" class="solution">
-  
+<div id="w-hv" class="home-backround">
+    <div id="solutionall" class="solution">
+
+    </div>
 </div>
+
     @section scripts{
         <script>   
+            $("#w-hv").on("mouseover", function () {
+                $('.contentsolution *').addClass('font');
+                $('.contentsolution *').css("font-size", "100%")
+                var a = window.matchMedia("(max-width: 1000px)")
+                var b = window.matchMedia("(max-width: 850px)")
+                var c = window.matchMedia("(max-width: 675px)")
+                var d = window.matchMedia("(max-width: 375px)")
+                if (a.matches) {
+                    $('.contentsolution *').css("font-size", "90%")
+                } else if (b.matches) {
+                    $('.contentsolution *').css("font-size", "85%")
+                }
+                else if (c.matches) {
+                    $('.contentsolution *').css("font-size", "75%")
+                } else if (d.matches) {
+                    $('.contentsolution *').css("font-size", "60%")
+                }
+                           
+            });
            /* ---------hienthisolution---------------*/
             $.ajax({
                 url: '/solutionhome/Solution',
@@ -30,7 +52,7 @@
                 }
             });
             /* ---------addlink---------------*/
-            $(document).on('click', "a[name='a']", function () {
+            $(document).on('click', "a[name='b']", function () {
                 let id = $(this).closest('div').attr('id')
                 $.ajax({
                     url: '/solutionhome/DetailSolution',
@@ -41,13 +63,13 @@
                     success: function (data) {
                         if (data.code == 200) {
                             $.each(data.left, function (k, v) {
-                                window.location.href = data.Url + v.meta+"/"+ + v.id
+                                window.location.href = data.Url + v.meta+"/"+ v.id
                             })
                             
                         }
                     }
                 })
             })
-
+           
         </script>
 }

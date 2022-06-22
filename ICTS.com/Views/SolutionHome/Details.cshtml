@@ -4,24 +4,30 @@
     ViewBag.Title = Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="Detail-solution">
-    <img src="~/Images/@Model.Image" />
+
+<div id="w-hv" class="home-backround">
+    <div class="Detail-solution">
+        <img src="~/Images/@Model.Image" />
     </div>
-<div class="Detail-Name-Solution">
-    <div class="row">
-        <div class="col-sm-6 img-detailsolution">
-            <input hidden type="text" id="iddetailsolution" value="@Model.IdSolution" />
-            <h1 id="idname"></h1>
-            <div id="p"></div>
-        </div>
-        
-        <div id="imagedetailsolution" class="col-sm-6 img-detailsolution">
- 
+    <div class="Detail-Name-Solution">
+        <div class="row">
+            <div class="col-sm-6 img-detailsolution">
+                <input hidden type="text" id="iddetailsolution" value="@Model.IdSolution" />
+                <h1 id="idname"></h1>
+                <div id="p"></div>
+            </div>
+
+            <div id="imagedetailsolution" class="col-sm-6 img-detailsolution">
+
+            </div>
         </div>
     </div>
 </div>
 @section scripts{
     <script type="text/javascript">
+        $("#w-hv").on("mouseover", function () {
+            $('#w-rm table').css("width", "");
+        });
         let id = $('#iddetailsolution').val().trim();
         /* ---------solutionview---------------*/
         $.ajax({

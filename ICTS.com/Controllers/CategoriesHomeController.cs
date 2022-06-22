@@ -6,9 +6,11 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using System.Net;
+using System.Collections;
 
 namespace ICTS.com.Controllers
 {
+    [HandleError]
     public class CategoriesHomeController : Controller
     {
         private Entities db = new Entities();
@@ -43,10 +45,6 @@ namespace ICTS.com.Controllers
         [HttpGet]
         public JsonResult ProductCategory(int id)
         {
-            //for(int i=1;i<=id.Length ; i++)
-            //{
-            //    var j = id[i];
-            //}
             try
             {
                 var dmsp = (from s in db.ProductCategories.Where(x => x.Status != false && x.IdCategory==id )
@@ -65,12 +63,11 @@ namespace ICTS.com.Controllers
             }
         }
         [HttpGet]
-        public JsonResult Cate(int id)
+        public JsonResult Product(int id)
         {
-
             try
             {
-                var dmsp = (from s in db.Categories.Where(x => x.Status != false && x.Id == id)
+                var dmsp = (from s in db.Products.Where(x => x.Status != false && x.IdProductCategory == id)
                             select new
                             {
                                 id = s.Id,
@@ -79,6 +76,26 @@ namespace ICTS.com.Controllers
                                 name = s.Name
                             }).ToList();
                 return Json(new { code = 200, dmsp = dmsp, msg = "Hiển Thị Dữ liệu thành công" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { code = 500, msg = "Hiểm thị dữ liệu thất bại" + e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpGet]
+        public JsonResult ProductsById(int id)
+        {
+            try
+            {
+                var left = (from s in db.ProductCategories.Where(x => x.Status != false && x.Id == id)
+                            select new
+                            {
+                                id = s.Id,
+                                title = s.Title,
+                                meta = s.Meta,
+                                name = s.Name
+                            }).ToList();
+                return Json(new { code = 200, left = left, Url = "/san-pham/" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {

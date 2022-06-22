@@ -1,0 +1,349 @@
+﻿@model ICTS.com.Models.DetailProduct
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="w-hv" class="home-backround">
+    <div class="row detail-pro">
+        <div id="img" class="col-sm-6 img-magnifier-container">
+           
+        </div>     
+        <input id="idproduct" value="@Model.IdProduct" hidden />
+        <div  class="col-sm-6 idname">
+            <ul id="name">
+            </ul>
+     </div>
+    </div>
+    <div class="dec-detail-pro">
+        <ul>
+            <li id="dec"><a name="dec"><h1>Thông Tin</h1></a></li>
+            <li id="dectech" ><a name="dectech"><h1>Thông Số Kĩ Thuật</h1></a></li>
+            <li id="option"><a  name="option"><h1>Option</h1></a></li>
+            <li id="download"><a name="download"><h1>Tài Liệu/File PDF</h1></a></li>
+        </ul>
+    </div>
+    <div class="dec-detail">
+        <p class="p" id="description"></p>
+    </div>
+</div>
+<div id="modalcontact" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div style="color: red; text-align: center" class="panel-heading" id="modalTitle"></div>
+                <input type="text" hidden id="idproduct" value="" />
+                <div id="content">
+                    <h1 >Contact</h1>
+                    <p>
+                        <label for="username" class="icon-user">
+                            Tên
+                            <span class="required">*</span>
+                        </label>
+                        <input type="text" name="username" id="namecontact" required="required" placeholder="Tên" />
+                    </p>
+                    <p>
+                        <label class="icon-envelope">
+                            Số Điện Thoại
+                            <span class="required">*</span>
+                        </label>
+                        <input type="text" id="phonecontact" placeholder="Số Điện Thoại" required="required" />
+                    </p>
+                    <p>
+                        <label for="usermail" class="icon-envelope">
+                            E-mail
+                            <span class="required">*</span>
+                        </label>
+                        <input type="email" id="emailcontact" placeholder="Nhập Email" required="required" />
+                    </p>
+                    <p>
+                        <label class="icon-envelope">
+                            Tên DN
+                            <span class="required">*</span>
+                        </label>
+                        <input type="text" id="enterprisecontact" placeholder="Tên Doanh Nghiệp" required="required" />
+                    </p>
+                    <p>
+                        <label class="icon-envelope">
+                            Số Lượng
+                            <span class="required">*</span>
+                        </label>
+                        <input type="text" id="amountcontact" placeholder="Số Lượng" required="required" />
+                    </p>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btnsubmitcontact">Xác Nhận</button>
+                        <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="popup1" class="overlay">
+        <div class="popup">
+            <h2>Here i am</h2>
+            <a class="close" href="#">&times;</a>
+            <div class="content">
+                Thank to pop me out of that button, but now i'm done so you can close this window.
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>              
+        let id = $('#idproduct').val().trim();
+        $.ajax({
+            url: '/producthome/DetailProductById',
+            type: 'get',
+            data: {
+                id: id
+            },
+            success: function (data) {
+                $('#img').empty();
+                $('#name').empty();
+                if (data.code == 200) {
+                    $.each(data.left, function (k, v) {
+                        let div = '<div id="lup" class="img-magnifier-glass"></div>';
+                        div += '<img id="productimage" src="/Images/' + v.image + '" />';
+                        $('#img').append(div);
+                        let ul = '<li><h1 class="Name-Product">' + v.name + '</h1></li>';
+                        ul += '<li><h1>Thương Hiệu : ' + v.brand + ' </h1></li>'
+                        ul += '<li><h1>Ứng Dụng : ' + v.application + ' </h1></li>'
+                        ul += '<li><h1 class="contactbt">Nhận Báo Giá : <a name="contact" ><span></span><span></span><span></span><span></span>Báo Giá Ngay </a ></h1></li>'
+                        $('#name').append(ul);
+                    });
+                    dec();
+                    magnify("productimage", 3);
+                     
+                } else {
+                    alert(data.msg)
+                }
+            }
+        });
+        function dec() {
+            $.ajax({
+                url: '/producthome/DetailProductById',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    $('#description').empty();
+                    if (data.code == 200) {
+                        $.each(data.left, function (k, v) {
+                            let div = '' + v.dec + '';
+                            $('#description').append(div);
+
+                        });
+                    } else {
+                        alert(data.msg)
+                    }
+                }
+            });
+
+        }
+        $(document).on('click', "a[name='dec']", function () {
+            $('#dec').addClass('active');
+            $('#dectech').removeClass('active');
+            $('#option').removeClass('active');
+            $('#download').removeClass('active');
+            dec();
+        })
+        $(document).on('click', "a[name='dectech']", function () {
+            $('#dectech').addClass('active');
+            $('#dec').removeClass('active');
+            $('#option').removeClass('active');
+            $('#download').removeClass('active');
+            $.ajax({
+                url: '/producthome/DetailProductById',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    $('#description').empty();
+                    if (data.code == 200) {
+                        $.each(data.left, function (k, v) {
+                            let div = '' + v.dectech + '';
+                            $('#description').append(div);
+                            $('.dec-detail p table').css("width", "");
+                        });
+                    } else {
+                        alert(data.msg)
+                    }
+                }
+            });
+        })
+        $(document).on('click', "a[name='option']", function () {
+            $('#option').addClass('active');
+            $('#dec').removeClass('active');
+            $('#dectech').removeClass('active');
+            $('#download').removeClass('active');
+            $.ajax({
+                url: '/producthome/DetailProductById',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    $('#description').empty();
+                    if (data.code == 200) {
+                        $.each(data.left, function (k, v) {
+                            let div = '' + v.option + '';
+                            $('#description').append(div);
+                        });
+                    } else {
+                        alert(data.msg)
+                    }
+                }
+            });
+        })
+        $(document).on('click', "a[name='download']", function () {
+            $('#download').addClass('active');
+            $('#dec').removeClass('active');
+            $('#dectech').removeClass('active');
+            $('#option').removeClass('active');
+            $.ajax({
+                url: '/download/Download',
+                type: 'get',
+                success: function (data) {
+                    $('#description').empty();
+                    var stt = 1;
+                    if (data.code == 200) {
+                        let div = '<table class="table table-striped">';
+                        div += '<thead>';
+                        div += '<tr>';
+                        div += '<th>STT</th>';
+                        div += '<th>Name</th>';
+                        div += '<th>Download</th>';
+                        div += '</tr>';
+                        div += '</thead>';
+                        div += '<tbody>';
+                        $.each(data.left, function (k, v) {
+                             div += '<tr>';
+                            div += '<td>' + (stt++) +'</td>';
+                            div += '<td>' + v.name + '</td>';
+                            div += '<td><a target="_blank" style="color:red" href="/Images/' + v.download + '">(Tải tại đây)</a></td>';
+                             div += '</tr>';
+                          
+                        });
+                        div += '</tbody>';
+                        div += '</table>';
+                        $('#description').append(div);
+                    } else {
+                        alert(data.msg)
+                    }
+                }
+            });
+        })
+        $(document).on('click', "a[name='contact']", function () {
+            $('#modalcontact').modal();
+        })
+        //confirm add
+        $('#btnsubmitcontact').click(function () {
+            let name = $('#namecontact').val().trim();
+            let phone = $('#phonecontact').val().trim();
+            let email = $('#emailcontact').val().trim();
+            let enterprise = $('#enterprisecontact').val().trim();
+            let amount = $('#amountcontact').val().trim();
+            var isphone = /^[+]?(1\-|1\s|1|\d{3}\-|\d{3}\s|)?((\(\d{3}\))|\d{3})(\-|\s)?(\d{3})(\-|\s)?(\d{4})$/g.test(phone);
+                if (isphone == false) {
+                    alert("Hãy Nhập Đúng Định Dạng Số Điện Thoại")
+                    return;
+                }
+            if (validateEmail(email) == false) {
+                return;
+            }
+            
+            //rang buộc dữ liệu
+            if (name.length == 0) {
+                alert('Vui Long Nhập Tên');
+                return;
+            } else
+                if (amount.length == 0 || isNaN(amount)) {
+                alert('Vui Lòng Nhập Số Lượng');
+                return;
+            }
+                $.ajax({
+                    url: '/contact/Add',
+                    type: 'post',
+                    data: {
+                        name: name,
+                        phone: phone,
+                        email: email,
+                        enterprise: enterprise,
+                        amount: amount,
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            $('#namecontact').val('');
+                            $('#phonecontact').val('');
+                            $('#emailcontact').val('');
+                            $('#amountcontact').val('');
+                            $('#enterprisecontact').val('');
+                            alert("Chào anh " +name+" : Anh sẽ được báo giá về sản phẩm này trong thời gian ngắn")
+                            $('#modalcontact').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+        });
+        function magnify(imgID, zoom) {
+            var img, glass, w, h, bw;
+            img = document.getElementById(imgID);
+            /*create magnifier glass:*/
+            glass = document.getElementById("lup")
+            /*insert magnifier glass:*/
+            img.parentElement.insertBefore(glass, img);
+            /*set background properties for the magnifier glass:*/
+            glass.style.backgroundImage = "url('" + img.src + "')";
+            glass.style.backgroundRepeat = "no-repeat";
+            glass.style.backgroundSize = (img.width * zoom) + "px " + (img.height * zoom*2.2) + "px";
+            bw = 3;
+            w = glass.offsetWidth / 2;
+            h = glass.offsetHeight /2;
+            /*execute a function when someone moves the magnifier glass over the image:*/
+            glass.addEventListener("mousemove", moveMagnifier);
+            img.addEventListener("mousemove", moveMagnifier);
+            /*and also for touch screens:*/
+            glass.addEventListener("touchmove", moveMagnifier);
+            img.addEventListener("touchmove", moveMagnifier);
+            function moveMagnifier(e) {
+                var pos, x, y;
+                /*prevent any other actions that may occur when moving over the image*/
+                e.preventDefault();
+                /*get the cursor's x and y positions:*/
+                pos = getCursorPos(e);
+                x = pos.x;
+                y = pos.y;
+                /*prevent the magnifier glass from being positioned outside the image:*/
+                if (x > img.width - (w / zoom)) { x = img.width - (w / zoom); }
+                if (x < w / zoom) { x = w / zoom; }
+                if (y > img.height - (h / zoom)) { y = img.height - (h / zoom); }
+                if (y < h / zoom) { y = h / zoom; }
+                /*set the position of the magnifier glass:*/
+                glass.style.left = (x - w) + "px";
+                glass.style.top = (y - h) + "px";
+                /*display what the magnifier glass "sees":*/
+                glass.style.backgroundPosition = "-" + ((x * zoom) - w + bw) + "px -" + ((y * zoom) - h + bw) + "px";
+            }
+            function getCursorPos(e) {
+                var a, x = 0, y = 0;
+                e = e || window.event;
+                /*get the x and y positions of the image:*/
+                a = img.getBoundingClientRect();
+                /*calculate the cursor's x and y coordinates, relative to the image:*/
+                x = e.pageX - a.left;
+                y = e.pageY - a.top;
+                /*consider any page scrolling:*/
+                x = x - window.pageXOffset;
+                y = y - window.pageYOffset;
+                return { x: x, y: y };
+            }
+        }
+
+    </script>
+    }
+
+

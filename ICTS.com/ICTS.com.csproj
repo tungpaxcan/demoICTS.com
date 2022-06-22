@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -25,6 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>4.3</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -132,22 +134,38 @@
     <Compile Include="Areas\ICTS\Controllers\BaseController.cs" />
     <Compile Include="Areas\ICTS\Controllers\BrandsController.cs" />
     <Compile Include="Areas\ICTS\Controllers\CategoriesController.cs" />
+    <Compile Include="Areas\ICTS\Controllers\ContactsController.cs" />
     <Compile Include="Areas\ICTS\Controllers\ContentsController.cs" />
+    <Compile Include="Areas\ICTS\Controllers\CustomersController.cs" />
     <Compile Include="Areas\ICTS\Controllers\DefaultController.cs" />
+    <Compile Include="Areas\ICTS\Controllers\DetailProductsController.cs" />
     <Compile Include="Areas\ICTS\Controllers\DetailSolutionsController.cs" />
+    <Compile Include="Areas\ICTS\Controllers\DownloadsController.cs" />
     <Compile Include="Areas\ICTS\Controllers\FootersController.cs" />
     <Compile Include="Areas\ICTS\Controllers\HomeAdminController.cs" />
     <Compile Include="Areas\ICTS\Controllers\PartnersController.cs" />
     <Compile Include="Areas\ICTS\Controllers\ProductCategoriesController.cs" />
     <Compile Include="Areas\ICTS\Controllers\ProductsController.cs" />
+    <Compile Include="Areas\ICTS\Controllers\PromotionController.cs" />
+    <Compile Include="Areas\ICTS\Controllers\ServicesController.cs" />
     <Compile Include="Areas\ICTS\Controllers\SlidersController.cs" />
     <Compile Include="Areas\ICTS\Controllers\SolutionsController.cs" />
+    <Compile Include="Areas\ICTS\Controllers\VideoController.cs" />
     <Compile Include="Areas\ICTS\ICTSAreaRegistration.cs" />
     <Compile Include="Controllers\AdminsssController.cs" />
     <Compile Include="Controllers\CategoriesHomeController.cs" />
+    <Compile Include="Controllers\CategoryProductHomeController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DetailSolutionHomeController.cs" />
+    <Compile Include="Controllers\DownloadController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PartnerController.cs" />
+    <Compile Include="Controllers\ProductHomeController.cs" />
+    <Compile Include="Controllers\PromotionsController.cs" />
+    <Compile Include="Controllers\SeachProductController.cs" />
+    <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\SlidersController.cs" />
     <Compile Include="Controllers\SolutionHomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -162,13 +180,22 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Contact.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Content.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Customer.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DetailProduct.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DetailSolution.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Download.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Image.cs">
@@ -199,6 +226,12 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductCategory.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Promotion.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Service.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Slider.cs">
@@ -1906,6 +1939,7 @@
     <Content Include="Areas\assets\media\users\user3.jpg" />
     <Content Include="Areas\assets\media\users\user4.jpg" />
     <Content Include="Areas\assets\media\users\user5.jpg" />
+    <Content Include="Areas\assets\MyStyle.css" />
     <Content Include="Areas\assets\plugins\custom\ckeditor\ckeditor-balloon-block.bundle.js" />
     <Content Include="Areas\assets\plugins\custom\ckeditor\ckeditor-balloon.bundle.js" />
     <Content Include="Areas\assets\plugins\custom\ckeditor\ckeditor-classic.bundle.js" />
@@ -2321,8 +2355,10 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\Error.css" />
     <Content Include="Content\css\jquery.fancybox.css" />
     <Content Include="Content\css\jquery.gritter.css" />
+    <Content Include="Content\css\magnifier.css" />
     <Content Include="Content\css\other.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="favicon.ico" />
@@ -2332,11 +2368,14 @@
     <Content Include="Images\05052022114041_39.jpg" />
     <Content Include="Images\29462021094637394_46.png" />
     <Content Include="Images\29462021094649875_3.jpg" />
+    <Content Include="Images\bokeh_PNG20.png" />
     <Content Include="Images\header-bg.jpg" />
     <Content Include="Images\i.png" />
     <Content Include="Images\loading.gif" />
     <Content Include="Images\logo.jpg" />
+    <Content Include="Images\movie.mp4" />
     <Content Include="Images\phone2x.png" />
+    <Content Include="Images\tải xuống %281%29.jpg" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -2347,6 +2386,18 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\atoms\plugins\entity-framework\entity-context.js" />
+    <Content Include="Scripts\atoms\plugins\entity-framework\entity-controls.js" />
+    <Content Include="Scripts\atoms\plugins\entity-framework\entity.css" />
+    <Content Include="Scripts\atoms\plugins\entity-framework\entity.min.css" />
+    <Content Include="Scripts\atoms\plugins\upload\atom-flash-uploader.swf" />
+    <Content Include="Scripts\atoms\plugins\upload\atom-uploader.css" />
+    <Content Include="Scripts\atoms\plugins\upload\atom-uploader.js" />
+    <Content Include="Scripts\atoms\plugins\upload\atom-uploader.min.css" />
+    <Content Include="Scripts\atoms\plugins\upload\busy.gif" />
+    <Content Include="Scripts\atoms\plugins\upload\checked.png" />
+    <Content Include="Scripts\atoms\plugins\upload\t.png" />
+    <Content Include="Scripts\atoms\plugins\upload\upload.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\bootstrap-4.1.3\bootstrap-4.1.3\.browserslistrc" />
@@ -2378,7 +2429,7 @@
     <Content Include="Content\bootstrap-4.1.3\bootstrap-4.1.3\dist\css\bootstrap.css.map" />
     <Content Include="Content\bootstrap-4.1.3\bootstrap-4.1.3\dist\css\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap-4.1.3\bootstrap-4.1.3\dist\js\bootstrap.bundle.js.map" />
-    <Content Include="Content\bootstrap-4.1.3\bootstrap-4.1.3\dist\js\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\js\bootstrap.bundle.min.js.map" />
     <Content Include="Content\bootstrap-4.1.3\bootstrap-4.1.3\dist\js\bootstrap.js.map" />
     <Content Include="Content\bootstrap-4.1.3\bootstrap-4.1.3\dist\js\bootstrap.min.js.map" />
     <Content Include="Content\bootstrap-4.1.3\bootstrap-4.1.3\Gemfile" />
@@ -2642,6 +2693,12 @@
     <Content Include="Areas\ICTS\Views\Default\Login.cshtml" />
     <Content Include="Areas\ICTS\Views\Categories\Index.cshtml" />
     <Content Include="Areas\ICTS\Views\Solutions\Index.cshtml" />
+    <Content Include="Scripts\atoms\plugins\upload\atom-uploader.css.map" />
+    <Content Include="Scripts\atoms\plugins\entity-framework\entity.css.map" />
+    <Content Include="Areas\ICTS\Views\Contacts\Index.cshtml" />
+    <Content Include="Areas\ICTS\Views\Downloads\Index.cshtml" />
+    <Content Include="Images\Web.pdf" />
+    <Content Include="Areas\ICTS\Views\Services\Index.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -2661,12 +2718,15 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\js\BasePage.js" />
     <Content Include="Scripts\js\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\js\Event.js" />
+    <Content Include="Scripts\js\Magnifier.js" />
     <Content Include="Scripts\js\pagination.js" />
     <Content Include="Scripts\js\jquery-3.2.1.min.js" />
     <Content Include="Scripts\js\jquery.fancybox.min.js" />
     <Content Include="Scripts\js\jquery.gritter.js" />
     <Content Include="Scripts\js\script.js" />
     <Content Include="Scripts\js\slick.min.js" />
+    <Content Include="Scripts\js\wow.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Sute.js" />
     <Content Include="Web.config" />
@@ -2678,7 +2738,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
@@ -2686,30 +2745,41 @@
     <Content Include="Views\CategoriesHome\Index.cshtml" />
     <Content Include="Views\SolutionHome\Details.cshtml" />
     <Content Include="Views\SolutionHome\Index.cshtml" />
+    <Content Include="Views\ProductHome\Details.cshtml" />
+    <Content Include="Views\Contact\Index.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Error\Error.cshtml" />
+    <Content Include="Views\Service\Detail.cshtml" />
+    <Content Include="Views\CategoryProductHome\Index.cshtml" />
+    <Content Include="Views\CategoryProductHome\ProCateIndex.cshtml" />
+    <Content Include="Views\Service\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\ICTS\Data\" />
     <Folder Include="Areas\ICTS\Views\Base\" />
-    <Folder Include="Views\Adminsss\" />
-    <Folder Include="Views\DetailSolutionHome\" />
-    <Folder Include="Views\Partner\" />
-    <Folder Include="Views\Sliders\" />
+    <Folder Include="Areas\ICTS\Views\Customers\" />
+    <Folder Include="Areas\ICTS\Views\Promotion\" />
+    <Folder Include="Areas\ICTS\Views\Video\" />
+    <Folder Include="Views\Customer\" />
+    <Folder Include="Views\Download\" />
+    <Folder Include="Views\Promotions\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\css\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="Scripts\js\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
@@ -2717,6 +2787,7 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">

@@ -11,6 +11,7 @@ using ICTS.com.Models;
 
 namespace ICTS.com.Controllers
 {
+    [HandleError]
     public class SolutionHomeController : Controller
     {
         private Entities db = new Entities();
@@ -94,7 +95,7 @@ namespace ICTS.com.Controllers
                                 meta = so.Meta,
                                 name = so.Name,
                                 content = s.Content,
-                                image = s.Image
+                                image = so.Image
                             }).ToList();
                                      
                 return Json(new { code = 200, left = left, msg = "Hiểm thị dữ liệu " }, JsonRequestBehavior.AllowGet);

@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace ICTS.com.Areas.ICTS.Controllers
 {
+    [HandleError]
     public class CategoriesController : BaseController
     {
         public ActionResult Index()
@@ -30,7 +31,7 @@ namespace ICTS.com.Areas.ICTS.Controllers
                     var sub21 = sub2.Replace(":", "");
                     string _FileName = "";
                     int index = file.FileName.IndexOf('.');
-                    _FileName = sub11 + sub21 + "Category" + "." + file.FileName.Substring(index + 1);
+                    _FileName = sub11 + sub21 + "Category" + file.FileName;
                     file.SaveAs(Server.MapPath("/Images/" + _FileName));
 
                     return "/Images/" + _FileName;

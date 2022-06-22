@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="home-backround">
+    
+    <div id="contentserviceother">
+
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $.ajax({
+            url: '/service/ServiceMenu',
+            type: 'get',
+            success: function (data) {
+                $('#contentserviceother').empty();
+                if (data.code == 200) {
+                    $.each(data.dmsp, function (k, v) {
+                        let li = '<h1 class="serviceother">HP Service : ' + v.name + '</h1>';
+                         li += ''+v.content+'';
+                        li += '<hr />';
+                        $('#contentserviceother').append(li);
+                    });
+                }
+            }
+        });
+
+    </script>
+}

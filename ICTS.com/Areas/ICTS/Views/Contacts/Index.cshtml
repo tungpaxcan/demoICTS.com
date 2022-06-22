@@ -1,0 +1,231 @@
+﻿
+@{
+    ViewBag.Title = "Liên Hệ";
+    Layout = "~/Areas/ICTS/Views/Shared/_Layout_Admin.cshtml";
+}
+<div id="seach" class="input-group">
+    <div class="form-outline">
+        <input type="search" id="seachcontact" class="form-control" placeholder="Liên Hệ" />
+    </div>
+    <button type="button" id="btnSeachcontact" class="btn btn-primary">
+        <i class="fas fa-search"></i>
+    </button>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>
+                Tên Người Liên Hệ
+            </th>
+            <th>
+                Tên Sản Phẩm
+            </th>
+            <th>
+                Ngày Gửi Báo Giá
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="tbdcontact">
+
+    </tbody>
+</table>
+<div id="modalcontact" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div style="color: red; text-align: center" class="panel-heading" id="modalTitlecontact"></div>
+                <input type="text" hidden id="idcontact" value="" />
+                <div class="form-group" style="margin-left:20px">
+                    <label>Tên </label>
+                    <input type="text" class="form-control" id="namecontact" placeholder="Tên ">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label>Số Điện Thoại </label>
+                    <input type="text" class="form-control" id="phonecontact" placeholder="Số Điện Thoại ">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label>Email</label>
+                    <input type="text" class="form-control" id="emailcontact" placeholder="email ">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label>Doanh Nghiệp</label>
+                    <input type="text" class="form-control" id="enterprisecontact" placeholder="Doanh Nghiệp ">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label>Số Lượng</label>
+                    <input type="text" class="form-control" id="amountcontact" placeholder="Số Lượng">
+                </div>
+            </div>
+            <div class="modal-footer">         
+                <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <ul class="pagination" id="pagecontact">
+    </ul>
+</div>
+@section scripts{
+    <script>
+        var page = 1;
+        var seach = '';
+        $(document).ready(function () {
+            ListContact(seach, page);
+            document.getElementById("trangchu").style.visibility = "hidden";
+            document.getElementById("sanpham").style.visibility = "hidden";
+            document.getElementById("giaiphap").style.visibility = "hidden";
+            document.getElementById("thuonghieu").style.visibility = "hidden";
+            document.getElementById("chitietsanpham").style.visibility = "hidden";
+        })
+        //--------------------------------------------------contacts-------------------------------------------------------------------------------------------------------
+        $(document).on('click', "a[name='contactclick']", function () {
+            ListContact(seach, page)
+        });
+        //phan trang
+        $('#pagecontact').on('click', 'li', function (e) {
+            e.preventDefault();
+            page = $(this).attr('id');
+            ListContact(seach, page);
+        });
+        ////tim kiem
+        $('#btnSeachcontact').click(function () {
+            page = 1;
+            seach = $('#seachcontact').val();
+            ListContact(seach, page);
+        });
+        $('#seachcontact').on('keypress', function (e) {
+            if (e.which == 13) {
+                $('#btnSeachcontact').click();
+            }
+        });
+        //Detail
+        $(document).on('click', "button[name='viewcontact']", function () {
+            let id = $(this).closest('tr').attr('id');                   
+            $('#modalTitlecontact').text("Chi Tiết Liên Hệ");
+            $('#idcontact').val('');
+            $.ajax({
+                url: '/icts/contacts/Edit',
+                type: 'post',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                    }
+                    else {
+                        alert(data.msg);
+                    }
+                }
+            }); Detailcontact(id); Contact();
+        });
+        //delete
+        $(document).on('click', "button[name='deletecontact']", function () {
+            let id = $(this).closest('tr').attr('id');
+            if (confirm("Bạn có muốn xóa dữ liệu này")) {
+                $.ajax({
+                    url: '/icts/contacts/Delete',
+                    type: 'post',
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Xóa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            ListContact(seach, page)
+                        } else {
+                            alert(data.msg);
+                        }
+                    }
+                }); Contact();
+            }
+
+        });
+        function ListContact(seach, page) {
+            $.ajax({
+                url: '/icts/contacts/Contact',
+                type: 'get',
+                data: {
+                    page: page,
+                    seach: seach
+                },
+                success: function (data) {
+                    $('#tbdcontact').empty();
+                    if (data.code == 200) {                       
+                        $.each(data.ct, function (k, v) {
+                            let tr = '<tr id="' + v.id + '">';
+                            if (v.status == null) {
+                                tr += '<td class="' + v.id + '" style="color:red">' + v.name + '</td>';
+                            } else if (v.status == false) {
+                                tr += '<td class="' + v.id + '" style="color:black">' + v.name + '</td>';
+                            }
+                            tr += '<td>' + v.nameproduct + '</td>';
+                            tr += '<td>' + v.createdate + '</td>';
+                            tr += '<td> <button class = "btn btn-xs btn-primary" name = "viewcontact" > <i class="fa-thin fa-circle-info"></i></button >&nbsp';
+                            tr += ' <button class = "btn btn-xs btn-danger" name = "deletecontact" > <i class="fa-thin fa-trash-xmark"></i></button >&nbsp</td>';
+                            tr +='</tr>';
+                            $('#tbdcontact').append(tr);
+                        });
+                        $('#pagecontact').empty();
+                        for (let i = 1; i <= data.pages; i++) {
+                            $('#pagecontact').empty();
+                            for (let j = page; j <= (parseInt(page) + 4); j++) {
+                                if (j <= data.pages) {
+                                    let li = '<li class="page-item" id="' + j + '"><a class="page-link" href="#">' + j + '</a></li>';
+                                    $('#pagecontact').append(li);
+                                }
+
+                            }
+                        }
+                        if (parseInt(page) > 1) {
+                            let Previous = '<li class="page-item" id="' + (parseInt(page) - 1) + '"><a  class="page-link" href="#">Previous</a></li>';
+                            $('#pagecontact').append(Previous);
+                        }
+
+                        let next = '<li class="page-item" id="' + (parseInt(page) + 1) + '"><a name="nextpage" class="page-link" href="#">Next</a></li>';
+                        $('#pagecontact').append(next);
+                        let li = $('#pagecontact li#' + page + '');
+                        $(li).addClass('active')
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function Detailcontact(id) {
+            $.ajax({
+                url: '/icts/contacts/Detail',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#idcontact').val(data.tv.Id);
+                        $('#namecontact').val(data.tv.Name);
+                        $('#phonecontact').val(data.tv.Phone);
+                        $('#emailcontact').val(data.tv.Email);
+                        $('#enterprisecontact').val(data.tv.NameEnterprise);
+                        $('#amountcontact').val(data.tv.Amount);
+                        $('.' + data.tv.Id + '').css("color", "black")
+
+                        $('#modalTitlecontact').text("Chi Tiết");
+                        $('#modalcontact').modal();
+                       
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+
+    </script>
+    }
+

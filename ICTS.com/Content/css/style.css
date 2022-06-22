@@ -11930,7 +11930,6 @@ button {
 }
 
 .h-product-wp {
-    background-color: #f8f8f8;
     padding: 3%;
 }
 
@@ -11971,7 +11970,6 @@ button {
         }
 
         .h-product-wp .h-product-item:hover {
-            background: no-repeat url("../images/hover.png");
             background-size: 100%
         }
 
@@ -11980,6 +11978,11 @@ button {
         width: 25%;
         padding:0% 3% 0% 3%;
         
+    }
+    .h-product-wp ul .servicemg {
+        display: inline-block;
+        width: 15%;
+        padding: 0% 3% 0% 3%;
     }
 
         .h-product-wp ul li img {
@@ -12600,10 +12603,9 @@ button {
                 background-color: white;
                 display: block;
                 color: black;
-                font-weight: 700;
                 font-size: 13px;
                 padding: 8px 15px 8px 32px;
-                border-bottom: solid 1px #314569
+                text-decoration-line:none;
             }
 
             .main-nav li ul li:last-child > a {
@@ -12611,8 +12613,8 @@ button {
             }
 
             .main-nav li ul li:hover > a {
-                background: #05132c;
-                color: #fff
+                background: #ebebeb;
+                color: #0770cd
             }
 
         .main-nav li:hover > ul {
@@ -12843,7 +12845,7 @@ button {
                     }
 
                     .m-nav .main-nav li ul li:hover > a {
-                        background: #03a5e1;
+                        background: #efefef;
                         color: #fff
                     }
 
@@ -13018,7 +13020,7 @@ button {
         .nav-wp .h-search-wp .lang-drop::after {
             content: '';
             position: absolute;
-            background: url(../images/icon-arrow.png) no-repeat;
+            /*background: url(../images/icon-arrow.png) no-repeat;*/
             top: 15px;
             right: 15px;
             bottom: 0;
@@ -13407,7 +13409,7 @@ button {
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
     border-top: 1px solid #0b2859;
-    background-image: url(/Images/header-bg.jpg);
+    background-image: url('../../Images/tải xuống (1).jpg');
     position: relative
 }
 
@@ -13510,14 +13512,14 @@ button:focus {
 
 @font-face {
     font-family: 'Roboto';
-    src: url("../webfonts/Roboto-Thin.ttf") format("truetype");
+   /* src: url("../webfonts/Roboto-Thin.ttf") format("truetype");*/
     font-weight: 100;
     font-display: swap
 }
 
 @font-face {
     font-family: 'Roboto';
-    src: url("../webfonts/Roboto-ThinItalic.ttf") format("truetype");
+    /*src: url("../webfonts/Roboto-ThinItalic.ttf") format("truetype");*/
     font-style: italic;
     font-weight: 100;
     font-display: swap
@@ -13525,14 +13527,14 @@ button:focus {
 
 @font-face {
     font-family: 'Roboto';
-    src: url("../webfonts/Roboto-Light.ttf") format("truetype");
+    /*src: url("../webfonts/Roboto-Light.ttf") format("truetype");*/
     font-weight: 300;
     font-display: swap
 }
 
 @font-face {
     font-family: 'Roboto';
-    src: url("../webfonts/Roboto-LightItalic.ttf") format("truetype");
+   /* src: url("../webfonts/Roboto-LightItalic.ttf") format("truetype");*/
     font-style: italic;
     font-weight: 300;
     font-display: swap
@@ -13540,14 +13542,14 @@ button:focus {
 
 @font-face {
     font-family: 'Roboto';
-    src: url("../webfonts/Roboto-Regular.ttf") format("truetype");
+  /*  src: url("../webfonts/Roboto-Regular.ttf") format("truetype");*/
     font-weight: 400;
     font-display: swap
 }
 
 @font-face {
     font-family: 'Roboto';
-    src: url("../webfonts/Roboto-Italic.ttf") format("truetype");
+/*    src: url("../webfonts/Roboto-Italic.ttf") format("truetype");*/
     font-style: italic;
     font-weight: 400;
     font-display: swap
@@ -13555,14 +13557,14 @@ button:focus {
 
 @font-face {
     font-family: 'Roboto';
-    src: url("../webfonts/Roboto-Medium.ttf") format("truetype");
+ /*   src: url("../webfonts/Roboto-Medium.ttf") format("truetype");*/
     font-weight: 500;
     font-display: swap
 }
 
 @font-face {
     font-family: 'Roboto';
-    src: url("../webfonts/Roboto-MediumItalic.ttf") format("truetype");
+ /*   src: url("../webfonts/Roboto-MediumItalic.ttf") format("truetype");*/
     font-style: italic;
     font-weight: 500;
     font-display: swap
@@ -13570,30 +13572,30 @@ button:focus {
 
 @font-face {
     font-family: 'Roboto';
-    src: url("../webfonts/Roboto-Bold.ttf") format("truetype");
+/*    src: url("../webfonts/Roboto-Bold.ttf") format("truetype");
+*/    font-weight: bold;
+    font-display: swap
+}
+
+@font-face {
+    font-family: 'Roboto';
+/*    src: url("../webfonts/Roboto-BoldItalic.ttf") format("truetype");
+*/    font-style: italic;
     font-weight: bold;
     font-display: swap
 }
 
 @font-face {
     font-family: 'Roboto';
-    src: url("../webfonts/Roboto-BoldItalic.ttf") format("truetype");
-    font-style: italic;
-    font-weight: bold;
+/*    src: url("../webfonts/Roboto-Black.ttf") format("truetype");
+*/    font-weight: 900;
     font-display: swap
 }
 
 @font-face {
     font-family: 'Roboto';
-    src: url("../webfonts/Roboto-Black.ttf") format("truetype");
-    font-weight: 900;
-    font-display: swap
-}
-
-@font-face {
-    font-family: 'Roboto';
-    src: url("../webfonts/Roboto-BlackItalic.ttf") format("truetype");
-    font-style: italic;
+/*    src: url("../webfonts/Roboto-BlackItalic.ttf") format("truetype");
+*/    font-style: italic;
     font-weight: 900;
     font-display: swap
 }
@@ -13779,13 +13781,12 @@ button:focus {
     color: black;
     width: 100%;
     margin: 0 auto;
-    background-color:white;
 }
 
     .title-big h1 {
         font-size: 2.125rem;
         font-weight: bold;
-        color: #0b2859;
+        text-shadow: 0px 0px 0px #ff2c2c, 0 0 5px #0095ff;
         text-align: center;
         text-transform: uppercase;
         margin-bottom: 1.25rem
@@ -14210,8 +14211,8 @@ button:focus {
         height: 100px
     }
 
-    .h-product-wp ul li {
-        width: 25%
+    .h-product-wp ul .servicemg {
+        width: 33%
     }
 
     .slick-prev, .slick-next {
@@ -14223,7 +14224,7 @@ button:focus {
     }
 
     .h-product-wp .h-product-item:hover {
-        background: no-repeat url(../images/hover.png);
+
         background-size: 80% 80%;
         background-position: center top;
     }
@@ -14491,7 +14492,7 @@ button:focus {
     }
 
     .h-product-wp ul li {
-        width: 23%
+        width: 33%
     }
 
     .slider-cn-wp .h-slider-wp ul li {
@@ -14758,7 +14759,7 @@ button:focus {
     }
 
     .h-product-wp ul li {
-        width: 23%
+        width: 33%
     }
 
     .h-about-wp .h-about-l {
@@ -14839,7 +14840,7 @@ button:focus {
     }
 
     .h-product-wp ul li {
-        width: 23%
+        width: 50%
     }
 
     .h-about-wp .h-about-l {

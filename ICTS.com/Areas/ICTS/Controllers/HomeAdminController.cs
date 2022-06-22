@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace ICTS.com.Areas.ICTS.Controllers
 {
+    [HandleError]
     public class HomeAdminController : BaseController
     {
         // GET: ICTS/HomeAdmin

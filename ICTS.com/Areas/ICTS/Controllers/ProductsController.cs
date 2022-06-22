@@ -80,20 +80,22 @@ namespace ICTS.com.Areas.ICTS.Controllers
         {
             try
             {
-                var pageSize = 1;
+                var pageSize = 5;
                 var dmspp = (from s in db.Products.Where(x => x.Id > 0)
                              join ss in db.ProductCategories on s.IdProductCategory equals ss.Id
                              join sss in db.Brands on s.IdBrand equals sss.Id
+                             join ssss in db.Categories on ss.IdCategory equals ssss.Id
                              select new
                              {
                                  id = s.Id,
                                  name = s.Name,
                                  image=s.Image,
+                                 namecategory=ssss.Name,
                                  nameproductcategory = ss.Name,
                                  namebrand = sss.Name,
                                  title = s.Title,
+                                 content=s.Content,
                                  meta = s.Meta,
-                                 dec = s.Description,
                                  createdate = s.CreateDate.Value.Day + "/" + s.CreateDate.Value.Month + "/" + s.CreateDate.Value.Year,
                                  createby = s.CreateBy,
                                  modifiledate = s.ModifileDate.Value.Day + "/" + s.ModifileDate.Value.Month + "/" + s.ModifileDate.Value.Year,
@@ -102,7 +104,7 @@ namespace ICTS.com.Areas.ICTS.Controllers
                              }).ToList().Where(x => x.status.ToLower().Contains(seach) || x.name.ToLower().Contains(seach) ||
                                             x.createby.ToLower().Contains(seach) || x.createdate.ToLower().Contains(seach) ||
                                             x.modifileby.ToLower().Contains(seach) || x.modifiledate.ToLower().Contains(seach) ||
-                                            x.dec.ToLower().Contains(seach)||x.namebrand.ToLower().Contains(seach)||
+                                            x.content.ToLower().Contains(seach)||x.namebrand.ToLower().Contains(seach)||
                                             x.nameproductcategory.ToLower().Contains(seach));
                 var pages = dmspp.Count() % pageSize == 0 ? dmspp.Count() / pageSize : dmspp.Count() / pageSize + 1;
                 var dmsp = dmspp.Skip((page - 1) * pageSize).Take(pageSize).ToList();
@@ -113,8 +115,8 @@ namespace ICTS.com.Areas.ICTS.Controllers
                 return Json(new { code = 500, msg = "Hiểm thị dữ liệu thất bại" + e.Message }, JsonRequestBehavior.AllowGet);
             }
         }
-        [HttpPost]
-        public JsonResult Add(string name, int nameproductcategory,int namebrand, string url, string title,string dec, bool status,string image)
+        [HttpPost, ValidateInput(false)]
+        public JsonResult Edit(string name, int nameproductcategory,int namebrand, string url, string title,string thongso, bool status,string image)
         {
             try
             {
@@ -126,7 +128,7 @@ namespace ICTS.com.Areas.ICTS.Controllers
                 d.IdProductCategory = nameproductcategory;
                 d.IdBrand = namebrand;
                 d.Meta = url;
-                d.Description = dec;
+                d.Content = thongso;
                 d.Image = images;
                 d.CreateBy = nameAdmin;
                 d.CreateDate = DateTime.Now;
@@ -143,8 +145,8 @@ namespace ICTS.com.Areas.ICTS.Controllers
                 return Json(new { code = 500, mmsg = "Thêm danh sách không thành công" + e.Message }, JsonRequestBehavior.AllowGet);
             }
         }
-        [HttpPost]
-        public JsonResult Edit(int id, string name, int nameproductcategory, int namebrand, string url, string title, string dec, bool status, string image)
+        [HttpPost, ValidateInput(false)]
+        public JsonResult Add(int id, string name, int nameproductcategory, int namebrand, string url, string title, string thongso, bool status, string image)
         {
             try
             {
@@ -156,7 +158,7 @@ namespace ICTS.com.Areas.ICTS.Controllers
                 d.IdProductCategory = nameproductcategory;
                 d.IdBrand = namebrand;
                 d.Meta = url;
-                d.Description = dec;
+                d.Content = thongso;
                 d.Image = images;
                 d.CreateBy = nameAdmin;
                 d.CreateDate = DateTime.Now;

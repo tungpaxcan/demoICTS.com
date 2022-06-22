@@ -1,0 +1,470 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/ICTS/Views/Shared/_Layout_Admin.cshtml";
+}
+<div id="seachinputservice" class="input-group">
+    <div class="form-outline">
+        <input type="search" id="seachservice" class="form-control" placeholder="Thương Hiệu" />
+    </div>
+    <button type="button" id="btnSeachservice" class="btn btn-primary">
+        <i class="fas fa-search"></i>
+    </button>
+</div>
+<table class="table Service">
+</table>
+<div>
+    <ul class="pagination" id="pageservice">
+    </ul>
+</div>
+@*-----------------modal brand------------------*@
+<div id="modalservice" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div style="color: red; text-align: center" class="panel-heading" id="modalTitleservice"></div>
+                <input type="text" hidden id="idservice" value="" />
+                <div class="form-group" style="margin-left:20px">
+                    <label>Tên Dịch Vụ</label>
+                    <input type="text" class="form-control" id="nameservice" placeholder="Tên Dịch Vụ">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <input type="text" class="form-control" hidden id="urlservice" placeholder="url">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <input type="text" class="form-control hidden" hidden id="titleservice" placeholder="title">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label>Nội Dung</label>
+                    <textarea id="contentservice"></textarea>
+                </div>
+                <div class="form-inline">
+                    <label>Chọn ảnh</label>
+                    <input type="text" hidden name="picture" id="picturefileservice" class="form-control" />
+                    <input type="file" id="fileUploadservice" name="fileUpload" accept="image/*" style="display:none" />
+                    <input type="button" id="btnUploadservice" value="..." class="btn-bg-success" />
+                    <img style="width:100px" id="pictureservice" />
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Trạng thái</label>
+                            <input type="checkbox" class="form-control" id="statusservice" placeholder="Trạng thái">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Trạng thái Hình Ảnh</label>
+                            <input type="checkbox" class="form-control" id="statusimageservice" placeholder="Trạng thái">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày tạo</label>
+                            <input type="text" class="form-control" id="createdateservice">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày sửa</label>
+                            <input type="text" class="form-control" id="modifiledateservice">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người tạo</label>
+                            <input type="text" class="form-control" id="createbyservice" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người sửa</label>
+                            <input type="text" class="form-control" id="modifilebyservice" placeholder="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="btnSubmitservice">Xác Nhận</button>
+                <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        var page = 1;
+        var seach = '';
+        //--------------------------------------------------Service-------------------------------------------------------------------------------------------------------
+        $('#btnservice').click(function () {
+            Service(seach, page);
+        });
+        //modal add category
+        $(document).on('click', "button[name='addservice']", function () {
+            Addservice();
+            $('#nameservice').val('');
+            $('#urlservice').val('');
+            $('#titleservice').val('');
+            $('#contentservice').val('');
+            $('#picturefileservice').val('');
+            $('#createdateservice').prop('readonly', true);
+            $('#createdateservice').val('');
+            $('#modifiledateservice').prop('readonly', true);
+            $('#modifiledateservice').val('');
+            $('#createbyservice').prop('readonly', true);
+            $('#createbyservice').val('');
+            $('#modifilebyservice').prop('readonly', true);
+            $('#modifilebyservice').val('');
+            $('#statusservice').prop('checked', false);
+            $('#statusimageservice').prop('checked', false);
+            $('#idservice').val('');
+            $('#btnSubmitservice').show();
+        });
+        //hien ten hinh
+        $('#btnUploadservice').click(function () {
+            $('#fileUploadservice').trigger('click');
+        });
+        //chon file
+        $('#fileUploadservice').change(function () {
+            if (window.FormData !== undefined) {
+                let fileUpload = $('#fileUploadservice').get(0);
+                let files = fileUpload.files;
+                let formdata = new FormData();
+                formdata.append('file', files[0]);
+                $.ajax({
+                    type: 'post',
+                    url: '/icts/services/UploadImage',
+                    contentType: false,
+                    processData: false,
+                    data: formdata,
+                    success: function (urlImage) {
+                        $('#pictureservice').attr('src', urlImage);
+                        $('#picturefileservice').val(urlImage);
+                    }
+                })
+            }
+
+        });
+        //confirm add/edit
+        $('#btnSubmitservice').click(function () {
+            let name = $('#nameservice').val().trim();
+            let url = $('#urlservice').val().trim();
+            let title = $('#titleservice').val().trim();
+            let content = $('#contentservice').summernote('code');
+            let image = $('#picturefileservice').val().trim();
+            let status = $('#statusservice').prop('checked');
+            let statusimage = $('#statusimageservice').prop('checked');
+            //rang buộc dữ liệu
+            if (name.length == 0 || image == null) {
+                alert('Vui Long Nhập Đầy Đủ Dữ liệu');
+                return;
+            }
+            let idservice = $('#idservice').val().trim();
+            if (idservice.length == 0) {
+                $.ajax({
+                    url: '/icts/services/Add',
+                    type: 'post',
+                    data: {
+                        name: name,
+                        url: url,
+                        title: title,
+                        content: content,
+                        image: image,
+                        status: status,
+                        statusimage: statusimage
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Thêm Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            Service(seach, page);
+                            $('#nameservice').val('');
+                            $('#urlservice').val('');
+                            $('#titleservice').val('');
+                            $('#contentservice').summernote('code','');
+                            $('#statusservice').prop('checked', false);
+                            $('#statusimageservice').prop('checked', false);
+                            $('#picturefileservice').val('');
+                            $('#modalservice').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/icts/services/Edit',
+                    type: 'post',
+                    data: {
+                        name: name,
+                        url: url,
+                        title: title,
+                        content: content,
+                        image: image,
+                        status: status,
+                        statusimage: statusimage,
+                        id: idservice
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Sửa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            Service(seach, page);
+                            $('#nameservice').val('');
+                            $('#urlservice').val('');
+                            $('#titleservice').val('');
+                            $('#contentservice').val('');
+                            $('#statusservice').prop('checked', false);
+                            $('#statusimageservice').prop('checked', false);
+                            $('#picturefileservice').val('');
+                            $('#idservice').val('');
+                            $('#modalservice').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+
+
+
+        });
+        //phan trang
+        $('#pageservice').on('click', 'li', function (e) {
+            e.preventDefault();
+            page = $(this).attr('id');
+            Service(seach, page);
+        });
+        ////tim kiem
+        $('#btnSeachservice').click(function () {
+            page = 1;
+            seach = $('#seachservice').val();
+            Service(seach, page);
+        });
+        $('#seachservice').on('keypress', function (e) {
+            if (e.which == 13) {
+                $('#btnSeachservice').click();
+            }
+        });
+        //catchuoi
+        $('#nameservice').keyup(function () {
+            $('#urlservice').val(GetChuoi($(this).val()));
+            $('#titleservice').val($(this).val());
+        });
+        //Detail
+        $(document).on('click', "button[name='viewservice']", function () {
+            let id = $(this).closest('tr').attr('id');
+            Detailservice(id);
+            $('#createdateservice').prop('readonly', true);
+            $('#modifiledateservice').prop('readonly', true);
+            $('#modifilebyservice').prop('readonly', true);
+            $('#createbyservice').prop('readonly', true);
+            $('#modifiledateservice').show();
+            $('#modifilebyservice').show();
+            $('#btnSubmitservice').hide();
+            $('#idservice').val('');
+        });
+        //Edit
+        $(document).on('click', "button[name='updateservice']", function () {
+            let id = $(this).closest('tr').attr('id');
+            Detailservice(id);
+            $('#createdateservice').prop('readonly', true);
+            $('#createbyservice').prop('readonly', true);
+            $('#modifiledateservice').prop('readonly', true);
+            $('#modifilebyservice').prop('readonly', true);
+            $('#modalTitleservice').text("Sửa Dịch Vụ");
+            $('#btnSubmitservice').show();
+            $('#idservice').val('');
+
+        });
+        //delete
+        $(document).on('click', "button[name='deleteservice']", function () {
+            let id = $(this).closest('tr').attr('id');
+            if (confirm("Bạn có muốn xóa dữ liệu này")) {
+                $.ajax({
+                    url: '/icts/services/Delete',
+                    type: 'post',
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Xóa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            Service(seach, page)
+                        } else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+
+        });
+        function Service(seach, page) {
+            $.ajax({
+                url: '/icts/services/Service',
+                type: 'get',
+                data: {
+                    page: page,
+                    seach: seach
+                },
+                success: function (data) {
+                    $('.Service').empty();
+                    if (data.code == 200) {
+                        let table = '<thead>';
+                        table += '<tr>';
+                        table += '<th>Tên Dịch Vụ</th>';
+                        table += '<th>Ảnh</th>';
+                        table += '<th>Trạng thái</th>';
+                        table += '<th>Trạng Thái Hình Ảnh Giao Diện</th>';
+                        table += '<th></th>';
+                        table += '<th> <button class = "btn btn-xs btn-success" name = "addservice" > <i class="fa-solid fa-plus"></i></button >&nbsp</th>';
+                        table += '</tr>';
+                        table += '</thead>';
+                        table += '<tbody>';
+                        $.each(data.dmsp, function (k, v) {
+                            table += '<tr id="' + v.id + '">';
+                            table += '<td>' + v.name + '</td>';
+                            table += '<td><img style="width:100px" src="/Images/' + v.image + '"</td>';
+                            table += '<td>' + v.status + '</td>';
+                            table += '<td>' + v.statusimage + '</td>';
+                            table += '<td> <button class = "btn btn-xs btn-primary" name = "viewservice" > <i class="fa-thin fa-circle-info"></i></button >&nbsp';
+                            table += ' <button class = "btn btn-xs btn-warning" name = "updateservice" > <i class="fa-thin fa-wrench"></i></button >&nbsp';
+                            table += ' <button class = "btn btn-xs btn-danger" name = "deleteservice" > <i class="fa-thin fa-trash-xmark"></i></button >&nbsp';
+                            table += '</td>';
+                            table += '<td></td>';
+                            table += '</tr>';
+                        });
+                        table += '</tbody>';
+                        $('.Service').append(table);
+                        $('#pageservice').empty();
+
+                        for (let i = 1; i <= data.pages; i++) {
+                            $('#pageservice').empty();
+                            for (let j = page; j <= (parseInt(page) + 4); j++) {
+                                if (j <= data.pages) {
+                                    let li = '<li class="page-item" id="' + j + '"><a class="page-link" href="#">' + j + '</a></li>';
+                                    $('#pageservice').append(li);
+                                }
+
+                            }
+                        }
+                        if (parseInt(page) > 1) {
+                            let Previous = '<li class="page-item" id="' + (parseInt(page) - 1) + '"><a  class="page-link" href="#">Previous</a></li>';
+                            $('#pageservice').append(Previous);
+                        }
+
+                        let next = '<li class="page-item" id="' + (parseInt(page) + 1) + '"><a name="nextpage" class="page-link" href="#">Next</a></li>';
+                        $('#pageservice').append(next);
+                        let li = $('#pageservice li#' + page + '');
+                        $(li).addClass('active')
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function Detailservice(id) {
+            $.ajax({
+                url: '/icts/services/Detail',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#idservice').val(data.tv.Id);
+                        $('#nameservice').val(data.tv.Name);
+                        $('#urlservice').val(data.tv.Meta);
+                        $('#titleservice').val(data.tv.Title);
+                        $('#contentservice').summernote('code',data.tv.Content);
+                        $('#picturefileservice').val("/Images/" + data.tv.Image);
+                        if (data.tv.Status == true) {
+                            $('#statusservice').prop('checked', true);
+                        } else {
+                            $('#statusservice').prop('checked', false);
+                        }
+                        if (data.tv.StatusImage == true) {
+                            $('#statusimageservice').prop('checked', true);
+                        } else {
+                            $('#statusimageservice').prop('checked', false);
+                        }
+                        $('#pictureservice').attr('src', $('#picturefile').val())
+                        $('#createdateservice').val(ConvertJsonDateString(data.tv.CreateDate));
+                        $('#modifiledateservice').val(ConvertJsonDateString(data.tv.ModifileDate));
+                        $('#createbyservice').val(data.tv.CreateBy);
+                        $('#modifilebyservice').val(data.tv.ModifileBy);
+
+                        $('#modalTitleservice').text("Chi Tiết Dịch Vụ");
+                        $('#modalservice').modal();
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function Addservice() {
+            $.ajax({
+                url: '/adminsss/Add',
+                type: 'get',
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#createdateservice').val(ConvertJsonDateString(data.date));
+                        $('#createbyservice').val(data.d);
+                        $('#modalTitleservice').text("Thêm Dịch Vụ");
+                        $('#modalservice').modal();
+                    }
+                }
+            });
+        }
+        //convert date string
+        function ConvertJsonDateString(jsonDate) {
+            var shortDate = null;
+            if (jsonDate) {
+                var regex = /-?\d+/;
+                var matches = regex.exec(jsonDate);
+                var dt = new Date(parseInt(matches[0]));
+                var month = dt.getMonth() + 1;
+                var monthString = month > 9 ? month : '0' + month;
+                var day = dt.getDate();
+                var dayString = day > 9 ? day : '0' + day;
+                var year = dt.getFullYear();
+                shortDate = monthString + '/' + dayString + '/' + year;
+            }
+            return shortDate;
+        };
+        $(document).ready(function () {
+            $('#contentservice').summernote();
+            Service(seach, page)
+            document.getElementById("trangchu").style.visibility = "hidden";
+            document.getElementById("giaiphap").style.visibility = "hidden";
+            document.getElementById("sanpham").style.visibility = "hidden";
+            document.getElementById("thuonghieu").style.visibility = "hidden";
+            document.getElementById("chitietsanpham").style.visibility = "hidden";
+            document.getElementById("download").style.visibility = "hidden";
+            document.getElementById("service").style.visibility = "visible";
+        });
+    </script>
+    }

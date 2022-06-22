@@ -26,7 +26,7 @@ namespace ICTS.com.Controllers
                               name = s.Name,
                               title = s.Title,
                               image = s.Image,
-                              link = s.Link,
+                              link = s.Link
                           }).ToList();
                 return Json(new { code = 200, pn = pn, msg = "Hiển Thị Dữ liệu thành công" }, JsonRequestBehavior.AllowGet);
             }

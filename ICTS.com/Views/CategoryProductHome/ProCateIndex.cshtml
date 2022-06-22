@@ -1,0 +1,193 @@
+﻿@model ICTS.com.Models.ProductCategory
+@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="w-hv" class="home-backround">
+    <div class="input-box">
+        <input type="text" id="seachh" class="form-control" placeholder="Seach">
+        <button hidden type="button" id="btnSeach" class="btn btn-primary"></button>
+        <i class="fa fa-search"></i>
+    </div>
+    <div class="menu-categgory" id="mymenu">
+        <div id="menu-category">
+            <div class="dropdown-category">
+                <button name="idpro-cate" class="dropbtn-category">
+                    <b>@Model.Name</b>
+                </button>
+            </div>
+            </div>
+            <a href="javascript:void(0);" style="font-size:100% ;" class="icon" onclick="myFunction()">&#9776;</a>
+        </div>
+    <input hidden id="procate" value="@Model.Id" />
+    <div class="product-container">
+        <div id="imageproductbyid" class="product-">
+        </div>
+    </div>
+    <div class="pagemg">
+        <ul class="pagination" id="page">
+        </ul>
+    </div>
+    <div class="pagemg">
+        <ul class="pagination" id="pagebyid">
+        </ul>
+    </div>
+</div>
+@section scripts{
+    <script>
+        //phan trang
+        $('#page').on('click', 'li', function (e) {
+            e.preventDefault();
+            page = $(this).attr('id');
+            SeachProduct(page, seach);
+        });
+
+        /*  --------------- seach---------------------------*/
+        $('#btnSeach').click(function () {
+            page = 1;
+            seach = $('#seachh').val();
+            SeachProduct(page, seach)
+        });
+        $('#seachh').on('keypress', function (e) {
+            if (e.which == 13) {
+                $('#btnSeach').click();
+            }
+        });
+        /*-------------------------------imageproduct==========================*/
+        $(document).ready(function () {
+            let id = $('#procate').val();
+            page = 1;
+            $('#pagebyid').on('click', 'li', function (e) {
+                e.preventDefault();
+                page = $(this).attr('id');
+                ImageProduct(id, page);
+            });
+            ImageProduct(id, page)
+        })
+          
+        function ImageProduct(id, page) {
+            $('#pagebyid').show();
+            $('#page').hide();
+            $.ajax({
+                url: '/producthome/ProductImageById/',
+                type: 'get',
+                data: {
+                    id: id,
+                    page: page
+                },
+                success: function (data) {
+                    $('#imageproductbyid').empty();
+                    if (data.code == 200) {
+                        $.each(data.dmsp, function (k, v) {
+                            let div = ' <a id="' + v.id + '"  name="b">';
+                            div += '<div class="product--display">';
+                            div += '<img src="/Images/' + v.image + '" />';
+                            div += '</div>';
+                            div += ' <div class="product--hover">';
+                            div += '<h2 id="w-rm">' + v.content + '</h2>';
+                            div += '</div>';
+                            div += '<h1 class="nameh1">' + v.name + '</h1></a>';
+                            div += '<div class="product--border"></div>';
+                            $('#imageproductbyid').append(div);
+                        });
+                        $('#pagebyid').empty();
+                        for (let i = 1; i <= data.pages; i++) {
+                            $('#page').empty();
+                            $('#pagebyid').empty();
+                            for (let j = page; j <= (parseInt(page) + 4); j++) {
+                                if (j <= data.pages) {
+                                    let li = '<li class="page-item" id="' + j + '"><a class="page-link" href="#">' + j + '</a></li>';
+                                    $('#pagebyid').append(li);
+                                }
+                            }
+
+                        }
+                        if (parseInt(page) > 1) {
+                            let Previous = '<li class="page-item" id="' + (parseInt(page) - 1) + '"><a  class="page-link" href="#">Previous</a></li>';
+                            $('#pagebyid').append(Previous);
+                        }
+                        let next = '<li class="page-item" id="' + (parseInt(page) + 1) + '"><a name="nextpage" class="page-link" href="#">Next</a></li>';
+                        $('#pagebyid').append(next);
+                        let li = $('#pagebyid li#' + page + '');
+                        $(li).addClass('active')
+                        $('#w-rm table').css("width", "");
+                    }
+
+                }
+            });
+        }
+        function SeachProduct(page, seach) {
+            $('#pagebyid').hide();
+            $('#page').show();
+            $.ajax({
+                url: '/producthome/Seach/',
+                type: 'get',
+                data: {
+                    page: page,
+                    seach: seach
+                },
+                success: function (data) {
+                    $('#imageproductbyid').empty();
+                    if (data.code == 200) {
+                        $.each(data.dmsp, function (k, v) {
+                            let div = ' <a id="' + v.id + '" href="" name="b">';
+                            div += '<div class="product--display">';
+                            div += '<img src="/Images/' + v.image + '" />';
+                            div += '</div>';
+                            div += ' <div class="product--hover">';
+                            div += '<h2 id="w-rm">' + v.content + '</h2>';
+                            div += '</div>';
+                            div += '<h1 class="nameh1">' + v.name + '</h1></a>';
+                            div += '<div class="product--border"></div>';
+                            $('#imageproductbyid').append(div);
+                        });
+                        $('#page').empty();
+                        $('#pagebyid').empty();
+
+                        for (let i = 1; i <= data.pages; i++) {
+                            $('#page').empty();
+                            $('#pagebyid').empty();
+                            for (let j = page; j <= (parseInt(page) + 4); j++) {
+                                if (j <= data.pages) {
+                                    let li = '<li class="page-item" id="' + j + '"><a class="page-link" href="#">' + j + '</a></li>';
+                                    $('#page').append(li);
+                                }
+                            }
+                        }
+
+                        if (parseInt(page) > 1) {
+                            let Previous = '<li class="page-item" id="' + (parseInt(page) - 1) + '"><a  class="page-link" href="#">Previous</a></li>';
+                            $('#page').append(Previous);
+                        }
+                        let next = '<li class="page-item" id="' + (parseInt(page) + 1) + '"><a name="nextpage" class="page-link" href="#">Next</a></li>';
+                        $('#page').append(next);
+
+                        let li = $('#page li#' + page + '');
+                        $(li).addClass('active')
+                        $('#w-rm table').css("width", "");
+                    }
+
+                }
+            });
+        }
+        /* ---------addlink---------------*/
+        $(document).on('click', "a[name='b']", function () {
+            let id = $(this).closest('a').attr('id')
+            $.ajax({
+                url: '/producthome/DetailProductById',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $.each(data.left, function (k, v) {
+                            window.location.href = data.Url + v.meta + "/" + v.id
+                        })
+
+                    }
+                }
+            })
+        })
+    </script>
+    }

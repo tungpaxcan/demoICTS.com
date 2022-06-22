@@ -56,6 +56,25 @@
           <Property Name="StatusImage" Type="bit" />
           <Property Name="Status" Type="bit" />
         </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdProduct" Type="int" />
+          <Property Name="IdP" Type="nchar" MaxLength="10" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Phone" Type="nchar" MaxLength="11" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="NameEnterprise" Type="nvarchar" MaxLength="250" />
+          <Property Name="Amount" Type="int" />
+          <Property Name="Description" Type="ntext" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="ModifileDate" Type="datetime" />
+          <Property Name="ModifileBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
         <EntityType Name="Content">
           <Key>
             <PropertyRef Name="Id" />
@@ -73,15 +92,34 @@
           <Property Name="ModifileBy" Type="nvarchar" MaxLength="200" />
           <Property Name="Status" Type="bit" />
         </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Meta" Type="varchar" MaxLength="100" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" />
+          <Property Name="Description" Type="ntext" />
+          <Property Name="Content" Type="nvarchar(max)" />
+          <Property Name="Image" Type="nvarchar" MaxLength="250" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="ModifileDate" Type="datetime" />
+          <Property Name="ModifileBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="StatusImage" Type="bit" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
         <EntityType Name="DetailProduct">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdProduct" Type="int" />
-          <Property Name="Application" Type="nvarchar" MaxLength="250" />
+          <Property Name="[content]Application" Type="nvarchar(max)" />
           <Property Name="[content]Dec" Type="nvarchar(max)" />
           <Property Name="[content]DecTech" Type="nvarchar(max)" />
+          <Property Name="[content]Option" Type="nvarchar(max)" />
           <Property Name="Image" Type="nvarchar" MaxLength="250" />
           <Property Name="ImageAdd" Type="int" />
           <Property Name="CreateDate" Type="datetime" />
@@ -98,11 +136,30 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdSolution" Type="int" />
           <Property Name="Meta" Type="varchar" MaxLength="100" />
-          <Property Name="Title" Type="varchar" MaxLength="200" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" />
           <Property Name="Description" Type="ntext" />
           <Property Name="Content" Type="nvarchar(max)" />
           <Property Name="Image" Type="nvarchar" MaxLength="520" />
           <Property Name="ImageAdd" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="ModifileDate" Type="datetime" />
+          <Property Name="ModifileBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="StatusImage" Type="bit" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="Download">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Meta" Type="varchar" MaxLength="100" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" />
+          <Property Name="Description" Type="ntext" />
+          <Property Name="Content" Type="nvarchar(max)" />
+          <Property Name="Download" Type="ntext" />
+          <Property Name="Image" Type="nvarchar" MaxLength="250" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="CreateBy" Type="nvarchar" MaxLength="200" />
           <Property Name="ModifileDate" Type="datetime" />
@@ -172,7 +229,7 @@
           <Property Name="IdBrand" Type="int" />
           <Property Name="Meta" Type="varchar" MaxLength="100" />
           <Property Name="Name" Type="nvarchar" MaxLength="250" />
-          <Property Name="Title" Type="varchar" MaxLength="200" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" />
           <Property Name="Description" Type="ntext" />
           <Property Name="Content" Type="nvarchar(max)" />
           <Property Name="Image" Type="nvarchar" MaxLength="250" />
@@ -197,6 +254,42 @@
           <Property Name="CreateBy" Type="nvarchar" MaxLength="200" />
           <Property Name="ModifileDate" Type="datetime" />
           <Property Name="ModifileBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="Promotion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Meta" Type="varchar" MaxLength="100" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" />
+          <Property Name="Description" Type="ntext" />
+          <Property Name="Content" Type="nvarchar(max)" />
+          <Property Name="Image" Type="nvarchar" MaxLength="250" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="ModifileDate" Type="datetime" />
+          <Property Name="ModifileBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="StatusImage" Type="bit" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Meta" Type="varchar" MaxLength="100" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" />
+          <Property Name="Description" Type="ntext" />
+          <Property Name="Content" Type="nvarchar(max)" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="ModifileDate" Type="datetime" />
+          <Property Name="Image" Type="nvarchar" MaxLength="250" />
+          <Property Name="ModifileBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="StatusImage" Type="bit" />
           <Property Name="Status" Type="bit" />
         </EntityType>
         <EntityType Name="Slider">
@@ -231,6 +324,18 @@
           <Property Name="StatusImage" Type="bit" />
           <Property Name="Status" Type="bit" />
         </EntityType>
+        <Association Name="FK_Contact_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Contact" Type="Self.Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contact">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DetailProduct_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
           <End Role="DetailProduct" Type="Self.DetailProduct" Multiplicity="*" />
@@ -295,16 +400,25 @@
           <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Brand" EntityType="Self.Brand" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contact" EntityType="Self.Contact" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Content" EntityType="Self.Content" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetailProduct" EntityType="Self.DetailProduct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetailSolution" EntityType="Self.DetailSolution" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Download" EntityType="Self.Download" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Images" EntityType="Self.Images" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Modules" EntityType="Self.Modules" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Partner" EntityType="Self.Partner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Promotion" EntityType="Self.Promotion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Slider" EntityType="Self.Slider" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Solution" EntityType="Self.Solution" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Contact_Product" Association="Self.FK_Contact_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Contact" EntitySet="Contact" />
+          </AssociationSet>
           <AssociationSet Name="FK_DetailProduct_Product" Association="Self.FK_DetailProduct_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="DetailProduct" EntitySet="DetailProduct" />
@@ -384,6 +498,26 @@
           <Property Name="Status" Type="Boolean" />
           <NavigationProperty Name="ProductCategories" Relationship="Self.FK_ProductCategory_Category" FromRole="Category" ToRole="ProductCategory" />
         </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdProduct" Type="Int32" />
+          <Property Name="IdP" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="11" FixedLength="true" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NameEnterprise" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ModifileDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifileBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Contact_Product" FromRole="Contact" ToRole="Product" />
+        </EntityType>
         <EntityType Name="Content">
           <Key>
             <PropertyRef Name="Id" />
@@ -401,15 +535,34 @@
           <Property Name="ModifileBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Boolean" />
         </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Meta" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ModifileDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifileBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StatusImage" Type="Boolean" />
+          <Property Name="Status" Type="Boolean" />
+        </EntityType>
         <EntityType Name="DetailProduct">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdProduct" Type="Int32" />
-          <Property Name="Application" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="C_content_Application" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="C_content_Dec" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="C_content_DecTech" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="C_content_Option" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Image" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="ImageAdd" Type="Int32" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
@@ -427,7 +580,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdSolution" Type="Int32" />
           <Property Name="Meta" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Image" Type="String" MaxLength="520" FixedLength="false" Unicode="true" />
@@ -439,6 +592,25 @@
           <Property Name="StatusImage" Type="Boolean" />
           <Property Name="Status" Type="Boolean" />
           <NavigationProperty Name="Solution" Relationship="Self.FK_DetailSolution_Solution" FromRole="DetailSolution" ToRole="Solution" />
+        </EntityType>
+        <EntityType Name="Download">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Meta" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Download1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ModifileDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifileBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StatusImage" Type="Boolean" />
+          <Property Name="Status" Type="Boolean" />
         </EntityType>
         <EntityType Name="Image">
           <Key>
@@ -502,7 +674,7 @@
           <Property Name="IdBrand" Type="Int32" />
           <Property Name="Meta" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Image" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
@@ -514,6 +686,7 @@
           <Property Name="StatusImage" Type="Boolean" />
           <Property Name="Status" Type="Boolean" />
           <NavigationProperty Name="Brand" Relationship="Self.FK_Product_Brand" FromRole="Product" ToRole="Brand" />
+          <NavigationProperty Name="Contacts" Relationship="Self.FK_Contact_Product" FromRole="Product" ToRole="Contact" />
           <NavigationProperty Name="DetailProducts" Relationship="Self.FK_DetailProduct_Product" FromRole="Product" ToRole="DetailProduct" />
           <NavigationProperty Name="ProductCategory" Relationship="Self.FK_Product_ProductCategory" FromRole="Product" ToRole="ProductCategory" />
         </EntityType>
@@ -533,6 +706,42 @@
           <Property Name="Status" Type="Boolean" />
           <NavigationProperty Name="Category" Relationship="Self.FK_ProductCategory_Category" FromRole="ProductCategory" ToRole="Category" />
           <NavigationProperty Name="Products" Relationship="Self.FK_Product_ProductCategory" FromRole="ProductCategory" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Promotion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Meta" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ModifileDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifileBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StatusImage" Type="Boolean" />
+          <Property Name="Status" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Meta" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ModifileDate" Type="DateTime" Precision="3" />
+          <Property Name="Image" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ModifileBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StatusImage" Type="Boolean" />
+          <Property Name="Status" Type="Boolean" />
         </EntityType>
         <EntityType Name="Slider">
           <Key>
@@ -591,6 +800,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Contact_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Contact" Type="Self.Contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contact">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DetailProduct_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
           <End Role="DetailProduct" Type="Self.DetailProduct" Multiplicity="*" />
@@ -631,14 +852,19 @@
           <EntitySet Name="Admins" EntityType="Self.Admin" />
           <EntitySet Name="Brands" EntityType="Self.Brand" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Contacts" EntityType="Self.Contact" />
           <EntitySet Name="Contents" EntityType="Self.Content" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
           <EntitySet Name="DetailProducts" EntityType="Self.DetailProduct" />
           <EntitySet Name="DetailSolutions" EntityType="Self.DetailSolution" />
+          <EntitySet Name="Downloads" EntityType="Self.Download" />
           <EntitySet Name="Images" EntityType="Self.Image" />
           <EntitySet Name="Modules" EntityType="Self.Module" />
           <EntitySet Name="Partners" EntityType="Self.Partner" />
           <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="ProductCategories" EntityType="Self.ProductCategory" />
+          <EntitySet Name="Promotions" EntityType="Self.Promotion" />
+          <EntitySet Name="Services" EntityType="Self.Service" />
           <EntitySet Name="Sliders" EntityType="Self.Slider" />
           <EntitySet Name="Solutions" EntityType="Self.Solution" />
           <AssociationSet Name="FK_Product_Brand" Association="Self.FK_Product_Brand">
@@ -648,6 +874,10 @@
           <AssociationSet Name="FK_ProductCategory_Category" Association="Self.FK_ProductCategory_Category">
             <End Role="Category" EntitySet="Categories" />
             <End Role="ProductCategory" EntitySet="ProductCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contact_Product" Association="Self.FK_Contact_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Contact" EntitySet="Contacts" />
           </AssociationSet>
           <AssociationSet Name="FK_DetailProduct_Product" Association="Self.FK_DetailProduct_Product">
             <End Role="Product" EntitySet="Products" />
@@ -722,6 +952,26 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="ICTS.COMModel.Contact">
+              <MappingFragment StoreEntitySet="Contact">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+                <ScalarProperty Name="IdP" ColumnName="IdP" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="NameEnterprise" ColumnName="NameEnterprise" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="ModifileDate" ColumnName="ModifileDate" />
+                <ScalarProperty Name="ModifileBy" ColumnName="ModifileBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Contents">
             <EntityTypeMapping TypeName="ICTS.COMModel.Content">
               <MappingFragment StoreEntitySet="Content">
@@ -740,14 +990,34 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="ICTS.COMModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Meta" ColumnName="Meta" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="ModifileDate" ColumnName="ModifileDate" />
+                <ScalarProperty Name="ModifileBy" ColumnName="ModifileBy" />
+                <ScalarProperty Name="StatusImage" ColumnName="StatusImage" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="DetailProducts">
             <EntityTypeMapping TypeName="ICTS.COMModel.DetailProduct">
               <MappingFragment StoreEntitySet="DetailProduct">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
-                <ScalarProperty Name="Application" ColumnName="Application" />
+                <ScalarProperty Name="C_content_Application" ColumnName="[content]Application" />
                 <ScalarProperty Name="C_content_Dec" ColumnName="[content]Dec" />
                 <ScalarProperty Name="C_content_DecTech" ColumnName="[content]DecTech" />
+                <ScalarProperty Name="C_content_Option" ColumnName="[content]Option" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="ImageAdd" ColumnName="ImageAdd" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
@@ -770,6 +1040,26 @@
                 <ScalarProperty Name="Content" ColumnName="Content" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="ImageAdd" ColumnName="ImageAdd" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="ModifileDate" ColumnName="ModifileDate" />
+                <ScalarProperty Name="ModifileBy" ColumnName="ModifileBy" />
+                <ScalarProperty Name="StatusImage" ColumnName="StatusImage" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Downloads">
+            <EntityTypeMapping TypeName="ICTS.COMModel.Download">
+              <MappingFragment StoreEntitySet="Download">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Meta" ColumnName="Meta" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Download1" ColumnName="Download" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="ModifileDate" ColumnName="ModifileDate" />
@@ -869,6 +1159,44 @@
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="ModifileDate" ColumnName="ModifileDate" />
                 <ScalarProperty Name="ModifileBy" ColumnName="ModifileBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Promotions">
+            <EntityTypeMapping TypeName="ICTS.COMModel.Promotion">
+              <MappingFragment StoreEntitySet="Promotion">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Meta" ColumnName="Meta" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="ModifileDate" ColumnName="ModifileDate" />
+                <ScalarProperty Name="ModifileBy" ColumnName="ModifileBy" />
+                <ScalarProperty Name="StatusImage" ColumnName="StatusImage" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Services">
+            <EntityTypeMapping TypeName="ICTS.COMModel.Service">
+              <MappingFragment StoreEntitySet="Service">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Meta" ColumnName="Meta" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="ModifileDate" ColumnName="ModifileDate" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="ModifileBy" ColumnName="ModifileBy" />
+                <ScalarProperty Name="StatusImage" ColumnName="StatusImage" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>

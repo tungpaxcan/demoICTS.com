@@ -7,10 +7,15 @@ using ICTS.com.Models;
 
 namespace ICTS.com.Controllers
 {
+    [HandleError]
     public class HomeController : Controller
     {
         private Entities db = new Entities();
         public ActionResult Index()
+        {
+            return View();
+        }
+        public ActionResult Error()
         {
             return View();
         }
@@ -180,6 +185,25 @@ namespace ICTS.com.Controllers
                                 image = s.Image
                             }).Take(4).ToList();
                 return Json(new { code = 200, left = left, msg = "Hiển thị dữ liệu " }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { code = 500, msg = "Hiểm thị dữ liệu thất bại" + e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpGet]
+        public JsonResult KmContent()
+        {
+            try
+            {
+                var w = (from s in db.Modules.Where(x => x.Id == 22)
+                         select new
+                         {
+                             id = s.Id,
+                             name = s.Name,
+                             content = s.Content
+                         }).ToList();
+                return Json(new { code = 200, w = w, msg = "Hiển Thị Dữ liệu thành công" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {

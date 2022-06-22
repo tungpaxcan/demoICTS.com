@@ -1,0 +1,56 @@
+﻿@model ICTS.com.Models.Service
+
+@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div  class="home-backround">
+    <input hidden id="idservice" value="@Model.Id" />
+    <div id="contentservice" class="Content-sv">
+    </div>
+    <hr />
+    <div id="contentserviceother">
+        
+    </div>
+</div>
+@section scripts{
+    <script>
+        const id = $('#idservice').val();
+        $.ajax({
+            url: '/service/ServiceDetail',
+            type: 'get',
+            data: {
+                id: id
+            },
+            success: function (data) {
+                $('#contentservice').empty();
+                if (data.code == 200) {
+                    $.each(data.dmsp, function (k, v) {
+                        let li = '<h1 class="serviceother">HP Service : ' + v.name + '</h1>';
+                         li += ''+v.content+'';
+                        $('#contentservice').append(li);
+                    });
+                }
+            }
+        });
+        $.ajax({
+            url: '/service/ServiceDetailOther',
+            type: 'get',
+            data: {
+                id: id
+            },
+            success: function (data) {
+                $('#contentserviceother').empty();
+                if (data.code == 200) {
+                    $.each(data.dmsp, function (k, v) {
+                        let li = '<h1 class="serviceother">HP Service : ' + v.name + '</h1>';
+                        li += '' + v.content + '';
+                        $('#contentserviceother').append(li);
+                    });
+                }
+            }
+        });
+    </script>
+}
+

@@ -16,9 +16,10 @@ namespace ICTS.com.Models
     {
         public int Id { get; set; }
         public Nullable<int> IdProduct { get; set; }
-        public string Application { get; set; }
+        public string C_content_Application { get; set; }
         public string C_content_Dec { get; set; }
         public string C_content_DecTech { get; set; }
+        public string C_content_Option { get; set; }
         public string Image { get; set; }
         public Nullable<int> ImageAdd { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }

@@ -3,10 +3,12 @@
     ViewBag.Title = "Danh Mục Sản Phẩm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="home-backround">
+<div id="w-hv" class="home-backround">
     <div class="input-box">
-        <input type="text" class="form-control" placeholder="Seach">
+        <input type="text" id="seachh" class="form-control" placeholder="Seach">       <button hidden type="button" id="btnSeach" class="btn btn-primary"></button>
         <i class="fa fa-search"></i>
+
+
     </div>
 
     <div class="menu-categgory" id="mymenu">
@@ -14,71 +16,43 @@
         <div id="menu-category">
             @foreach (var item in Model)
             {
-            <div id="@Html.DisplayFor(modelitem=>item.Id)" class="dropdown-category">
-                <button name="idpro-cate" class="dropbtn-category">
-                    @Html.DisplayFor(modelitem => item.Name)
-                </button>
-            </div>
-                
-            }
+                <div class="dropdown-category">
+                    <button id="pro-cate-@Html.DisplayFor(modelitem=>item.Id)" name="idpro-cate" class="dropbtn-category">
+                        <b>@Html.DisplayFor(modelitem => item.Name)</b>
+                        <i class="fa-thin fa-circle-chevron-down"></i>
+                    </button>
+                    <div id="@Html.DisplayFor(modelitem=>item.Id)" class="dropdown-content-category add">
 
+                    </div>
+
+                </div>
+            }
         </div>
         <a href="javascript:void(0);" style="font-size:100% ;" class="icon" onclick="myFunction()">&#9776;</a>
     </div>
-    <div class="button-cate">
-        <button  style="" class="dropdown-category detail-drop">
-           <div id="namebuttonshow"></div>
-            <div id="pro-cate" class="dropdown-content-category">
-
-            </div>
-        </button>
-    </div>
-    
     <div class="product-container">
-        <div class="product-">
-            <a href="hottub">
-                <div class="product--display">
-                    <img src="~/Images/logo.jpg" />
-                </div>
-                <div class="product--hover">
-                    <h2>Hot Tub Time Machine</h2>
-                </div>
-            </a>
-            <div class="product--border"></div>
-            <a href="hottub">
-                <div class="product--display">
-                    <img src="~/Images/logo.jpg" />
-                </div>
-                <div class="product--hover">
-                    <h2>Hot Tub Time Machine</h2>
-                </div>
-            </a>
-            <div class="product--border"></div>
-            <a href="hottub">
-                <div class="product--display">
-                    <img src="~/Images/logo.jpg" />
-                </div>
-                <div class="product--hover">
-                    <h2>Hot Tub Time Machine</h2>
-                </div>
-            </a>
-            <div class="product--border"></div>
-            <a href="hottub">
-                <div class="product--display">
-                    <img src="~/Images/logo.jpg" />
-                </div>
-                <div class="product--hover">
-                    <h2>Hot Tub Time Machine</h2>
-                </div>
-            </a>
-            <div class="product--border"></div>
+        <div id="imageproductbyid" class="product-">
         </div>
     </div>
-
+    <div class="pagemg">
+        <ul class="pagination" id="page">
+        </ul>
+    </div>
+    <div class="pagemg">
+        <ul class="pagination" id="pagebyid">
+        </ul>
+    </div>
 </div>
 
 @section scripts{
     <script>
+        var page = 1;
+        var seach = '';
+        $(document).ready(function () {
+            SeachProduct(page, seach);
+            $('#pagebyid').hide();
+            $('#page').show();
+        })
         function myFunction() {
             var x = document.getElementById("mymenu");
             if (x.className === "menu-categgory") {
@@ -86,48 +60,189 @@
             } else {
                 x.className = "menu-categgory";
             }
-        }
-            /* ----------------------------danhmuc----------------------*/
-        $(document).on('click', "button[name='idpro-cate']", function () {
-            let id = $(this).closest('div').attr('id');
+        };
+/*-------------------------------loaisanpham==========================*/
+        var ids = $('.dropbtn-category').map(function (_, x) { return x.id; }).get();
+        for (let i = 0; i < ids.length; i++) {       
+            $('#' + ids[i] + '').mouseenter(function () {              
+                $('.add').addClass('Add' + ids[i] + '')
+                let id = ids[i].substring(9)
             $.ajax({
-                url: '/categorieshome/Cate/',
+                url: '/categorieshome/ProductCategory/',
                 type: 'get',
                 data: {
                     id: id
                 },
                 success: function (data) {
-                    $('#namebuttonshow').empty();
+                    $('.Add' + ids[i] + '').empty();
                     if (data.code == 200) {
                         $.each(data.dmsp, function (k, v) {
-                            let but = '' + v.name + '';
-                            $('#namebuttonshow').append(but);
+                            let li = '<a id="' + v.id + '" name="a">' + v.name + '</a>';
+                            $('.Add' + ids[i] + '').append(li);
                         });
                     }
 
                 }
             });
+        })
+            $('#' + ids[i] + '').mouseleave(function () {
+                $('.add').removeClass('Add' + ids[i] + '')
+            })
+        }
+        //phan trang
+        $('#page').on('click', 'li', function (e) {
+            e.preventDefault();
+            page = $(this).attr('id');
+            SeachProduct(page, seach);
         });
-                    /* ----------------------------loaisanpham----------------------*/
-        $(document).on('click', "button[name='idpro-cate']", function () {
-            let id = $(this).closest('div').attr('id');
-                $.ajax({
-                    url: '/categorieshome/ProductCategory/',
-                    type: 'get',
-                    data: {
-                        id: id
-                    },
-                    success: function (data) {
-                        $('#pro-cate').empty();
-                        if (data.code == 200) {
-                            $.each(data.dmsp, function (k, v) {
-                                let li = '<a>' + v.name + '</a>';
-                                $('#pro-cate').append(li);
-                            });
+
+      /*  --------------- seach---------------------------*/
+        $('#btnSeach').click(function () {
+            page = 1;
+            seach = $('#seachh').val();
+            SeachProduct(page,seach)
+        });
+        $('#seachh').on('keypress', function (e) {
+            if (e.which == 13) {
+                $('#btnSeach').click();
+            }
+        });
+        /*-------------------------------imageproduct==========================*/
+        $(document).on('click', "a[name='a']", function () {
+            let id = $(this).closest('a').attr('id')
+            page = 1;
+            $('#pagebyid').on('click', 'li', function (e) {
+                e.preventDefault();
+                page = $(this).attr('id');
+                ImageProduct(id, page);
+            });
+            ImageProduct(id, page)
+           
+        })
+        function ImageProduct(id,page) {
+            $('#pagebyid').show();
+            $('#page').hide();
+            $.ajax({
+                url: '/producthome/ProductImageById/',
+                type: 'get',
+                data: {
+                    id: id,
+                    page: page
+                },
+                success: function (data) {
+                    $('#imageproductbyid').empty();
+                    if (data.code == 200) {
+                        $.each(data.dmsp, function (k, v) {
+                            let div = ' <a id="' + v.id + '"  name="b">';
+                            div += '<div class="product--display">';
+                            div += '<img src="/Images/' + v.image + '" />';
+                            div += '</div>';
+                            div += ' <div class="product--hover">';
+                            div += '<h2 id="w-rm">' + v.content + '</h2>';
+                            div += '</div>';
+                            div += '<h1 class="nameh1">' + v.name + '</h1></a>';
+                            div += '<div class="product--border"></div>';
+                            $('#imageproductbyid').append(div);
+                        });
+                        $('#pagebyid').empty();
+                        for (let i = 1; i <= data.pages; i++) {                                                   
+                            $('#page').empty();
+                            $('#pagebyid').empty();
+                                for (let j = page; j <= (parseInt(page) + 4); j++) {
+                                    if (j <= data.pages) {
+                                    let li = '<li class="page-item" id="' + j + '"><a class="page-link" href="#">' + j + '</a></li>';
+                                    $('#pagebyid').append(li);
+                                }
+                            }
+                           
+                        }
+                        if (parseInt(page) > 1) {
+                            let Previous = '<li class="page-item" id="' + (parseInt(page) - 1) + '"><a  class="page-link" href="#">Previous</a></li>';
+                            $('#pagebyid').append(Previous);
+                        }
+                        let next = '<li class="page-item" id="' + (parseInt(page) + 1) + '"><a name="nextpage" class="page-link" href="#">Next</a></li>';
+                        $('#pagebyid').append(next);
+                        let li = $('#pagebyid li#' + page + '');
+                        $(li).addClass('active')
+                        $('#w-rm table').css("width", "");
+                    }
+
+                }
+            });
+        }
+        function SeachProduct(page, seach) {
+            $('#pagebyid').hide();
+            $('#page').show();
+            $.ajax({
+                url: '/producthome/Seach/',
+                type: 'get',
+                data: {
+                    page: page,
+                    seach: seach
+                },
+                success: function (data) {
+                    $('#imageproductbyid').empty();
+                    if (data.code == 200) {
+                        $.each(data.dmsp, function (k, v) {
+                            let div = ' <a id="' + v.id + '" href="" name="b">';
+                            div += '<div class="product--display">';
+                            div += '<img src="/Images/' + v.image + '" />';
+                            div += '</div>';
+                            div += ' <div class="product--hover">';
+                            div += '<h2 id="w-rm">' + v.content + '</h2>';
+                            div += '</div>';
+                            div += '<h1 class="nameh1">' + v.name + '</h1></a>';
+                            div += '<div class="product--border"></div>';
+                            $('#imageproductbyid').append(div);
+                        });
+                        $('#page').empty();
+                        $('#pagebyid').empty();
+
+                        for (let i = 1; i <= data.pages; i++) {
+                            $('#page').empty();                            
+                            $('#pagebyid').empty();                            
+                                for (let j = page; j <= (parseInt(page) + 4); j++) {
+                                    if (j <= data.pages) {
+                                    let li = '<li class="page-item" id="' + j + '"><a class="page-link" href="#">' + j + '</a></li>';
+                                    $('#page').append(li);
+                                }
+                            }                           
                         }
 
+                        if (parseInt(page) > 1) {
+                            let Previous = '<li class="page-item" id="' + (parseInt(page) - 1) + '"><a  class="page-link" href="#">Previous</a></li>';
+                            $('#page').append(Previous);
+                        }
+                            let next = '<li class="page-item" id="' + (parseInt(page) + 1) + '"><a name="nextpage" class="page-link" href="#">Next</a></li>';
+                            $('#page').append(next);
+                        
+                           let li = $('#page li#' + page + '');
+                        $(li).addClass('active')
+                        $('#w-rm table').css("width", "");
                     }
-                });
-        });
+
+                }
+            });
+        }
+        /* ---------addlink---------------*/
+        $(document).on('click', "a[name='b']", function () {
+            let id = $(this).closest('a').attr('id')
+            $.ajax({
+                url: '/producthome/DetailProductById',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $.each(data.left, function (k, v) {
+                            window.location.href = data.Url + v.meta + "/" + v.id
+                        })
+
+                    }
+                }
+            })
+        })
+      
     </script>
 }

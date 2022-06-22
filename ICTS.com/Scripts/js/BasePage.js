@@ -233,4 +233,11 @@ function Alert(message, icon) {
    
 } $(document).scroll(function () {
         $(".animated").addClass("delay-1s");
-    });
+});
+function validateEmail(email) {
+    const res = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g.test(email);
+    if (res == false) {
+        alert("Vui Lòng Nhập Đúng Định Dạng Email")
+        return false;
+    }
+}

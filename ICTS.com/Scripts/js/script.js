@@ -65,7 +65,7 @@ jQuery(function($) {
 
         nav = menu.find('.main-nav');
         nav.find("ul li").each(function() {
-            if($(this).find("ul>li").length > 0){
+            if($(this).find("#menusanphamct>li").length > 0){
                 $(this).prepend('<i class="nav-drop"></i>');
             }
         });
