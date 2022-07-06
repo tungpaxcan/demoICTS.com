@@ -107,7 +107,6 @@ jQuery(function ($) {
 });
 $(window).scroll(function() {    
     var scroll = $(window).scrollTop();
-
     if (scroll >= 200) {
         $(".nav-wp").addClass("darkHeader fadeInDown");
         $("body").addClass("jjj");
@@ -116,7 +115,6 @@ $(window).scroll(function() {
         $("body").removeClass("jjj");
     }
 });
-
 /* menu left */
 
 (function($){
@@ -164,4 +162,43 @@ $(document).ready(function(){
 //$('[data-fancybox="gallery"]').fancybox({
 //  // Options will go here
 //});
+$(window).on("scroll", function () {
+    var scroll_pos = $(window).scrollTop();
+    var scroll = scroll_pos + 900;
+    var element_pos = $(".wow").offset().top;
+    var element_h1why = $(".h1why").offset().top;
+    var element_imgservice = $(".imgservice").offset().top;
+    var element_partnercontent = $(".partnercontent").offset().top;
+    var element_imgsolution = $(".imgsolution").offset().top;
+    var element_imgpromotion = $(".imgpromotion").offset().top;
+    var element_kmcontent = $(".kmcontent").offset().top;
+    var element_imgcustomer = $(".imgcustomer").offset().top;
+    var element_imgblog = $(".imgblog").offset().top;
 
+    if (scroll >= element_pos) {
+        $(".wow").addClass("fadeInLeft");
+    }
+    if (scroll >= element_h1why) {
+        $(".h1why").addClass("fadeInRight");
+    }
+    if (scroll >= element_imgservice) {
+        $(".imgservice").addClass("fadeInUp");
+    }
+    if (scroll >= element_partnercontent) {
+        $(".partnercontent").addClass("fadeInDown");
+    }
+    if (scroll >= element_imgsolution) {
+        $(".imgsolution").addClass("fadeInLeft");
+    }
+    if (scroll >= element_imgpromotion) {
+        $(".imgpromotion").addClass("fadeInRight");
+    }
+    if (scroll >= element_kmcontent) {
+        $(".kmcontent").addClass("fadeInUp");
+    }
+    if (scroll >= element_imgcustomer) {
+        $(".imgcustomer").addClass("fadeInDown");
+    } if (scroll >= element_imgblog) {
+        $(".imgblog").addClass("fadeInLeft");
+    }
+});

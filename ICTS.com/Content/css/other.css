@@ -4,6 +4,13 @@
 .goog-te-banner-frame.skiptranslate {
 	display: none;
 }
+#fixNav {
+	display: block;
+	position: fixed; /*Cho menu cố định 1 vị trí với top và left*/
+	bottom: 20px; /*Nằm trên cùng*/
+	left: 20px; /*Nằm sát bên trái*/
+	z-index: 100000; /*Hiển thị lớp trên cùng*/
+}
 /*-----------------------------------------------------*/
 .img-magnifier-container {
 	position: relative;

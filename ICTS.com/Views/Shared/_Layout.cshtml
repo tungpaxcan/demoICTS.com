@@ -205,11 +205,11 @@
             <div style="text-align:right;padding-top:2%" id="google_translate_element"> </div>
             <div class="clear">
             </div>
-
         </div>
-       
     </div>
+
     @RenderBody()
+    <div id="fixNav"><a onclick="Top();" class="smooth" id="smooth"><i class="fa-solid fa-up-to-line"></i></a></div>
     <footer class="footer-wp">
         <a href="https://core.vchat.vn/service/chat?code=15916&jwt=45ae06d6b91993b0946b399ef54787a1" class="btn btn-ft">
             Tư vấn ngay
@@ -246,6 +246,7 @@
                 </p>
             </div>
         </div>
+
     </footer>
     <script lang="javascript">var __vnp = { code: 15916, key: '', secret: '45ae06d6b91993b0946b399ef54787a1' }; (function () { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.defer = true; ga.src = '//core.vchat.vn/code/tracking.js'; var s = document.getElementsByTagName('script'); s[0].parentNode.insertBefore(ga, s[0]); })();</script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
@@ -271,6 +272,13 @@
                 top.location.href = self.location.href;
             }
         });
+        function Top() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+
         //seo
         $.ajax({
             url: '/seo/Seo',

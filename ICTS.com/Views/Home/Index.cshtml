@@ -10,14 +10,14 @@
         </div>
     </div>
     <div class="h-product-wp">
-        <div class="title-big  wow fadeInUp animated">
+        <div class="title-big  wow  animated">
             <h1>SẢN PHẨM CỦA CHÚNG TÔI</h1>
         </div>
         <div style="text-align:center" class="h-product-block ">
             <ul id="imgcategory" class="home-imageproduct">
             </ul>
         </div>
-        <div class="title-big  wow fadeInUp animated">
+        <div class="title-big h1why animated">
             <div id="h1why">
             </div>
             <div id="pwhy">
@@ -25,7 +25,7 @@
         </div>
     </div>
     <div class="h-product-wp">
-        <div class="title-big  wow fadeInUp animated">
+        <div class="title-big imgservice animated">
             <h1>DỊCH VỤ</h1>
         </div>
         <div style="text-align:center" class="h-product-block ">
@@ -33,21 +33,21 @@
             </ul>
         </div>
     </div>
-    <div class="title-big  wow fadeInUp animated">
+    <div class="title-big partnercontent animated">
         <h1>ĐỐI TÁC CAO CẤP</h1>
     </div>
     <div class="slider">
         <div id="partner" class="slide-track">
         </div>
     </div>
-    <div style="padding:3%;margin-top:3%" class="title-big  wow fadeInUp animated">
+    <div style="padding:3%;margin-top:3%" class="title-big partnercontent animated">
         <div id="namebv1">
         </div>
         <div id="partnercontent">
         </div>
     </div>
     <div class="h-product-wp">
-        <div class="title-big  wow fadeInUp animated">
+        <div class="title-big imgsolution animated">
             <h1>GIẢI PHÁP</h1>
         </div>
         <div style="text-align:center" class="h-product-block ">
@@ -56,7 +56,7 @@
         </div>
     </div>
     <div class="h-product-wp">
-        <div class="title-big  wow fadeInUp animated">
+        <div class="title-big imgpromotion animated">
             <h1>CHƯƠNG TRÌNH KHUYẾN MÃI</h1>
         </div>
         <div style="text-align:center" class="h-product-block ">
@@ -64,14 +64,14 @@
             </ul>
         </div>
     </div>
-    <div style="padding:3%;margin-top:1%" class="title-big  wow fadeInUp animated">
+    <div style="padding:3%;margin-top:1%" class="title-big kmcontent animated">
         <div id="namebv2">
         </div>
         <div id="kmcontent">
         </div>
     </div>
     <div class="h-product-wp">
-        <div class="title-big  wow fadeInUp animated">
+        <div class="title-big imgcustomer animated">
             <h1>KHÁCH HÀNG THÂN THIẾT</h1>
         </div>
         <div style="text-align:center" class="h-product-block ">
@@ -80,16 +80,16 @@
         </div>
     </div>
     <div class="h-product-wp">
-        <div class="title-big  wow fadeInUp animated">
+        <div class="title-big imgblog animated">
             <h1>TIN TỨC</h1>
         </div>
-        <div style="text-align:center" class="h-product-block ">
+        <div style="text-align:center" class="h-product-block imgblog animated">
             <ul id="imgblog" class="home-imageproduct">
             </ul>
         </div>
     </div>
     <div class="newsletter-bg form-group">
-        <div style="padding:3%;margin-top:1%" class="title-big  wow fadeInUp animated">
+        <div style="padding:3%;margin-top:1%" class="title-big  wow  animated">
             <h1>Đăng kí nhận tin mới nhất từ chúng tôi</h1>
         </div>
 
@@ -125,6 +125,7 @@
                 Promotion();
                 Customer();
                 Blog();
+                 
             });
 
 
@@ -192,7 +193,7 @@
                             $.each(data.dmsp, function (k, v) {
                                 let div = '<li>'
                                 div += ' <div class="h-product-item">'
-                                div += ' <div  class="h-product-item-img wow fadeInDown animated perspective">';
+                                div += ' <div  class="h-product-item-img wow  animated perspective">';
                                 div += '<a href="/san-pham/" class="image-product image-product-3d image-product-3da">';
                                 div += '<img src="/Images/' + v.image + '" title="' + v.title + '" />';
                                 div += '</a>';
@@ -287,7 +288,7 @@
                             $.each(data.left, function (k, v) {
                                 let div = '<li class="">'
                                 div += ' <div class="h-product-item">'
-                                div += ' <div id="' + v.id + '" class="h-product-item-img wow fadeInRight animated perspective">';
+                                div += ' <div id="' + v.id + '" class="h-product-item-img imgsolution animated perspective">';
                                 div += '<a id="' + v.id + '" name="bb" class="image-product image-product-3d image-product-3da">';
                                 div += '<img class="" src="/Images/' + v.image + '" title="' + v.title + '" />';
                                 div += '</a>';
@@ -312,7 +313,7 @@
                             $.each(data.dmsp, function (k, v) {
                                 let div = '<li class="servicemg">'
                                 div += ' <div class="h-product-item">'
-                                div += ' <div id="' + v.id + '" class="h-product-item-img wow fadeInDown animated ">';
+                                div += ' <div id="' + v.id + '" class="h-product-item-img imgservice animated ">';
                                 div += '<a id="' + v.id + '" href="" name="aservice" class="image-product image-product-3d image-product-3da">';
                                 div += '<img class="" src="/Images/' + v.image + '" title="' + v.title + '" />';
                                 div += '</a>';
@@ -358,7 +359,7 @@
                             $.each(data.dmsp, function (k, v) {
                                 let div = '<li>'
                                 div += ' <div class="h-product-item">'
-                                div += ' <div  class="h-product-item-img wow fadeInLeft animated perspective">';
+                                div += ' <div  class="h-product-item-img imgpromotion animated perspective">';
                                 div += '<a href="" class="image-product image-product-3d image-product-3da">';
                                 div += '<img src="/Images/' + v.image + '" alt="' + v.title + '" />';
                                 div += '</a>';
@@ -384,7 +385,7 @@
                             $.each(data.dmsp, function (k, v) {
                                 let div = '<li class="servicemg " >'
                                 div += ' <div class="h-product-item">'
-                                div += ' <div  class="h-product-item-img perspective">';
+                                div += ' <div  class="h-product-item-img imgcustomer animated perspective">';
                                 div += '<a target="_blank" href="' + v.link + '"class="image-product image-product-3d image-product-3da">';
                                 div += '<img src="/Images/' + v.image + '" title="' + v.title + '" />';
                                 div += '</a>';
@@ -518,5 +519,6 @@
                     }
                 })
             })
+
         </script>
     }
