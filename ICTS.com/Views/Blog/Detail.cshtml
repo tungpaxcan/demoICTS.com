@@ -1,0 +1,144 @@
+﻿@model ICTS.com.Models.Blog
+@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<input hidden value="@Model.Id" id="idblog" />
+<div class="home-backround">
+    <div class="title-big ">
+        <h1 class="nameblog">Blog/@Model.Name</h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="h-product-wp">
+                <div class="h-product-block ">
+                    <ul id="blogadd" class="home-imageproduct">
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+                <div class="h-product-block ">
+                    <ul id="blogorder">
+                    </ul>
+                </div>
+        </div>
+    </div>   
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            BlogAddById();
+            BlogAddOrther();
+            $('.title-big .nameblog').css("text-align","left");
+            $('.title-big .nameblog').css("padding-left", "5%");
+            $('.title-big .nameblog').css("padding-top", "2%");
+        })
+        function BlogAddById() {
+            let idblog = $('#idblog').val().trim();
+            let stt = 1;
+            $.ajax({
+                url: '/blog/BlogAddById',
+                type: 'get',
+                data: {
+                    id: idblog
+                },
+                success: function (data) {
+                    $('#blogadd').empty();
+                    if (data.code == 200) {
+                        $.each(data.left, function (k, v) {
+                            let div = '<li id="' + v.id + '" name="ablogadd">';
+                            div += ' <div class="h-product-item">';
+                            div += ' <div  class="h-product-item-img perspective">';
+                            div += '<a href="" class="image-product ">';
+                            div += '<img  src="/Images/' + v.image + '" title="' + v.title + '" />';
+                            div += '</a>';
+                            div += '</div>';
+                            div += ' <div style="padding:3%;margin-top:1%" class="title-big ">';
+                            div += '<h1>Bài Viết '+(stt++)+'</h1>';
+                            div += ' </div>'
+                            div += '</div>';
+                            div += '</li>';
+                            $('#blogadd').append(div);
+                        });
+
+                    } else {
+                        alert(data.msg)
+                    }
+                }
+            });
+        }
+        function BlogAddOrther() {
+            let idblog = $('#idblog').val().trim();
+            let stt = 1;
+            $.ajax({
+                url: '/blog/BlogAddOrder',
+                type: 'get',
+                data: {
+                    id: idblog
+                },
+                success: function (data) {
+                    $('#blogorder').empty();
+                    if (data.code == 200) {
+                        $.each(data.left, function (k, v) {
+                            let div = '<li id="' + v.id + '" name="ablog">';
+                            div += ' <div class="h-product-item">';
+                            div += ' <div  class="h-product-item-img perspective">';
+                            div += '<a href="" class="image-product ">';
+                            div += '<img style="width:100%;padding:20% 20% 0%" src="/Images/' + v.image + '" title="' + v.title + '" />';
+                            div += '</a>';
+                            div += '</div>';
+                            div += ' <div style="padding:3%;margin-top:1%" class="title-big ">';
+                            div += '<h1>Bài Mới Của ' + v.name + '</h1>';
+                            div += ' </div>'
+                            div += '</div>';
+                            div += '</li>';
+                            $('#blogorder').append(div);
+                        });
+
+                    } else {
+                        alert(data.msg)
+                    }
+                }
+            });
+        }
+     /*   --------- addlink---------------**/
+        $(document).on('click', "li[name='ablog']", function () {
+            let id = $(this).closest('li').attr('id')
+            $.ajax({
+                url: '/blog/BlogUrl',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $.each(data.left, function (k, v) {
+                            window.location.href = data.Url + v.meta + "/" + v.id
+                        })
+
+                    }
+                }
+            })
+        })
+        /*   --------- addlinkblogadd---------------**/
+        $(document).on('click', "li[name='ablogadd']", function () {
+            let id = $(this).closest('li').attr('id')
+            $.ajax({
+                url: '/blogadd/BlogAddUrl',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $.each(data.left, function (k, v) {
+                            window.location.href = data.Url + v.meta + "/" + v.id
+                        })
+
+                    }
+                }
+            })
+        })
+    </script>
+    }

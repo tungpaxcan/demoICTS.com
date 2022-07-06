@@ -45,7 +45,9 @@ namespace ICTS.com.Areas.ICTS.Controllers
             {
                 db.Configuration.ProxyCreationEnabled = false;
                 var tv = db.Modules.SingleOrDefault(x => x.Id == id);
-                return Json(new { code = 200, tv = tv, msg = "" }, JsonRequestBehavior.AllowGet);
+                var session = (Admin)Session["admin"];
+                var role = session.Role;
+                return Json(new { code = 200, tv = tv, role= role, msg = "" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
@@ -124,7 +126,9 @@ namespace ICTS.com.Areas.ICTS.Controllers
             {
                 db.Configuration.ProxyCreationEnabled = false;
                 var tv = db.Modules.SingleOrDefault(x => x.Id == id);
-                return Json(new { code = 200, tv = tv, msg = "" }, JsonRequestBehavior.AllowGet);
+                var session = (Admin)Session["admin"];
+                var role = session.Role;
+                return Json(new { code = 200, tv = tv,role=role, msg = "" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
@@ -158,7 +162,9 @@ namespace ICTS.com.Areas.ICTS.Controllers
             {
                 db.Configuration.ProxyCreationEnabled = false;
                 var ttlh = db.Modules.SingleOrDefault(x => x.Id == id);
-                return Json(new { code = 200, ttlh = ttlh, msg = "" }, JsonRequestBehavior.AllowGet);
+                var session = (Admin)Session["admin"];
+                var role = session.Role;
+                return Json(new { code = 200,role=role ,ttlh = ttlh, msg = "" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
@@ -175,6 +181,43 @@ namespace ICTS.com.Areas.ICTS.Controllers
                 ttlh.Name = ten;
                 ttlh.Meta = meta;
                 ttlh.Phone = phone;
+                db.SaveChanges();
+                return Json(new { code = 200, msg = "Sửa danh sách thành công" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { code = 500, mmsg = "Sửa danh sách không thành công" + e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpGet]
+        public JsonResult Gmail()
+        {
+            try
+            {
+                var ttlh = (from tt in db.Modules.Where(x => x.Id == 23)
+                            select new
+                            {
+                                id = tt.Id,
+                                email=tt.Email
+                            }).ToList();
+                return Json(new { code = 200, ttlh = ttlh, msg = "Hiển Thị Dữ liệu thành công" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { code = 500, msg = "Hiểm thị dữ liệu thất bại" + e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        public JsonResult EditGmail(int id, string email)
+        {
+            try
+            {
+                var session = (Admin)Session["admin"];
+                var nameAdmin = session.Name;
+                var logo = db.Modules.SingleOrDefault(x => x.Id == id);
+                logo.Email = email;
+                logo.ModifileBy = nameAdmin;
+                logo.ModifileDate = DateTime.Now;
                 db.SaveChanges();
                 return Json(new { code = 200, msg = "Sửa danh sách thành công" }, JsonRequestBehavior.AllowGet);
             }

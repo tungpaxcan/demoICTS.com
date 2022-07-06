@@ -191,6 +191,80 @@ namespace ICTS.com.Controllers
                 return Json(new { code = 500, mmsg = "Thêm danh sách không thành công" + e.Message }, JsonRequestBehavior.AllowGet);
             }
         }
-
+        [HttpGet]
+        public JsonResult Gmail()
+        {
+            try
+            {
+                var a = db.Modules.SingleOrDefault(x => x.Id == 23);
+                return Json(new { code = 200, a = a, msg = "Hiển Thị Dữ liệu thành công" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { code = 500, msg = "Hiểm thị dữ liệu thất bại" + e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        public JsonResult GmailNewsLetter(string email)
+        {
+            try
+            {
+                var gm = new GmailNewsLetter();
+                gm.Email = email;
+                gm.CreateAt = DateTime.Now;
+                db.GmailNewsLetters.Add(gm);
+                db.SaveChanges();
+                return Json(new { code = 200,msg = "" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { code = 500, msg = "" + e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpGet]
+        public JsonResult ListGmailNewLetter()
+        {
+            try
+            {
+                var a = (from s in db.GmailNewsLetters.Where(x => x.Id > 0)
+                         select new
+                         {
+                             id = s.Id,
+                             email = s.Email,
+                             creatdate = s.CreateAt.Value.Day+"/"+s.CreateAt.Value.Month+"/"+s.CreateAt.Value.Year
+                         }).ToList();
+                return Json(new { code = 200, a = a, msg = "Hiển Thị Dữ liệu thành công" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { code = 500, msg = "Hiểm thị dữ liệu thất bại" + e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        public JsonResult DeleteGmailNewLetter(int id)
+        {
+            try
+            {       db.Configuration.ProxyCreationEnabled = false;
+                var a = (Admin)Session["admin"];
+                var role = a.Role;
+                
+                var gm = db.GmailNewsLetters.SingleOrDefault(x => x.Id == id);
+                if (role == true)
+                {
+                    db.GmailNewsLetters.Remove(gm);
+                    db.SaveChanges();
+                    return Json(new { code = 200, msg = "" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { code = 300, msg = "Bạn không có quyền xóa" }, JsonRequestBehavior.AllowGet);
+                }
+               
+            }
+            catch (Exception e)
+            {
+                return Json(new { code = 500, msg = "" + e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

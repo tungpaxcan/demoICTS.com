@@ -75,7 +75,9 @@ namespace ICTS.com.Areas.ICTS.Controllers
             {
                 db.Configuration.ProxyCreationEnabled = false;
                 var tv = db.Sliders.SingleOrDefault(x => x.Id == id);
-                return Json(new { code = 200, tv = tv, msg = "" }, JsonRequestBehavior.AllowGet);
+                var session = (Admin)Session["admin"];
+                var role = session.Role;
+                return Json(new { code = 200, tv = tv,role=role, msg = "" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
@@ -136,9 +138,15 @@ namespace ICTS.com.Areas.ICTS.Controllers
             {
                 db.Configuration.ProxyCreationEnabled = false;
                 var l = db.Sliders.Find(id);
-                db.Sliders.Remove(l);
-                db.SaveChanges();
-                return Json(new { code = 200, msg = "Xoa Dữ Liệu thành công" }, JsonRequestBehavior.AllowGet);
+                var session = (Admin)Session["admin"];
+                var role = session.Role;
+                if (role == true)
+                {
+                    db.Sliders.Remove(l);
+                    db.SaveChanges();
+                    return Json(new { code = 200, msg = "Xoa Dữ Liệu thành công" }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { code = 300, msg = "Bạn Không có quyền xóa dữ liệu " }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {

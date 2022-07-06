@@ -26,6 +26,7 @@ namespace ICTS.com.Models
         public string CreateBy { get; set; }
         public Nullable<System.DateTime> ModifileDate { get; set; }
         public string ModifileBy { get; set; }
+        public Nullable<int> Count { get; set; }
         public Nullable<bool> StatusImage { get; set; }
         public Nullable<bool> Status { get; set; }
     }

@@ -19,6 +19,7 @@ namespace ICTS.com.Models
         {
             this.Contacts = new HashSet<Contact>();
             this.DetailProducts = new HashSet<DetailProduct>();
+            this.Images = new HashSet<Image>();
         }
     
         public int Id { get; set; }
@@ -43,6 +44,8 @@ namespace ICTS.com.Models
         public virtual ICollection<Contact> Contacts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetailProduct> DetailProducts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Image> Images { get; set; }
         public virtual ProductCategory ProductCategory { get; set; }
     }
 }

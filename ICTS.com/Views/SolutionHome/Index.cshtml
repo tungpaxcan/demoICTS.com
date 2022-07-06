@@ -40,9 +40,9 @@
                     if (data.code == 200) {
                         $.each(data.left, function (k, v) {
                             let div = '<div class="form-solution">';
-                            div += '<div id="' + v.id + '"><a name="a"><img alt="' + v.title + '" src="/Images/' + v.image + '" /></a></div>';
+                            div += '<div ><a id="' + v.id + '" name="bb"><img alt="' + v.title + '" src="/Images/' + v.image + '" /></a></div>';
                             div += '<h1>' + v.name + '</h1>';
-                            div += '<div id="' + v.id + '"class="contentsolution">' + v.content + '<a href="" name="a" >  xem thêm...</a></div>';
+                            div += '<div class="contentsolution">' + v.content + '<a style="color:blue" id="' + v.id + '"  name="bb" >  xem thêm...</a></div>';
                             div += '</div>';
                             $('#solutionall').append(div);
                         });
@@ -52,8 +52,8 @@
                 }
             });
             /* ---------addlink---------------*/
-            $(document).on('click', "a[name='b']", function () {
-                let id = $(this).closest('div').attr('id')
+            $(document).on('click', "a[name='bb']", function () {
+                let id = $(this).closest('a').attr('id')
                 $.ajax({
                     url: '/solutionhome/DetailSolution',
                     type: 'get',

@@ -1,6 +1,6 @@
 ﻿@model ICTS.com.Models.ProductCategory
 @{
-    ViewBag.Title = Model.Name;
+    ViewBag.Title = "CÁC LOẠI "+Model.Name;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div id="w-hv" class="home-backround">
@@ -41,7 +41,14 @@
             page = $(this).attr('id');
             SeachProduct(page, seach);
         });
-
+        function myFunction() {
+            var x = document.getElementById("mymenu");
+            if (x.className === "menu-categgory") {
+                x.className += " responsive";
+            } else {
+                x.className = "menu-categgory";
+            }
+        };
         /*  --------------- seach---------------------------*/
         $('#btnSeach').click(function () {
             page = 1;
@@ -81,7 +88,7 @@
                         $.each(data.dmsp, function (k, v) {
                             let div = ' <a id="' + v.id + '"  name="b">';
                             div += '<div class="product--display">';
-                            div += '<img src="/Images/' + v.image + '" />';
+                            div += '<img alt="' + v.title +'" src="/Images/' + v.image + '" />';
                             div += '</div>';
                             div += ' <div class="product--hover">';
                             div += '<h2 id="w-rm">' + v.content + '</h2>';
@@ -132,7 +139,7 @@
                         $.each(data.dmsp, function (k, v) {
                             let div = ' <a id="' + v.id + '" href="" name="b">';
                             div += '<div class="product--display">';
-                            div += '<img src="/Images/' + v.image + '" />';
+                            div += '<img alt="' + v.title +'" src="/Images/' + v.image + '" />';
                             div += '</div>';
                             div += ' <div class="product--hover">';
                             div += '<h2 id="w-rm">' + v.content + '</h2>';
@@ -182,7 +189,7 @@
                 success: function (data) {
                     if (data.code == 200) {
                         $.each(data.left, function (k, v) {
-                            window.location.href = data.Url + v.meta + "/" + v.id
+                            window.location.href = data.Url + v.meta + "/" + v.ids
                         })
 
                     }

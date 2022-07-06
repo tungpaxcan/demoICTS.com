@@ -52,6 +52,7 @@ namespace ICTS.com.Areas.ICTS.Controllers
                                 name = s.Name,
                                 title = s.Title,
                                 meta = s.Meta,
+                                link=s.link,
                                 image = s.Image,
                                 createdate = s.CreateDate.Value.Day + "/" + s.CreateDate.Value.Month + "/" + s.CreateDate.Value.Year,
                                 createby = s.CreateBy,
@@ -69,7 +70,7 @@ namespace ICTS.com.Areas.ICTS.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public JsonResult Add(string name, string url, string title, bool status, bool statusimage, string image)
+        public JsonResult Add(string name, string url, string title,string link, bool status, bool statusimage, string image)
         {
             try
             {
@@ -81,6 +82,7 @@ namespace ICTS.com.Areas.ICTS.Controllers
                 d.Name = name;
                 d.Meta = url;
                 d.Title = title;
+                d.link = link;
                 d.CreateBy = nameAdmin;
                 d.CreateDate = DateTime.Now;
                 d.ModifileBy = nameAdmin;
@@ -97,7 +99,7 @@ namespace ICTS.com.Areas.ICTS.Controllers
             }
         }
         [HttpPost, ValidateInput(false)]
-        public JsonResult Edit(int id, string name, string url, string title, bool status, bool statusimage, string image)
+        public JsonResult Edit(int id, string name, string url, string title,string link, bool status, bool statusimage, string image)
         {
             try
             {
@@ -108,6 +110,7 @@ namespace ICTS.com.Areas.ICTS.Controllers
                 dmsp.Name = name;
                 dmsp.Meta = url;
                 dmsp.Title = title;
+                dmsp.link = link;
                 dmsp.Status = status;
                 dmsp.StatusImage = statusimage;
                 dmsp.Image = images;
@@ -142,9 +145,18 @@ namespace ICTS.com.Areas.ICTS.Controllers
             {
                 db.Configuration.ProxyCreationEnabled = false;
                 var l = db.Customers.Find(id);
-                db.Customers.Remove(l);
-                db.SaveChanges();
-                return Json(new { code = 200, msg = "Xoa Dữ Liệu thành công" }, JsonRequestBehavior.AllowGet);
+                var session = (Admin)Session["admin"];
+                var role = session.Role;
+                if (role == true)
+                {
+                    db.Customers.Remove(l);
+                    db.SaveChanges();
+                    return Json(new { code = 200, msg = "Xoa Dữ Liệu thành công" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { code = 300, msg = "Bạn không có quyền xóa dữ liệu" }, JsonRequestBehavior.AllowGet);
+                }
             }
             catch (Exception e)
             {

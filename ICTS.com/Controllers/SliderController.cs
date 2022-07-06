@@ -11,7 +11,7 @@ using ICTS.com.Models;
 
 namespace ICTS.com.Controllers
 {
-    public class SlidersController : Controller
+    public class SliderController : Controller
     {
         private Entities db = new Entities();
 
@@ -33,7 +33,8 @@ namespace ICTS.com.Controllers
                                   image = s.Image,
                                   title = s.Title
                               }).ToList();
-                return Json(new { code = 200, slider = slider, msg = "Hiển Thị Dữ liệu thành công" }, JsonRequestBehavior.AllowGet);
+                var count = slider.Count();
+                return Json(new { code = 200, count= count, slider = slider, msg = "Hiển Thị Dữ liệu thành công" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {

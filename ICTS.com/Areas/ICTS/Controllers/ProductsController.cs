@@ -29,7 +29,7 @@ namespace ICTS.com.Areas.ICTS.Controllers
                     var sub21 = sub2.Replace(":", "");
                     string _FileName = "";
                     int index = file.FileName.IndexOf('.');
-                    _FileName = sub11 + sub21 + "Product" + "." + file.FileName.Substring(index + 1);
+                    _FileName = sub11 + sub21 + "Product" + file.FileName;
                     file.SaveAs(Server.MapPath("/Images/" + _FileName));
 
                     return "/Images/" + _FileName;
@@ -76,12 +76,12 @@ namespace ICTS.com.Areas.ICTS.Controllers
             }
         }
         [HttpGet]
-        public JsonResult Product(string seach, int page)
+        public JsonResult Product(int idprocate,int idbr, string seach, int page)
         {
             try
             {
                 var pageSize = 5;
-                var dmspp = (from s in db.Products.Where(x => x.Id > 0)
+                var dmspp = (from s in db.Products.Where(x => x.IdProductCategory == idprocate && x.IdBrand == idbr)
                              join ss in db.ProductCategories on s.IdProductCategory equals ss.Id
                              join sss in db.Brands on s.IdBrand equals sss.Id
                              join ssss in db.Categories on ss.IdCategory equals ssss.Id
@@ -116,7 +116,7 @@ namespace ICTS.com.Areas.ICTS.Controllers
             }
         }
         [HttpPost, ValidateInput(false)]
-        public JsonResult Edit(string name, int nameproductcategory,int namebrand, string url, string title,string thongso, bool status,string image)
+        public JsonResult Add(string name, int nameproductcategory,int namebrand, string url, string title,string thongso, bool status,string image)
         {
             try
             {
@@ -146,7 +146,7 @@ namespace ICTS.com.Areas.ICTS.Controllers
             }
         }
         [HttpPost, ValidateInput(false)]
-        public JsonResult Add(int id, string name, int nameproductcategory, int namebrand, string url, string title, string thongso, bool status, string image)
+        public JsonResult Edit(int id, string name, int nameproductcategory, int namebrand, string url, string title, string thongso, bool status, string image)
         {
             try
             {
@@ -195,13 +195,44 @@ namespace ICTS.com.Areas.ICTS.Controllers
             {
                 db.Configuration.ProxyCreationEnabled = false;
                 var l = db.Products.Find(id);
-                db.Products.Remove(l);
-                db.SaveChanges();
-                return Json(new { code = 200, msg = "Xoa Dữ Liệu thành công" }, JsonRequestBehavior.AllowGet);
+                var session = (Admin)Session["admin"];
+                var role = session.Role;
+                if (role == true)
+                {
+                    db.Products.Remove(l);
+                    db.SaveChanges();
+                    return Json(new { code = 200, msg = "Xoa Dữ Liệu thành công" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { code = 300, msg = "Bạn không có quyền xóa dữ liệu" }, JsonRequestBehavior.AllowGet);
+                }
+              
             }
             catch (Exception e)
             {
                 return Json(new { code = 500, msg = "Xoa nhật dữ liệu thất bại" + e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpGet]
+        public JsonResult SeachAuto(string seach)
+        {
+            try
+            {
+                var dmsp = (from s in db.Products.Where(x => x.Id > 0)
+                            join ss in db.ProductCategories on s.IdProductCategory equals ss.Id
+                            join sss in db.Categories on ss.IdCategory equals sss.Id
+                            select new
+                            {
+                                id = s.Id,
+                                name = s.Name
+
+                            }).ToList().Where(x => x.name.ToLower().Contains(seach));
+                return Json(new { code = 200, dmsp = dmsp, msg = "Hiển Thị Dữ liệu thành công" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { code = 500, msg = "Hiểm thị dữ liệu thất bại" + e.Message }, JsonRequestBehavior.AllowGet);
             }
         }
     }

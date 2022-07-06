@@ -5,18 +5,14 @@
 <div class="home-backround">
     <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
         <div id="slidehome" class="carousel-inner">
-            <div class="carousel-item active">
-                <img class="d-block w-100" src="~/Images/05052022114041_39.jpg" alt="First slide">
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="~/Images/29462021094637394_46.png" alt="Second slide">
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="~/Images/29462021094649875_3.jpg" alt="Third slide">
+            <div id="showContainer">
             </div>
         </div>
     </div>
     <div class="h-product-wp">
+        <div class="title-big  wow fadeInUp animated">
+            <h1>SẢN PHẨM CỦA CHÚNG TÔI</h1>
+        </div>
         <div style="text-align:center" class="h-product-block ">
             <ul id="imgcategory" class="home-imageproduct">
             </ul>
@@ -29,304 +25,498 @@
         </div>
     </div>
     <div class="h-product-wp">
+        <div class="title-big  wow fadeInUp animated">
+            <h1>DỊCH VỤ</h1>
+        </div>
         <div style="text-align:center" class="h-product-block ">
             <ul id="imgservice" class="home-imageproduct">
             </ul>
         </div>
     </div>
+    <div class="title-big  wow fadeInUp animated">
+        <h1>ĐỐI TÁC CAO CẤP</h1>
+    </div>
     <div class="slider">
         <div id="partner" class="slide-track">
         </div>
     </div>
-    <div style="padding:3%;margin-top:1%" class="title-big  wow fadeInUp animated">
+    <div style="padding:3%;margin-top:3%" class="title-big  wow fadeInUp animated">
+        <div id="namebv1">
+        </div>
         <div id="partnercontent">
         </div>
     </div>
     <div class="h-product-wp">
+        <div class="title-big  wow fadeInUp animated">
+            <h1>GIẢI PHÁP</h1>
+        </div>
         <div style="text-align:center" class="h-product-block ">
             <ul id="imgsolution" class="home-imageproduct">
             </ul>
         </div>
     </div>
     <div class="h-product-wp">
+        <div class="title-big  wow fadeInUp animated">
+            <h1>CHƯƠNG TRÌNH KHUYẾN MÃI</h1>
+        </div>
         <div style="text-align:center" class="h-product-block ">
             <ul id="imgpromotion" class="home-imageproduct">
             </ul>
         </div>
     </div>
     <div style="padding:3%;margin-top:1%" class="title-big  wow fadeInUp animated">
+        <div id="namebv2">
+        </div>
         <div id="kmcontent">
         </div>
     </div>
     <div class="h-product-wp">
+        <div class="title-big  wow fadeInUp animated">
+            <h1>KHÁCH HÀNG THÂN THIẾT</h1>
+        </div>
         <div style="text-align:center" class="h-product-block ">
             <ul id="imgcustomer" class="home-imageproduct">
             </ul>
         </div>
     </div>
+    <div class="h-product-wp">
+        <div class="title-big  wow fadeInUp animated">
+            <h1>TIN TỨC</h1>
+        </div>
+        <div style="text-align:center" class="h-product-block ">
+            <ul id="imgblog" class="home-imageproduct">
+            </ul>
+        </div>
+    </div>
+    <div class="newsletter-bg form-group">
+        <div style="padding:3%;margin-top:1%" class="title-big  wow fadeInUp animated">
+            <h1>Đăng kí nhận tin mới nhất từ chúng tôi</h1>
+        </div>
+
+        <input id="emailnesletter" class="form-control" type="text" value="" placeholder="Nhập Email" />
+        <button type="submit" class="btn btn-primary" id="submitgmailnewletter">Gửi</button>
+    </div>
 </div>
-@section scripts{
-    <script>
-        $(document).ready(function () {
-            ImgCategory();
-            Why();
-            Partner();
-            PartnerContent();
-            Solution();
-            Service();
-            KmContent();
-            Promotion();
-            Customer();
-        });
-        function ImgCategory() {
-            $.ajax({
-                url: '/home/DanhMucTheoAnh',
-                type: 'get',
-                success: function (data) {
-                    $('#imgcategory').empty();
-                    if (data.code == 200) {
-                        $.each(data.dmsp, function (k, v) {
-                            let div = '<li>'
-                            div += ' <div class="h-product-item">'
-                            div += ' <div  class="h-product-item-img wow fadeInDown animated perspective">';
-                            div += '<a href="/san-pham/" class="image-product image-product-3d image-product-3da">';
-                            div += '<img src="/Images/' + v.image + '" title="' + v.title + '" />';
-                            div += '</a>';
-                            div += '</div>';
-                            div += '</div>';
-                            div += '</li>';
-                            $('#imgcategory').append(div);
-                        });
+@*<style>
+    .div {
+        width: 100px;
+        height: 100px;
+        background: purple;
+        -webkit-transition: width 2s; /* For Safari 3.1 to 6.0 */
+        transition: width 2s;
+    }
 
-                    } else {
-                        alert(data.msg)
-                    }
-                }
-            });
+        .div:hover {
+            display:none;
         }
-        function Why() {
-            $.ajax({
-                url: '/home/Why',
-                type: 'get',
-                success: function (data) {
-                    if (data.code == 200) {
-                        $.each(data.w, function (k, v) {
-                            $('#h1why').empty();
-                            let h1 = '<h1 id="' + v.id + '">';
-                            h1 += '' + v.name + '';
-                            h1 += '</h1>';
-                            $('#h1why').append(h1);
-                            $('#pwhy').empty();
-                            let p = ''+v.content+'';
-                            $('#pwhy').append(p);
-                        });
+</style>
+    <div class="div"></div>*@
+    @section scripts{
+        <script>
+            $(document).ready(function () {
+                Slider();
+                ImgCategory();
+                Why();
+                Partner();
+                PartnerContent();
+                Solution();
+                Service();
+                KmContent();
+                Promotion();
+                Customer();
+                Blog();
+            });
 
-                    } else {
-                        alert(data.msg)
+
+            function Slider() {
+                $.ajax({
+                    url: '/slider/Slider',
+                    type: 'get',
+                    success: function (data) {
+                        let ids = 1;
+                        $('#slidehome').empty();
+                        if (data.code == 200) {
+                            let div = '<div>'
+                            $.each(data.slider, function (k, v) {
+                                div += '<div class="imageContainer Out" id="im_' + (ids++) + '">';
+                                div += '<img alt="' + v.title + '" class="d-block" src="/Images/' + v.image + '" >';
+                                div += '</div>';
+                               
+                            });
+                            div += ' <div hidden class="navButton" id="previous"></div>';
+                            div += ' <div hidden class="navButton" id="next"></div>';
+                            div += ' </div>';
+                            $('#slidehome').append(div);
+                            $('#previous').on('click', function () {
+                                // Change to the previous image 
+                               
+                                $('#im_' + currentImage).addClass('Out');
+                                $('#im_' + currentImage).removeClass('In');
+                                decreaseImage();
+                                $('#im_' + currentImage).addClass('In');
+                                $('#im_' + currentImage).removeClass('Out');
+                                $(".In").css("display", 'block')
+                                $(".Out").css("display", 'none')
+
+                                
+                            });
+                            var currentImage = 1;
+                            var totalImages = data.count;
+                            function decreaseImage() {
+                                /* Decrease currentImage by 1.
+                                * Resets to totalImages if smaller than 1
+                                */ 
+                                --currentImage;
+                                
+                                if (currentImage < 1) {
+                                    currentImage = totalImages;
+                                }
+                            }
+                            setInterval(function () {
+                                $('#previous').click();
+                            }, 2500);
+                          
+                        } else {
+                            alert(data.msg)
+                        }
                     }
-                }
-            });
-        }
-        function Partner() {
-            $.ajax({
-                url: '/partner/Partner',
-                type: 'get',
-                success: function (data) {
-                    $('#partner').empty();
-                    if (data.code == 200) {
-                        for (let i = 1; i <= 2; i++) {
-                            $.each(data.pn, function (k, v) {
-                                let div = ' <div class="slide">';
-                                div += '<a target="_blank" href="' + v.link + '">'
-                                div += ' <img src="/Images/' + v.image + '" height="100" width="250" alt="' + v.title + '" />'
+                });
+            }
+            function ImgCategory() {
+                $.ajax({
+                    url: '/home/DanhMucTheoAnh',
+                    type: 'get',
+                    success: function (data) {
+                        $('#imgcategory').empty();
+                        if (data.code == 200) {
+                            $.each(data.dmsp, function (k, v) {
+                                let div = '<li>'
+                                div += ' <div class="h-product-item">'
+                                div += ' <div  class="h-product-item-img wow fadeInDown animated perspective">';
+                                div += '<a href="/san-pham/" class="image-product image-product-3d image-product-3da">';
+                                div += '<img src="/Images/' + v.image + '" title="' + v.title + '" />';
                                 div += '</a>';
                                 div += '</div>';
-                                $('#partner').append(div);
+                                div += '</div>';
+                                div += '</li>';
+                                $('#imgcategory').append(div);
                             });
+
+                        } else {
+                            alert(data.msg)
                         }
-                      
+                    }
+                });
+            }
+            function Why() {
+                $.ajax({
+                    url: '/home/Why',
+                    type: 'get',
+                    success: function (data) {
+                        if (data.code == 200) {
+                            $.each(data.w, function (k, v) {
+                                $('#h1why').empty();
+                                let h1 = '<h1 id="' + v.id + '">';
+                                h1 += '' + v.name + '';
+                                h1 += '</h1>';
+                                $('#h1why').append(h1);
+                                $('#pwhy').empty();
+                                let p = '' + v.content + '';
+                                $('#pwhy').append(p);
+                            });
 
-                    } else {
-                        alert(data.msg)
+                        } else {
+                            alert(data.msg)
+                        }
                     }
-                }
-            });
-        }
-        function PartnerContent() {
-            $.ajax({
-                url: '/home/PartnerContent',
-                type: 'get',
-                success: function (data) {
-                    if (data.code == 200) {
-                        $('#partnercontent').empty();
-                        $.each(data.w, function (k, v) {
-                            let p = '' + v.content + ''
-                            $('#partnercontent').append(p);
-                        });
+                });
+            }
+            function Partner() {
+                $.ajax({
+                    url: '/partner/Partner',
+                    type: 'get',
+                    success: function (data) {
+                        $('#partner').empty();
+                        if (data.code == 200) {
+                            for (let i = 1; i <= 2; i++) {
+                                $.each(data.pn, function (k, v) {
+                                    let div = ' <div class="slide">';
+                                    div += '<a target="_blank" href="' + v.link + '">'
+                                    div += ' <img src="/Images/' + v.image + '" height="100" width="250" alt="' + v.title + '" />'
+                                    div += '</a>';
+                                    div += '</div>';
+                                    $('#partner').append(div);
+                                });
+                            }
 
-                    } else {
-                        alert(data.msg)
-                    }
-                }
-            });
-        }
-        function Solution() {
-            $.ajax({
-                url: '/home/Solution',
-                type: 'get',
-                success: function (data) {
-                    $('#imgsolution').empty();
-                    if (data.code == 200) {
-                        $.each(data.left, function (k, v) {
-                            let div = '<li class="">'
-                            div += ' <div class="h-product-item">'
-                            div += ' <div id="' + v.id + '" class="h-product-item-img wow fadeInRight animated perspective">';
-                            div += '<a href="" name="a" class="image-product image-product-3d image-product-3da">';
-                            div += '<img class="" src="/Images/' + v.image + '" title="' + v.title + '" />';
-                            div += '</a>';
-                            div += '</div>';
-                            div += '</div>';
-                            div += '</li>';
-                            $('#imgsolution').append(div);
-                        });
-                    } else {
-                        alert(data.msg)
-                    }
-                }
-            });
-        }
-        function Service() {
-            $.ajax({
-                url: '/service/ServiceImage',
-                type: 'get',
-                success: function (data) {
-                    $('#imgservice').empty();
-                    if (data.code == 200) {
-                        $.each(data.dmsp, function (k, v) {
-                            let div = '<li class="servicemg">'
-                            div += ' <div class="h-product-item">'
-                            div += ' <div id="' + v.id + '" class="h-product-item-img wow fadeInDown animated ">';
-                            div += '<a id="' + v.id + '" href="" name="aservice" class="image-product image-product-3d image-product-3da">';
-                            div += '<img class="" src="/Images/' + v.image + '" title="' + v.title + '" />';
-                            div += '</a>';
-                            div += '</div>';
-                            div += '</div>';
-                            div += '</li>';
-                            $('#imgservice').append(div);
-                        });
-                    } else {
-                        alert(data.msg)
-                    }
-                }
-            });
-        }
-        function KmContent() {
-            $.ajax({
-                url: '/home/KmContent',
-                type: 'get',
-                success: function (data) {
-                    if (data.code == 200) {
-                        $('#kmcontent').empty();
-                        $.each(data.w, function (k, v) {
-                            let p = '' + v.content + ''
-                            $('#kmcontent').append(p);
-                        });
 
-                    } else {
-                        alert(data.msg)
+                        } else {
+                            alert(data.msg)
+                        }
                     }
-                }
-            });
-        }
-        function Promotion() {
-            $.ajax({
-                url: '/promotions/PromotionImg',
-                type: 'get',
-                success: function (data) {
-                    $('#imgpromotion').empty();
-                    if (data.code == 200) {
-                        $.each(data.dmsp, function (k, v) {
-                            let div = '<li>'
-                            div += ' <div class="h-product-item">'
-                            div += ' <div  class="h-product-item-img wow fadeInLeft animated perspective">';
-                            div += '<a href="" class="image-product image-product-3d image-product-3da">';
-                            div += '<img src="/Images/' + v.image + '" title="' + v.title + '" />';
-                            div += '</a>';
-                            div += '</div>';
-                            div += '</div>';
-                            div += '</li>';
-                            $('#imgpromotion').append(div);
-                        });
+                });
+            }
+            function PartnerContent() {
+                $.ajax({
+                    url: '/home/PartnerContent',
+                    type: 'get',
+                    success: function (data) {
+                        if (data.code == 200) {
+                            $('#partnercontent').empty();
+                            $('#namebv1').empty();
+                            $.each(data.w, function (k, v) {
+                                let p = '' + v.content + ''
+                                $('#partnercontent').append(p);
+                                let n = '<h1>' + v.name + '</h1>';
+                                $('#namebv1').append(n);
+                            });
 
-                    } else {
-                        alert(data.msg)
+                        } else {
+                            alert(data.msg)
+                        }
                     }
-                }
-            });
-        }
-        function Customer() {
-            $.ajax({
-                url: '/customer/CustomerImg',
-                type: 'get',
-                success: function (data) {
-                    $('#imgcustomer').empty();
-                    if (data.code == 200) {
-                        $.each(data.dmsp, function (k, v) {
-                            let div = '<li class="servicemg">'
-                            div += ' <div class="h-product-item">'
-                            div += ' <div  class="h-product-item-img wow fadeInLeft animated perspective">';
-                            div += '<a href="" class="image-product image-product-3d image-product-3da">';
-                            div += '<img src="/Images/' + v.image + '" title="' + v.title + '" />';
-                            div += '</a>';
-                            div += '</div>';
-                            div += '</div>';
-                            div += '</li>';
-                            $('#imgcustomer').append(div);
-                        });
+                });
+            }
+            function Solution() {
+                $.ajax({
+                    url: '/home/Solution',
+                    type: 'get',
+                    success: function (data) {
+                        $('#imgsolution').empty();
+                        if (data.code == 200) {
+                            $.each(data.left, function (k, v) {
+                                let div = '<li class="">'
+                                div += ' <div class="h-product-item">'
+                                div += ' <div id="' + v.id + '" class="h-product-item-img wow fadeInRight animated perspective">';
+                                div += '<a id="' + v.id + '" name="bb" class="image-product image-product-3d image-product-3da">';
+                                div += '<img class="" src="/Images/' + v.image + '" title="' + v.title + '" />';
+                                div += '</a>';
+                                div += '</div>';
+                                div += '</div>';
+                                div += '</li>';
+                                $('#imgsolution').append(div);
+                            });
+                        } else {
+                            alert(data.msg)
+                        }
+                    }
+                });
+            }
+            function Service() {
+                $.ajax({
+                    url: '/service/ServiceImage',
+                    type: 'get',
+                    success: function (data) {
+                        $('#imgservice').empty();
+                        if (data.code == 200) {
+                            $.each(data.dmsp, function (k, v) {
+                                let div = '<li class="servicemg">'
+                                div += ' <div class="h-product-item">'
+                                div += ' <div id="' + v.id + '" class="h-product-item-img wow fadeInDown animated ">';
+                                div += '<a id="' + v.id + '" href="" name="aservice" class="image-product image-product-3d image-product-3da">';
+                                div += '<img class="" src="/Images/' + v.image + '" title="' + v.title + '" />';
+                                div += '</a>';
+                                div += '</div>';
+                                div += '</div>';
+                                div += '</li>';
+                                $('#imgservice').append(div);
+                            });
+                        } else {
+                            alert(data.msg)
+                        }
+                    }
+                });
+            }
+            function KmContent() {
+                $.ajax({
+                    url: '/home/KmContent',
+                    type: 'get',
+                    success: function (data) {
+                        if (data.code == 200) {
+                            $('#kmcontent').empty();
+                            $('#namebv2').empty();
+                            $.each(data.w, function (k, v) {
+                                let p = '' + v.content + ''
+                                $('#kmcontent').append(p);
+                                let n = '<h1>' + v.name + '</h1>';
+                                $('#namebv2').append(n);
+                            });
 
-                    } else {
-                        alert(data.msg)
+                        } else {
+                            alert(data.msg)
+                        }
                     }
-                }
-            });
-        }
-        //link service
-        $(document).on('click', "a[name='aservice']", function () {
-            let idservice = $(this).closest('a').attr('id');
-            $.ajax({
-                url: '/service/ServiceDetail',
-                type: 'get',
-                data: {
-                    id: idservice
-                },
-                success: function (data) {
-                    if (data.code == 200) {
-                        $.each(data.dmsp, function (k, v) {
-                            location.href = data.Url + v.meta + "/" + v.id;
-                        })
-                    }
-                }
-            });
-        })
-        /* --------------addlink-----------*/
-        $(document).on('click', "a[name='a']", function () {
-            let id = $(this).closest('div').attr('id')
-            $.ajax({
-                url: '/solutionhome/DetailSolution',
-                type: 'get',
-                data: {
-                    id: id
-                },
-                success: function (data) {
-                    if (data.code == 200) {
-                        $.each(data.left, function (k, v) {
-                            window.location.href = data.Url + v.meta + "/" + + v.id
-                        })
+                });
+            }
+            function Promotion() {
+                $.ajax({
+                    url: '/promotions/PromotionImg',
+                    type: 'get',
+                    success: function (data) {
+                        $('#imgpromotion').empty();
+                        if (data.code == 200) {
+                            $.each(data.dmsp, function (k, v) {
+                                let div = '<li>'
+                                div += ' <div class="h-product-item">'
+                                div += ' <div  class="h-product-item-img wow fadeInLeft animated perspective">';
+                                div += '<a href="" class="image-product image-product-3d image-product-3da">';
+                                div += '<img src="/Images/' + v.image + '" alt="' + v.title + '" />';
+                                div += '</a>';
+                                div += '</div>';
+                                div += '</div>';
+                                div += '</li>';
+                                $('#imgpromotion').append(div);
+                            });
 
+                        } else {
+                            alert(data.msg)
+                        }
                     }
-                }
+                });
+            }
+            function Customer() {
+                $.ajax({
+                    url: '/customer/CustomerImg',
+                    type: 'get',
+                    success: function (data) {
+                        $('#imgcustomer').empty();
+                        if (data.code == 200) {
+                            $.each(data.dmsp, function (k, v) {
+                                let div = '<li class="servicemg " >'
+                                div += ' <div class="h-product-item">'
+                                div += ' <div  class="h-product-item-img perspective">';
+                                div += '<a target="_blank" href="' + v.link + '"class="image-product image-product-3d image-product-3da">';
+                                div += '<img src="/Images/' + v.image + '" title="' + v.title + '" />';
+                                div += '</a>';
+                                div += '</div>';
+                                div += '</div>';
+                                div += '</li>';
+                                $('#imgcustomer').append(div);
+                            });
+
+                        } else {
+                            alert(data.msg)
+                        }
+                    }
+                });
+            }
+            function Blog() {
+                $.ajax({
+                    url: '/blog/BlogImage',
+                    type: 'get',
+                    success: function (data) {
+                        $('#imgblog').empty();
+                        if (data.code == 200) {
+                            $.each(data.dmsp, function (k, v) {
+                                let div = '<li>'
+                                div += ' <div style="background-image: url(../../Images/' + v.image + ');" class="h-product-item carreaux_presentation_light">'
+                                div += '<img src="/Images/' + v.image + '"/>'
+                                div += ' <div  class="h-product-item-img perspective shadow_swhow_mini">';
+                                div += '<a id="' + v.id + '" class="deroul_titre" name="ablog"  >';
+                                div += '' + v.name + '';
+                                div += '</a>';
+                                div += '</div>';
+                                div += '</div>';
+                                div += '</li>';
+                                $('#imgblog').append(div);
+                            });
+
+                        } else {
+                            alert(data.msg)
+                        }
+                    }
+                });
+            }
+            //addgmailnewsletter
+            $('#submitgmailnewletter').click(function () {
+                let email = $('#emailnesletter').val();
+                $.ajax({
+                    url: '/contact/GmailNewsLetter',
+                    type: 'post',
+                    data: {
+                        email: email
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            $('#emailnesletter').val("Email đã được ghi nhận");
+                        }
+                    }
+                })
             })
-        })
+            /* //link service*/
+            $(document).on('click', "a[name='aservice']", function () {
+                let idservice = $(this).closest('a').attr('id');
+                $.ajax({
+                    url: '/service/ServiceDetail',
+                    type: 'get',
+                    data: {
+                        id: idservice
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            $.each(data.dmsp, function (k, v) {
+                                location.href = data.Url + v.meta + "/" + v.id;
+                            })
+                        }
+                    }
+                });
+            })
+            /* --------------addlink-----------*/
+            $(document).on('click', "a[name='a']", function () {
+                let id = $(this).closest('div').attr('id')
+                $.ajax({
+                    url: '/solutionhome/DetailSolution',
+                    type: 'get',
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            $.each(data.left, function (k, v) {
+                                window.location.href = data.Url + v.meta + "/" + + v.id
+                            })
 
-    </script>
-}  
+                        }
+                    }
+                })
+            })
+          /*  --------- addlinkblog---------------*/
+            $(document).on('click', "a[name='ablog']", function () {
+                let id = $(this).closest('a').attr('id')
+                $.ajax({
+                    url: '/blog/BlogUrl',
+                    type: 'get',
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            $.each(data.left, function (k, v) {
+                                window.location.href = data.Url + v.meta + "/" + v.id
+                            })
+
+                        }
+                    }
+                })
+            })
+            /* ---------addlinksolution---------------*/
+            $(document).on('click', "a[name='bb']", function () {
+                let id = $(this).closest('a').attr('id')
+                $.ajax({
+                    url: '/solutionhome/DetailSolution',
+                    type: 'get',
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            $.each(data.left, function (k, v) {
+                                window.location.href = data.Url + v.meta + "/" + v.id
+                            })
+
+                        }
+                    }
+                })
+            })
+        </script>
+    }

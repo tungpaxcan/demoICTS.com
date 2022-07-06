@@ -13,21 +13,37 @@ namespace ICTS.com
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+           
             routes.MapRoute(
-        name: "Service",
-        url: "dich-vu/{action}/{id}",
-        defaults: new { controller = "Service", action = "Index", id = UrlParameter.Optional }
-    );
+               name: "blog",
+               url: "blog/{action}/{meta}",
+               defaults: new { controller = "Blog", action = "Index", id = UrlParameter.Optional }
+           );
             routes.MapRoute(
-        name: "DetailService",
-        url: "dich-vu/chi-tiet-dich-vu/{meta}/{id}",
-        defaults: new { controller = "Service", action = "Detail", id = UrlParameter.Optional }
-    );
+             name: "blogg",
+             url: "blog/danh-muc/{meta}/{id}",
+             defaults: new { controller = "Blog", action = "Detail", id = UrlParameter.Optional }
+         );
             routes.MapRoute(
-            name: "DetailSolutionHome",
-            url: "giai-phap/chi-tiet-giai-phap/{meta}/{id}",
-            defaults: new { controller = "SolutionHome", action = "Details", id = UrlParameter.Optional }
+            name: "bloggg",
+            url: "blog/chi-tiet/{meta}/{id}",
+            defaults: new { controller = "BlogAdd", action = "Index", id = UrlParameter.Optional }
         );
+            routes.MapRoute(
+                name: "Service",
+                url: "dich-vu/{action}/{id}",
+                defaults: new { controller = "Service", action = "Index", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+                name: "DetailService",
+                url: "dich-vu/chi-tiet-dich-vu/{meta}/{id}",
+                defaults: new { controller = "Service", action = "Detail", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+                name: "DetailSolutionHome",
+                url: "giai-phap/chi-tiet-giai-phap/{meta}/{id}",
+                defaults: new { controller = "SolutionHome", action = "Details", id = UrlParameter.Optional }
+            );
             routes.MapRoute(
                name: "SolutionHome",
                url: "giai-phap/{action}/{id}",

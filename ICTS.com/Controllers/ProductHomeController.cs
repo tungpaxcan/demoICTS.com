@@ -21,7 +21,7 @@ namespace ICTS.com.Controllers
         {
             try
             {
-                var pageSize = 3;
+                var pageSize = 9;
                 var dmspp = (from s in db.Products.Where(x => x.Status != false && x.IdProductCategory == id)
                             join ss in db.ProductCategories on s.IdProductCategory equals ss.Id
                             join sss in db.Brands on s.IdBrand equals sss.Id
@@ -37,6 +37,7 @@ namespace ICTS.com.Controllers
                                 metabrand =sss.Meta,
                                 meta = s.Meta,
                                 name = s.Name,
+                                title=s.Title,
                                 content = s.Content,
                                 image = s.Image
 
@@ -44,6 +45,34 @@ namespace ICTS.com.Controllers
                 var pages = dmspp.Count() % pageSize == 0 ? dmspp.Count() / pageSize : dmspp.Count() / pageSize + 1;
                 var dmsp = dmspp.Skip((page - 1) * pageSize).Take(pageSize).ToList();
                 return Json(new { code = 200,pages=pages, dmsp = dmsp, msg = "Hiển Thị Dữ liệu thành công" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { code = 500, msg = "Hiểm thị dữ liệu thất bại" + e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult ProductOrder(int id, int page)
+        {
+            try
+            {
+                var pageSize = 3;
+                var dmspp = (from s in db.Products.Where(x => x.Status != false && x.IdProductCategory == id)
+                             join ss in db.ProductCategories on s.IdProductCategory equals ss.Id
+                             join sss in db.Brands on s.IdBrand equals sss.Id
+                             join ssss in db.Categories on ss.IdCategory equals ssss.Id
+                             select new
+                             {
+                                 id = s.Id,
+                                 idprocate=s.IdProductCategory,
+                                 meta = s.Meta,
+                                 name = s.Name,
+                                 content = s.Content,
+                                 image = s.Image
+
+                             }).ToList();
+                var pages = dmspp.Count() % pageSize == 0 ? dmspp.Count() / pageSize : dmspp.Count() / pageSize + 1;
+                var dmsp = dmspp.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                return Json(new { code = 200, pages = pages, dmsp = dmsp, msg = "Hiển Thị Dữ liệu thành công" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
@@ -84,7 +113,7 @@ namespace ICTS.com.Controllers
         {
             try
             {
-                var pageSize = 3;
+                var pageSize = 9;
                 var dmspp = (from s in db.Products.Where(x => x.Status != false )
                             join ss in db.ProductCategories on s.IdProductCategory equals ss.Id
                             join sss in db.Brands on s.IdBrand equals sss.Id
@@ -98,6 +127,7 @@ namespace ICTS.com.Controllers
                                 metaproductcategory = ss.Meta,
                                 namebrand = sss.Name,
                                 metabrand = sss.Meta,
+                                title = s.Title,
                                 meta = s.Meta,
                                 name = s.Name,
                                 content = s.Content,
@@ -140,9 +170,11 @@ namespace ICTS.com.Controllers
                             join soo in db.Brands on so.IdBrand equals soo.Id
                             select new
                             {
-                                id = s.Id,
+                                id = so.Id,
+                                ids=s.Id,
+                                idprocate=so.IdProductCategory,
                                 title = so.Title,
-                                meta = so.Meta,
+                                meta = so.Meta.Replace("/",""),
                                 name = so.Name,
                                 brand = soo.Name,
                                 application = s.C_content_Application,
@@ -152,6 +184,30 @@ namespace ICTS.com.Controllers
                                 image = so.Image
                             }).ToList();
                 return Json(new { code = 200, left = left, Url = "/chi-tiet-san-pham/" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { code = 500, msg = "Hiểm thị dữ liệu thất bại" + e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpGet]
+        public JsonResult ProductLook(string seach,int page)
+        {
+            try
+            {
+                var pageSize = 3;
+                var dmspp = (from s in db.Products.Where(x => x.Status != false && x.Status != false)
+                             select new
+                             {
+                                 id = s.Id,
+                                 meta = s.Meta,
+                                 name = s.Name,
+                                 content = s.Content,
+                                 image = s.Image
+                             }).ToList().Where(x=>x.name.ToLower().Contains(seach)||x.meta.ToLower().Contains(seach));
+                var pages = dmspp.Count() % pageSize == 0 ? dmspp.Count() / pageSize : dmspp.Count() / pageSize + 1;
+                var dmsp = dmspp.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                return Json(new { code = 200,pages=pages, dmsp = dmsp, msg = "Hiển Thị Dữ liệu thành công" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {

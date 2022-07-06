@@ -165,3 +165,10 @@
         transform: translate(800%, -200%);
     }
 }
+
+
+     .inn {
+        display: flex;
+        flex-direction: column
+    }
+

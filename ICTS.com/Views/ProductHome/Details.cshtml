@@ -1,30 +1,54 @@
 ﻿@model ICTS.com.Models.DetailProduct
 @{
-    ViewBag.Title = "";
+    ViewBag.Title = Model.Name;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div id="w-hv" class="home-backround">
     <div class="row detail-pro">
         <div id="img" class="col-sm-6 img-magnifier-container">
-           
-        </div>     
+            <div id="lup" class="img-magnifier-glass"></div>
+            <img class="a" id="productimage" src="" />
+            <div  style="display:flex" id="imageadd">
+
+            </div>
+            <div hidden id="slinext"></div>
+        </div>
+
         <input id="idproduct" value="@Model.IdProduct" hidden />
-        <div  class="col-sm-6 idname">
+        <div class="col-sm-6 idname">
             <ul id="name">
             </ul>
-     </div>
+            <div class="fb-login-button" data-width="" data-size="small" data-button-type="continue_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true"></div>
+            <div id="like" class="fb-like" data-width="" data-layout="button_count" data-action="like" data-size="small" data-share="false"></div>
+
+            <div id="share" class="fb-share-button" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Chia sẻ</a></div>
+
+
+        </div>
     </div>
     <div class="dec-detail-pro">
         <ul>
             <li id="dec"><a name="dec"><h1>Thông Tin</h1></a></li>
-            <li id="dectech" ><a name="dectech"><h1>Thông Số Kĩ Thuật</h1></a></li>
-            <li id="option"><a  name="option"><h1>Option</h1></a></li>
+            <li id="dectech"><a name="dectech"><h1>Thông Số Kĩ Thuật</h1></a></li>
+            <li id="option"><a name="option"><h1>Option</h1></a></li>
             <li id="download"><a name="download"><h1>Tài Liệu/File PDF</h1></a></li>
         </ul>
     </div>
     <div class="dec-detail">
         <p class="p" id="description"></p>
     </div>
+    <hr style="width:100%" />
+    <div class="product-container">
+        <div id="productorther" class="product-">
+        </div>
+    </div>
+    <div class="pagemg">
+        <ul class="pagination" id="pagebyid">
+        </ul>
+    </div>
+    <div id="comment" class="fb-comments dec-detail-pro" data-width="100%" data-numposts="3"></div>
+
+    <!-- Thumbnail navigation -->
 </div>
 <div id="modalcontact" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -33,63 +57,64 @@
                 <div style="color: red; text-align: center" class="panel-heading" id="modalTitle"></div>
                 <input type="text" hidden id="idproduct" value="" />
                 <div id="content">
-                    <h1 >Contact</h1>
-                    <p>
-                        <label for="username" class="icon-user">
-                            Tên
-                            <span class="required">*</span>
-                        </label>
-                        <input type="text" name="username" id="namecontact" required="required" placeholder="Tên" />
-                    </p>
-                    <p>
-                        <label class="icon-envelope">
-                            Số Điện Thoại
-                            <span class="required">*</span>
-                        </label>
-                        <input type="text" id="phonecontact" placeholder="Số Điện Thoại" required="required" />
-                    </p>
-                    <p>
-                        <label for="usermail" class="icon-envelope">
-                            E-mail
-                            <span class="required">*</span>
-                        </label>
-                        <input type="email" id="emailcontact" placeholder="Nhập Email" required="required" />
-                    </p>
-                    <p>
-                        <label class="icon-envelope">
-                            Tên DN
-                            <span class="required">*</span>
-                        </label>
-                        <input type="text" id="enterprisecontact" placeholder="Tên Doanh Nghiệp" required="required" />
-                    </p>
-                    <p>
-                        <label class="icon-envelope">
-                            Số Lượng
-                            <span class="required">*</span>
-                        </label>
-                        <input type="text" id="amountcontact" placeholder="Số Lượng" required="required" />
-                    </p>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" id="btnsubmitcontact">Xác Nhận</button>
-                        <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    </div>
+                    <h1>Contact</h1>
+                    <form id="setaction" @*action="https://formsubmit.co/b71a591dcf7f69a3dc504fa653653f30"*@ method="POST">
+                        <p>
+                            <label for="username" class="icon-user">
+                                Tên
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" name="Name" id="namecontact" required="required" placeholder="Tên" />
+                        </p>
+                        <p>
+                            <label class="icon-envelope">
+                                Số Điện Thoại
+                                <span class="required">*</span>
+                            </label>
+                            <input name="Phone" type="text" id="phonecontact" placeholder="Số Điện Thoại" required="required" />
+                        </p>
+                        <p>
+                            <label for="usermail" class="icon-envelope">
+                                E-mail
+                                <span class="required">*</span>
+                            </label>
+                            <input name="Email" type="email" id="emailcontact" placeholder="Nhập Email" required="required" />
+                        </p>
+                        <p>
+                            <label class="icon-envelope">
+                                Tên DN
+                                <span class="required">*</span>
+                            </label>
+                            <input name="Business" type="text" id="enterprisecontact" placeholder="Tên Doanh Nghiệp" required="required" />
+                        </p>
+                        <p>
+                            <label class="icon-envelope">
+                                Số Lượng
+                                <span class="required">*</span>
+                            </label>
+                            <input name="Amount" type="text" id="amountcontact" placeholder="Số Lượng" required="required" />
+                        </p>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" id="btnsubmitcontact">Xác Nhận</button>
+                            <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        </div>
+                    </form>
+                 
                 </div>
-            </div>
-        </div>
-    </div>
-    <div id="popup1" class="overlay">
-        <div class="popup">
-            <h2>Here i am</h2>
-            <a class="close" href="#">&times;</a>
-            <div class="content">
-                Thank to pop me out of that button, but now i'm done so you can close this window.
             </div>
         </div>
     </div>
 </div>
 @section scripts{
-    <script>              
+    <script>
+        var page = 1;
         let id = $('#idproduct').val().trim();
+        //phan trang
+        $('#pagebyid').on('click', 'li', function (e) {
+            e.preventDefault();
+            page = $(this).attr('id');
+            ImageProductOrther(id, page);
+        });        
         $.ajax({
             url: '/producthome/DetailProductById',
             type: 'get',
@@ -97,22 +122,21 @@
                 id: id
             },
             success: function (data) {
-                $('#img').empty();
+
                 $('#name').empty();
                 if (data.code == 200) {
                     $.each(data.left, function (k, v) {
-                        let div = '<div id="lup" class="img-magnifier-glass"></div>';
-                        div += '<img id="productimage" src="/Images/' + v.image + '" />';
-                        $('#img').append(div);
-                        let ul = '<li><h1 class="Name-Product">' + v.name + '</h1></li>';
+                        $('.a').attr('src', "/Images/" + v.image)
+                        let ul = '<li><h1 class="Name-Product">' + v.name + '</h1><input hidden id="idprocate" value="'+v.idprocate+'"</li>';
                         ul += '<li><h1>Thương Hiệu : ' + v.brand + ' </h1></li>'
                         ul += '<li><h1>Ứng Dụng : ' + v.application + ' </h1></li>'
-                        ul += '<li><h1 class="contactbt">Nhận Báo Giá : <a name="contact" ><span></span><span></span><span></span><span></span>Báo Giá Ngay </a ></h1></li>'
+                        ul += '<li><h1 class="contactbt">Nhận Báo Giá : <a name="contact" ><span></span><span></span><span></span><span></span>Báo Giá Ngay </a ></h1></li>';
                         $('#name').append(ul);
                     });
+                    let idprocate = $('#idprocate').val().trim()
+                    ImageProductOrther(idprocate, page)
                     dec();
                     magnify("productimage", 3);
-                     
                 } else {
                     alert(data.msg)
                 }
@@ -218,12 +242,12 @@
                         div += '</thead>';
                         div += '<tbody>';
                         $.each(data.left, function (k, v) {
-                             div += '<tr>';
-                            div += '<td>' + (stt++) +'</td>';
+                            div += '<tr>';
+                            div += '<td>' + (stt++) + '</td>';
                             div += '<td>' + v.name + '</td>';
-                            div += '<td><a target="_blank" style="color:red" href="/Images/' + v.download + '">(Tải tại đây)</a></td>';
-                             div += '</tr>';
-                          
+                            div += '<td><a download id="' + v.id + '" name="countdl" target="_blank" style="color:red" href="/Images/' + v.download + '">(Tải tại đây)</a></td>';
+                            div += '</tr>';
+
                         });
                         div += '</tbody>';
                         div += '</table>';
@@ -234,10 +258,165 @@
                 }
             });
         })
+        //count download
+        $(document).on('click', "a[name='countdl']", function () {
+            let id = $(this).closest('a').attr('id');
+            $.ajax({
+                url: '/download/Count',
+                type: 'post',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+
+                    }
+                }
+            })
+        })
         $(document).on('click', "a[name='contact']", function () {
             $('#modalcontact').modal();
         })
-        //confirm add
+        //imageadd
+        $.ajax({
+            url: '/imageadd/ImageById',
+            type: 'get',
+            data: {
+                id: id
+            },
+            success: function (data) {
+                $('#imageadd').empty();
+                let page = 0;
+                if (data.code == 200) {
+                    $.each(data.dmsp1, function (k, v) {
+                        let div1 = '<img class="animated fadeInRight" title="' + v.id + '" id="productimage" name="change" style="margin:1%;width:18%" src="/Images/' + v.image + '" />';
+                        $('#imageadd').append(div1);
+                    });
+                    for (let i = page; i <= (page + 3); i++) {
+                        let div = '<img class="animated fadeInRight" title="' + data.dmsp[i].id + '" id="productimage" name="change" style="margin:1%;width:18%" src="/Images/' + data.dmsp[i].image + '" />';
+                            $('#imageadd').append(div); 
+                    }
+                    $('#slinext').click(function () {                     
+                        $('#imageadd').empty();
+                        page += 1;
+                        Maximg = 3;
+                        if (page == (data.dmsp).length+1) {
+                            page = 0;
+                        }
+                        $.each(data.dmsp1, function (k, v) {
+                            let div1 = '<img class="animated fadeInRight" title="' + v.id + '" id="productimage" name="change" style="margin:1%;width:18%" src="/Images/' + v.image + '" />';
+                            $('#imageadd').append(div1);
+                        });
+                        for (let i = page; i <= (page + Maximg); i++) {
+                            if (i >= (data.dmsp).length - 1) {
+                                for (let j = 0; j <= (page + 1) - ((data.dmsp).length - Maximg); j++) {
+                                    let div = '<img class="animated fadeInRight" title="' + data.dmsp[j].id + '" id="productimage" name="change" style="margin:1%;width:18%" src="/Images/' + data.dmsp[j].image + '" />';
+                                    $('#imageadd').append(div);
+                                }
+                                return;
+                            }
+                                let div = '<img class="animated fadeInRight" title="' + data.dmsp[i].id + '" id="productimage" name="change" style="margin:1%;width:18%" src="/Images/' + data.dmsp[i].image + '" />';
+                                $('#imageadd').append(div);                                                     
+                        }
+                    })
+                    setInterval(function () {
+                        $('#slinext').click();
+                    }, 10000);
+                } else {
+                    alert(data.msg)
+                }
+            }
+        });
+        //doianhz
+        $(document).on('click', "img[name='change']", function () {
+            let idd = $(this).closest('img').attr('title');
+            $('.a').attr('src', '');
+            if (id == idd) {
+                $.ajax({
+                    url: '/imageadd/ChangeImg',
+                    type: 'get',
+                    data: {
+                        id: idd
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            $('.a').attr('src', '/Images/' + data.tv1.Image);
+                            magnify("productimage", 3);
+                        } else {
+                            alert(data.msg)
+                        }
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/imageadd/ChangeImg',
+                    type: 'get',
+                    data: {
+                        id: idd
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            $('.a').attr('src', '/Images/' + data.tv.Image1);
+                            magnify("productimage", 3);
+                        } else {
+                            alert(data.msg)
+                        }
+                    }
+                });
+            }
+        });
+        //orther product
+        function ImageProductOrther(idpro,page) {
+            $.ajax({
+                url: '/producthome/ProductOrder',
+                type: 'get',
+                data: {
+                    id: idpro,
+                    page: page
+                },
+                success: function (data) {
+                    $('#productorther').empty();
+                    if (data.code == 200) {
+                        $.each(data.dmsp, function (k, v) {
+                            let div = ' <a id="' + v.id + '"  name="b">';
+                            div += '<div class="product--display">';
+                            div += '<img src="/Images/' + v.image + '" />';
+                            div += '</div>';
+                            div += ' <div class="product--hover">';
+                            div += '<h2 id="w-rm">' + v.content + '</h2>';
+                            div += '</div>';
+                            div += '<h1 class="nameh1">' + v.name + '</h1></a>';
+                            div += '<div class="product--border"></div>';
+                            $('#productorther').append(div);
+                        });
+                        $('#pagebyid').empty();
+                        for (let i = 1; i <= data.pages; i++) {
+                            $('#page').empty();
+                            $('#pagebyid').empty();
+                            for (let j = page; j <= (parseInt(page) + 4); j++) {
+                                if (j <= data.pages) {
+                                    let li = '<li class="page-item" id="' + j + '"><a class="page-link" href="#">' + j + '</a></li>';
+                                    $('#pagebyid').append(li);
+                                }
+                            }
+
+                        }
+                        if (parseInt(page) > 1) {
+                            let Previous = '<li class="page-item" id="' + (parseInt(page) - 1) + '"><a  class="page-link" href="#">Previous</a></li>';
+                            $('#pagebyid').append(Previous);
+                        }
+                        let next = '<li class="page-item" id="' + (parseInt(page) + 1) + '"><a name="nextpage" class="page-link" href="#">Next</a></li>';
+                        $('#pagebyid').append(next);
+                        let li = $('#pagebyid li#' + page + '');
+                        $(li).addClass('active')
+                        $('#w-rm table').css("width", "");
+                        
+                    }
+                }
+            })
+        }
+        
+        //confirm add contact
         $('#btnsubmitcontact').click(function () {
             let name = $('#namecontact').val().trim();
             let phone = $('#phonecontact').val().trim();
@@ -245,49 +424,49 @@
             let enterprise = $('#enterprisecontact').val().trim();
             let amount = $('#amountcontact').val().trim();
             var isphone = /^[+]?(1\-|1\s|1|\d{3}\-|\d{3}\s|)?((\(\d{3}\))|\d{3})(\-|\s)?(\d{3})(\-|\s)?(\d{4})$/g.test(phone);
-                if (isphone == false) {
-                    alert("Hãy Nhập Đúng Định Dạng Số Điện Thoại")
-                    return;
-                }
+            if (isphone == false) {
+                alert("Hãy Nhập Đúng Định Dạng Số Điện Thoại")
+                return;
+            }
             if (validateEmail(email) == false) {
                 return;
             }
-            
+
             //rang buộc dữ liệu
             if (name.length == 0) {
                 alert('Vui Long Nhập Tên');
                 return;
             } else
                 if (amount.length == 0 || isNaN(amount)) {
-                alert('Vui Lòng Nhập Số Lượng');
-                return;
-            }
-                $.ajax({
-                    url: '/contact/Add',
-                    type: 'post',
-                    data: {
-                        name: name,
-                        phone: phone,
-                        email: email,
-                        enterprise: enterprise,
-                        amount: amount,
-                        id: id
-                    },
-                    success: function (data) {
-                        if (data.code == 200) {
-                            $('#namecontact').val('');
-                            $('#phonecontact').val('');
-                            $('#emailcontact').val('');
-                            $('#amountcontact').val('');
-                            $('#enterprisecontact').val('');
-                            alert("Chào anh " +name+" : Anh sẽ được báo giá về sản phẩm này trong thời gian ngắn")
-                            $('#modalcontact').modal('hide');
-                        }
-                        else {
-                            alert(data.msg);
-                        }
+                    alert('Vui Lòng Nhập Số Lượng');
+                    return;
+                }
+            $.ajax({
+                url: '/contact/Add',
+                type: 'post',
+                data: {
+                    name: name,
+                    phone: phone,
+                    email: email,
+                    enterprise: enterprise,
+                    amount: amount,
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#namecontact').val('');
+                        $('#phonecontact').val('');
+                        $('#emailcontact').val('');
+                        $('#amountcontact').val('');
+                        $('#enterprisecontact').val('');
+                        alert("Chào anh " + name + " : Anh sẽ được báo giá về sản phẩm này trong thời gian ngắn")
+                        $('#modalcontact').modal('hide');
                     }
-                });
+                    else {
+                        alert(data.msg);
+                    }
+                }
+            });
         });
         function magnify(imgID, zoom) {
             var img, glass, w, h, bw;
@@ -299,10 +478,10 @@
             /*set background properties for the magnifier glass:*/
             glass.style.backgroundImage = "url('" + img.src + "')";
             glass.style.backgroundRepeat = "no-repeat";
-            glass.style.backgroundSize = (img.width * zoom) + "px " + (img.height * zoom*2.2) + "px";
+            glass.style.backgroundSize = (img.width * zoom) + "px " + (img.height * zoom * 1.2) + "px";
             bw = 3;
             w = glass.offsetWidth / 2;
-            h = glass.offsetHeight /2;
+            h = glass.offsetHeight / 2;
             /*execute a function when someone moves the magnifier glass over the image:*/
             glass.addEventListener("mousemove", moveMagnifier);
             img.addEventListener("mousemove", moveMagnifier);
@@ -342,8 +521,66 @@
                 return { x: x, y: y };
             }
         }
+        //setaction
+        function SetAction() {
+            $.ajax({
+                url: '/contact/Gmail/',
+                type: 'get',
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#setaction').attr('action', 'https://formsubmit.co/' + data.a.Email);
+                    }
+                }
+            });
+        }
+        //urlsharefacebook
+        function Facebook() {
+            let id = $('#idproduct').val().trim()
+            $.ajax({
+                url: '/producthome/DetailProductById',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $.each(data.left, function (k, v) {
+                            document.getElementById("like").setAttribute("data-href", "https://localhost:44311" + data.Url + v.meta + "/" + v.ids);
+                            document.getElementById("comment").setAttribute("data-href", "https://localhost:44311" + data.Url + v.meta + "/" + v.ids);
+                            document.getElementById("share").setAttribute("data-href", "https://localhost:44311" + data.Url + v.meta + "/" + v.ids);
+                           
+                        })
+                       
+                    }
+                }
+            })
+        }
+     
+        /* ---------addlink---------------*/
+        $(document).on('click', "a[name='b']", function () {
+            let id = $(this).closest('a').attr('id')
+            $.ajax({
+                url: '/producthome/DetailProductById',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $.each(data.left, function (k, v) {
+                            window.location.href = data.Url + v.meta + "/" + v.ids
+                        })
 
+                    }
+                }
+            })
+        })
+        $(document).ready(function () {
+            SetAction();
+            Facebook();
+        })
     </script>
-    }
+   
+}
 
 

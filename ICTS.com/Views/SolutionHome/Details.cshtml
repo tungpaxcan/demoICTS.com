@@ -6,6 +6,7 @@
 }
 
 <div id="w-hv" class="home-backround">
+    <input hidden id="idsolution" value="@Model.IdSolution" />
     <div class="Detail-solution">
         <img src="~/Images/@Model.Image" />
     </div>
@@ -13,7 +14,10 @@
         <div class="row">
             <div class="col-sm-6 img-detailsolution">
                 <input hidden type="text" id="iddetailsolution" value="@Model.IdSolution" />
-                <h1 id="idname"></h1>
+                <div class="title-big">
+                    <h1 id="idname"></h1>
+                </div>
+
                 <div id="p"></div>
             </div>
 
@@ -25,6 +29,9 @@
 </div>
 @section scripts{
     <script type="text/javascript">
+        $(document).ready(function () {
+            Facebook();
+        })
         $("#w-hv").on("mouseover", function () {
             $('#w-rm table').css("width", "");
         });
@@ -41,7 +48,11 @@
                 $('#idname').empty();
                 if (data.code == 200) {
                     $.each(data.left, function (k, v) {
-                        let div = '<div>' + v.content + '</div><div style="text-aligt:center"><button class="btn btn-primary" type="button"><a href="#" style="color:red">Liên hệ ngay với chúng tôi</a></button></div>';
+                        let div = '<div>' + v.content + '</div><div style="text-aligt:center"><button class="btn btn-primary" type="button"><a href="/lien-he/" style="color:red">Liên hệ ngay với chúng tôi</a></button></div>';
+                        div += '<div class="fb-login-button" data-width="" data-size="small" data-button-type="continue_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true"></div>';
+                        div += '<div id="like" class="fb-like" data-width="" data-layout="button_count" data-action="like" data-size="small" data-share="false"></div>';
+                        div += ' <div id="share" class="fb-share-button" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Chia sẻ</a></div>';
+                        div += '<div id="comment" class="fb-comments dec-detail-pro" data-width="100%" data-numposts="3"></div>';
                         $('#p').append(div);
                         let h1 = '' + v.name + '';
                         $('#idname').append(h1);
@@ -90,5 +101,28 @@
                 }
             })
         })
+
+        //urlsharefacebook
+        function Facebook() {
+            let id = $('#idsolution').val().trim()
+            $.ajax({
+                url: '/solutionhome/DetailSolution',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $.each(data.left, function (k, v) {
+                            document.getElementById("like").setAttribute("data-href", data_ICTS + data.Url + v.meta + "/" + v.id);
+                            document.getElementById("comment").setAttribute("data-href", data_ICTS + data.Url + v.meta + "/" + v.id);
+                            document.getElementById("share").setAttribute("data-href", data_ICTS + data.Url + v.meta + "/" + v.id);
+
+                        })
+
+                    }
+                }
+            })
+        }
     </script>
     }

@@ -12,10 +12,14 @@ namespace ICTS.com
     {
         protected void Application_Start()
         {
+            HttpCookie cookie = new HttpCookie("MySecureCookie");
+            cookie.Value = "This is a PII information";
+            cookie.Secure = true;
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
     }
 }

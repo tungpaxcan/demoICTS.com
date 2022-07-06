@@ -112,9 +112,19 @@ namespace ICTS.com.Areas.ICTS.Controllers
             {
                 db.Configuration.ProxyCreationEnabled = false;
                 var l = db.Brands.Find(id);
-                db.Brands.Remove(l);
-                db.SaveChanges();
-                return Json(new { code = 200, msg = "Xoa Dữ Liệu thành công" }, JsonRequestBehavior.AllowGet);
+                var session = (Admin)Session["admin"];
+                var role = session.Role;
+                if (role == true)
+                {
+                    db.Brands.Remove(l);
+                    db.SaveChanges();
+                    return Json(new { code = 200, msg = "Xoa Dữ Liệu thành công" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { code = 300, msg = "Bạn không có quyền xóa dữ liệu" }, JsonRequestBehavior.AllowGet);
+                }
+               
             }
             catch (Exception e)
             {

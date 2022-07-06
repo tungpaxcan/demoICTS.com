@@ -55,6 +55,7 @@ namespace ICTS.com.Areas.ICTS.Controllers
                                 id = tt.Id,
                                 name = tt.Name,
                                 meta = tt.Meta,
+                                link =tt.Link,
                                 modifileBy = tt.ModifileBy,
                                 modifileDate = tt.ModifileDate.Value.Day + "/" + tt.ModifileDate.Value.Month + "/" + tt.ModifileDate.Value.Year,
                             }).ToList();

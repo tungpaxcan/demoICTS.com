@@ -7,7 +7,7 @@ using ICTS.com.Models;
 namespace ICTS.com.Areas.ICTS.Controllers
 {
     [HandleError]
-    public class ContactsController : Controller
+    public class ContactsController : BaseController
     {
         private Entities db = new Entities();
         // GET: ICTS/Contacts
@@ -36,7 +36,9 @@ namespace ICTS.com.Areas.ICTS.Controllers
                               modifiledate = tt.ModifileDate.Value.Day + "/" + tt.ModifileDate.Value.Month + "/" + tt.ModifileDate.Value.Year,
                           }).ToList();
                 var result = ct.Count();
-                return Json(new { code = 200, result = result, ct = ct, msg = "Hiển Thị Dữ liệu thành công" }, JsonRequestBehavior.AllowGet);
+                var session = (Admin)Session["admin"];
+                var role = session.Role;
+                return Json(new { code = 200,role=role ,result = result, ct = ct, msg = "Hiển Thị Dữ liệu thành công" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
@@ -120,6 +122,25 @@ namespace ICTS.com.Areas.ICTS.Controllers
             catch (Exception e)
             {
                 return Json(new { code = 500, mmsg = "Sửa danh sách không thành công" + e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpGet]
+        public JsonResult ListGmail()
+        {
+            try
+            {
+                var ct = (from tt in db.Contacts.Where(x => x.Id>0)
+                          select new
+                          {
+                              id = tt.Id,
+                              email = tt.Email
+                          }).ToList();
+
+                return Json(new { code = 200, ct = ct, msg = "Hiển Thị Dữ liệu thành công" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { code = 500, msg = "Hiểm thị dữ liệu thất bại" + e.Message }, JsonRequestBehavior.AllowGet);
             }
         }
     }

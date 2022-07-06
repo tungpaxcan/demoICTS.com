@@ -1,3 +1,6 @@
+html{
+    scroll-padding-top:20%;
+}
 .fa, .fas, .far, .fal, .fab {
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
@@ -12558,7 +12561,7 @@ button {
 
             .main-nav > ul > li > a {
                 display: block;
-                font-size: .875rem;
+                font-size: .775rem;
                 color: #fff;
                 padding: 18px;
                 font-weight: 500;
@@ -12650,8 +12653,10 @@ button {
 }
 
 .nav-wp {
-    background: url(/Images/header-bg.jpg);
-    position: relative
+    background: rgb(1,184,253);
+    background: linear-gradient(90deg, rgba(1,184,253,1) 17%, rgba(0,67,247,1) 61%, rgba(196,73,73,1) 100%);
+    position: relative;
+    text-align: center
 }
 
 @media (min-width: 1200px) {
@@ -12911,14 +12916,10 @@ button {
 }
 
     .nav-wp .h-search-wp .search-bl {
-        float: right;
         width: 2.5rem;
         padding-top: .625rem
     }
 
-        .nav-wp .h-search-wp .search-bl .dropdown-toggle::after {
-            display: none
-        }
 
         .nav-wp .h-search-wp .search-bl i {
             font-size: 1.25rem;
@@ -13203,7 +13204,7 @@ button {
     position: fixed;
     top: 0px;
     width: 100%;
-    z-index: 9;
+    z-index: 2000;
     -webkit-animation-name: fadeInDown;
     -webkit-animation-duration: 5s;
     -webkit-animation-timing-function: linear;
@@ -13230,7 +13231,7 @@ button {
     -moz-animation-timing-function: ease-out
 }
 
-.aaa {
+.jjj {
     margin-top: 80px
 }
 
@@ -13409,7 +13410,8 @@ button {
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
     border-top: 1px solid #0b2859;
-    background-image: url('../../Images/tải xuống (1).jpg');
+    background: rgb(1,184,253);
+    background: linear-gradient(90deg, rgba(1,184,253,1) 17%, rgba(0,67,247,1) 61%, rgba(196,73,73,1) 100%);
     position: relative
 }
 
@@ -14180,9 +14182,9 @@ button:focus {
         max-width: 100%
     }
 
-    .main-nav {
+   /* .main-nav {
         display: none
-    }
+    }*/
 
     .nav-wp .h-search-wp {
         float: right;
@@ -14320,13 +14322,13 @@ button:focus {
         display: block
     }
 
-    .main-nav ul li:after {
+    /*.main-nav ul li:after {
         display: none
     }
 
     .main-nav ul li i {
         display: none
-    }
+    }*/
 
     .about-r .ab-bl .caption {
         padding: 20px
@@ -14334,8 +14336,8 @@ button:focus {
 
     .main-nav > ul > li > a {
         height: inherit
-    }
 
+    }
     .main-nav .active {
         background: #f9f9f9
     }

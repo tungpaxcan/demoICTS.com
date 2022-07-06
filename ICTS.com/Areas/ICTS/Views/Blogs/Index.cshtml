@@ -1,0 +1,998 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/ICTS/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<div id="seachinputblog" class="input-group">
+    <div class="form-outline">
+        <input type="search" id="seachblog" class="form-control" placeholder="Blog" />
+    </div>
+    <button type="button" id="btnSeachblog" class="btn btn-primary">
+        <i class="fas fa-search"></i>
+    </button>
+</div>
+<div id="seachinputblogadd" class="row">
+    <div class="col-sm-2">
+        <div id="seachinputblogadd" class="input-group">
+            <div class="form-outline">
+                <input type="search" id="seachblogadd" class="form-control" placeholder="Blog" />
+            </div>
+            <button type="button" id="btnSeachblogadd" class="btn btn-primary">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <label>Danh Mục Blog</label>
+        <select class="browser-default custom-select" id="nameblogid">
+        </select>
+    </div>
+</div>
+
+<table class="table Blogadd Blog">
+</table>
+<div>
+    <ul class="pagination" id="pageblog">
+    </ul>
+</div>
+<div>
+    <ul class="pagination" id="pageblogadd">
+    </ul>
+</div>
+@*-----------------modal blog------------------*@
+<div id="modalblog" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div style="color: red; text-align: center" class="panel-heading" id="modalTitleblog"></div>
+                <input type="text" hidden id="idblog" value="" />
+                <div class="form-group" style="margin-left:20px">
+                    <label>Tên Danh Mục Blog</label>
+                    <input type="text" class="form-control" id="nameblog" placeholder="Tên Blog">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <input type="text" class="form-control" hidden id="urlblog" placeholder="url">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <input type="text" class="form-control hidden" hidden id="titleblog" placeholder="title">
+                </div>
+                <div class="form-inline">
+                    <label>Chọn ảnh</label>
+                    <input type="text" hidden name="picture" id="picturefileblog" class="form-control" />
+                    <input type="file" id="fileUploadblog" name="fileUpload" accept="image/*" style="display:none" />
+                    <input type="button" id="btnUploadblog" value="..." class="btn-bg-success" />
+                    <img style="width:100px" id="pictureblog" />
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Trạng thái</label>
+                            <input type="checkbox" class="form-control" id="statusblog" placeholder="Trạng thái">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Trạng thái Hình Ảnh</label>
+                            <input type="checkbox" class="form-control" id="statusimageblog" placeholder="Trạng thái">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày tạo</label>
+                            <input type="text" class="form-control" id="createdateblog">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày sửa</label>
+                            <input type="text" class="form-control" id="modifiledateblog">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người tạo</label>
+                            <input type="text" class="form-control" id="createbyblog" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người sửa</label>
+                            <input type="text" class="form-control" id="modifilebyblog" placeholder="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="btnSubmitblog">Xác Nhận</button>
+                <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*-----------------modal blogadd------------------*@
+<div id="modalblogadd" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div style="color: red; text-align: center" class="panel-heading" id="modalTitleblogadd"></div>
+                <input type="text" hidden id="idblogadd" value="" />
+                <input type="text" hidden id="idnameblog" value="" />
+                <div class="form-group" style="margin-left:20px">
+                    <label>Tên Blog</label>
+                    <input type="text" class="form-control" id="nameblogadd" placeholder="Tên Blog">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <input type="text" class="form-control" hidden id="urlblogadd" placeholder="url">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <input type="text" class="form-control hidden" hidden id="titleblogadd" placeholder="title">
+                </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label>Nội Dung</label>
+                    <textarea id="contentblogadd"></textarea>
+                </div>
+                <div class="form-inline">
+                    <label>Chọn ảnh</label>
+                    <input type="text" hidden name="picture" id="picturefileblogadd" class="form-control" />
+                    <input type="file" id="fileUploadblogadd" name="fileUpload" accept="image/*" style="display:none" />
+                    <input type="button" id="btnUploadblogadd" value="..." class="btn-bg-success" />
+                    <img style="width:100px" id="pictureblogadd" />
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Trạng thái</label>
+                            <input type="checkbox" class="form-control" id="statusblogadd" placeholder="Trạng thái">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày tạo</label>
+                            <input type="text" class="form-control" id="createdateblogadd">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Ngày sửa</label>
+                            <input type="text" class="form-control" id="modifiledateblogadd">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người tạo</label>
+                            <input type="text" class="form-control" id="createbyblogadd" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" style="margin-left:20px">
+                            <label>Người sửa</label>
+                            <input type="text" class="form-control" id="modifilebyblogadd" placeholder="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="btnSubmitblogadd">Xác Nhận</button>
+                <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*-----------------modalchange------------------*@
+<div id="modalchange" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div style="color: red; text-align: center" class="panel-heading" id="">Sửa Danh Mục Blog</div>
+                <input type="text" hidden id="idchange" value=""/>
+                <div class="form-group" style="margin-left:20px">
+                    <label>Tên danh mục Blog</label>
+                    <select class="browser-default custom-select" id="blogchange">
+                    </select>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="btnSubmitchange">Xác Nhận</button>
+                <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        var page = 1;
+        var seach = '';
+        //--------------------------------------------------blog-------------------------------------------------------------------------------------------------------
+        $('#btnblog').click(function () {
+            Blog(seach, page);
+            $('#pageblog').show();
+            $('#seachinputblog').show();
+            $('#pageblogadd').hide();
+            $('#seachinputblogadd').hide();
+        });
+        //modal add category
+        $(document).on('click', "button[name='addblog']", function () {
+            Addblog();
+            $('#nameblog').val('');
+            $('#urlblog').val('');
+            $('#titleblog').val('');
+            $('#picturefileblog').val('');
+            $('#createdateblog').prop('readonly', true);
+            $('#createdateblog').val('');
+            $('#modifiledateblog').prop('readonly', true);
+            $('#modifiledateblog').val('');
+            $('#createbyblog').prop('readonly', true);
+            $('#createbyblog').val('');
+            $('#modifilebyblog').prop('readonly', true);
+            $('#modifilebyblog').val('');
+            $('#statusblog').prop('checked', false);
+            $('#statusimageblog').prop('checked', false);
+            $('#idblog').val('');
+            $('#btnSubmitblog').show();
+        });
+        //hien ten hinh
+        $('#btnUploadblog').click(function () {
+            $('#fileUploadblog').trigger('click');
+        });
+        //chon file
+        $('#fileUploadblog').change(function () {
+            if (window.FormData !== undefined) {
+                let fileUpload = $('#fileUploadblog').get(0);
+                let files = fileUpload.files;
+                let formdata = new FormData();
+                formdata.append('file', files[0]);
+                $.ajax({
+                    type: 'post',
+                    url: '/icts/blogs/UploadImage',
+                    contentType: false,
+                    processData: false,
+                    data: formdata,
+                    success: function (urlImage) {
+                        $('#pictureblog').attr('src', urlImage);
+                        $('#picturefileblog').val(urlImage);
+                    }
+                })
+            }
+
+        });
+        //confirm add/edit
+        $('#btnSubmitblog').click(function () {
+            let name = $('#nameblog').val().trim();
+            let url = $('#urlblog').val().trim();
+            let title = $('#titleblog').val().trim();
+            let image = $('#picturefileblog').val().trim();
+            let status = $('#statusblog').prop('checked');
+            let statusimage = $('#statusimageblog').prop('checked');
+            //rang buộc dữ liệu
+            if (name.length == 0 || image == null) {
+                alert('Vui Long Nhập Đầy Đủ Dữ liệu');
+                return;
+            }
+            let idblog = $('#idblog').val().trim();
+            if (idblog.length == 0) {
+                $.ajax({
+                    url: '/icts/blogs/Add',
+                    type: 'post',
+                    data: {
+                        name: name,
+                        url: url,
+                        title: title,
+                        image: image,
+                        status: status,
+                        statusimage: statusimage
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Thêm Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            Blog(seach, page);
+                            $('#nameblog').val('');
+                            $('#urlblog').val('');
+                            $('#titleblog').val('');
+                            $('#statusblog').prop('checked', false);
+                            $('#statusimageblog').prop('checked', false);
+                            $('#picturefileblog').val('');
+                            $('#modalblog').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/icts/blogs/Edit',
+                    type: 'post',
+                    data: {
+                        name: name,
+                        url: url,
+                        title: title,
+                        image: image,
+                        status: status,
+                        statusimage: statusimage,
+                        id: idblog
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Sửa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            Blog(seach, page);
+                            $('#nameblog').val('');
+                            $('#urlblog').val('');
+                            $('#titleblog').val('');
+                            $('#statusblog').prop('checked', false);
+                            $('#statusimageblog').prop('checked', false);
+                            $('#picturefileblog').val('');
+                            $('#idblog').val('');
+                            $('#modalblog').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+
+
+
+        });
+        //phan trang
+        $('#pageblog').on('click', 'li', function (e) {
+            e.preventDefault();
+            page = $(this).attr('id');
+            Blog(seach, page);
+        });
+        ////tim kiem
+        $('#btnSeachblog').click(function () {
+            page = 1;
+            seach = $('#seachblog').val();
+            Blog(seach, page);
+        });
+        $('#seachblog').on('keypress', function (e) {
+            if (e.which == 13) {
+                $('#btnSeachblog').click();
+            }
+        });
+        //catchuoi
+        $('#nameblog').keyup(function () {
+            $('#urlblog').val(GetChuoi($(this).val()));
+            $('#titleblog').val($(this).val());
+        });
+        //Detail
+        $(document).on('click', "button[name='viewblog']", function () {
+            let id = $(this).closest('tr').attr('id');
+            Detailblog(id);
+            $('#createdateblog').prop('readonly', true);
+            $('#modifiledateblog').prop('readonly', true);
+            $('#modifilebyblog').prop('readonly', true);
+            $('#createbyblog').prop('readonly', true);
+            $('#modifiledateblog').show();
+            $('#modifilebyblog').show();
+            $('#btnSubmitblog').hide();
+            $('#idblog').val('');
+        });
+        //Edit
+        $(document).on('click', "button[name='updateblog']", function () {
+            let id = $(this).closest('tr').attr('id');
+            Detailblog(id);
+            $('#createdateblog').prop('readonly', true);
+            $('#createbyblog').prop('readonly', true);
+            $('#modifiledateblog').prop('readonly', true);
+            $('#modifilebyblog').prop('readonly', true);
+            $('#modalTitleblog').text("Sửa Danh Mục Blog");
+            $('#btnSubmitblog').show();
+            $('#idblog').val('');
+
+        });
+        //delete
+        $(document).on('click', "button[name='deleteblog']", function () {
+            let id = $(this).closest('tr').attr('id');
+            if (confirm("Bạn có muốn xóa dữ liệu này")) {
+                $.ajax({
+                    url: '/icts/blogs/Delete',
+                    type: 'post',
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Xóa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            Blog(seach, page)
+                        } else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+
+        });
+        function Blog(seach, page) {
+            $.ajax({
+                url: '/icts/blogs/Blog',
+                type: 'get',
+                data: {
+                    page: page,
+                    seach: seach
+                },
+                success: function (data) {
+                    $('.Blog').empty();
+                    if (data.code == 200) {
+                        let table = '<thead>';
+                        table += '<tr>';
+                        table += '<th>Tên Danh Mục Blog</th>';
+                        table += '<th>Ảnh</th>';
+                        table += '<th>Trạng thái</th>';
+                        table += '<th>Trạng Thái Hình Ảnh Giao Diện</th>';
+                        table += '<th></th>';
+                        table += '<th> <button class = "btn btn-xs btn-success" name = "addblog" > <i class="fa-solid fa-plus"></i></button >&nbsp</th>';
+                        table += '</tr>';
+                        table += '</thead>';
+                        table += '<tbody>';
+                        $.each(data.dmsp, function (k, v) {
+                            table += '<tr id="' + v.id + '">';
+                            table += '<td>' + v.name + '</td>';
+                            table += '<td><img style="width:100px" src="/Images/' + v.image + '"</td>';
+                            table += '<td>' + v.status + '</td>';
+                            table += '<td>' + v.statusimage + '</td>';
+                            table += '<td> <button class = "btn btn-xs btn-primary" name = "viewblog" > <i class="fa-thin fa-circle-info"></i></button >&nbsp';
+                            table += ' <button class = "btn btn-xs btn-warning" name = "updateblog" > <i class="fa-thin fa-wrench"></i></button >&nbsp';
+                            table += ' <button class = "btn btn-xs btn-danger" name = "deleteblog" > <i class="fa-thin fa-trash-xmark"></i></button >&nbsp';
+                            table += '</td>';
+                            table += '<td></td>';
+                            table += '</tr>';
+                        });
+                        table += '</tbody>';
+                        $('.Blog').append(table);
+                        $('#pageblog').empty();
+
+                        for (let i = 1; i <= data.pages; i++) {
+                            $('#pageblog').empty();
+                            for (let j = page; j <= (parseInt(page) + 4); j++) {
+                                if (j <= data.pages) {
+                                    let li = '<li class="page-item" id="' + j + '"><a class="page-link" href="#">' + j + '</a></li>';
+                                    $('#pageblog').append(li);
+                                }
+
+                            }
+                        }
+                        if (parseInt(page) > 1) {
+                            let Previous = '<li class="page-item" id="' + (parseInt(page) - 1) + '"><a  class="page-link" href="#">Previous</a></li>';
+                            $('#pageblog').append(Previous);
+                        }
+
+                        let next = '<li class="page-item" id="' + (parseInt(page) + 1) + '"><a name="nextpage" class="page-link" href="#">Next</a></li>';
+                        $('#pageblog').append(next);
+                        let li = $('#pageblog li#' + page + '');
+                        $(li).addClass('active')
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function Detailblog(id) {
+            $.ajax({
+                url: '/icts/blogs/Detail',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#idblog').val(data.tv.Id);
+                        $('#nameblog').val(data.tv.Name);
+                        $('#urlblog').val(data.tv.Meta);
+                        $('#titleblog').val(data.tv.Title);
+                        $('#picturefileblog').val("/Images/" + data.tv.Image);
+                        if (data.tv.Status == true) {
+                            $('#statusblog').prop('checked', true);
+                        } else {
+                            $('#statusblog').prop('checked', false);
+                        }
+                        if (data.tv.StatusImage == true) {
+                            $('#statusimageblog').prop('checked', true);
+                        } else {
+                            $('#statusimageblog').prop('checked', false);
+                        }
+                        $('#pictureblog').attr('src', $('#picturefileblog').val())
+                        $('#createdateblog').val(ConvertJsonDateString(data.tv.CreateDate));
+                        $('#modifiledateblog').val(ConvertJsonDateString(data.tv.ModifileDate));
+                        $('#createbyblog').val(data.tv.CreateBy);
+                        $('#modifilebyblog').val(data.tv.ModifileBy);
+
+                        $('#modalTitleblog').text("Chi Tiết Danh Mục Blog");
+                        $('#modalblog').modal();
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function Addblog() {
+            $.ajax({
+                url: '/adminsss/Add',
+                type: 'get',
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#createdateblog').val(ConvertJsonDateString(data.date));
+                        $('#createbyblog').val(data.d);
+                        $('#modalTitleblog').text("Thêm Danh Mục Blog");
+                        $('#modalblog').modal();
+                    }
+                }
+            });
+        }
+        //--------------------------------------------------blogadd-------------------------------------------------------------------------------------------------------
+        $('#btnblogadd').click(function () {
+            BlogById();
+            $('#pageblog').hide();
+            $('#seachinputblog').hide();
+            $('#pageblogadd').show();
+            $('#seachinputblogadd').show();
+        });
+        //modal add blog
+        $(document).on('click', "button[name='addblogadd']", function () {
+            Addblogadd();
+            $('#nameblogadd').val('');
+            $('#urlblogadd').val('');
+            $('#titleblogadd').val('');
+            $('#contentblogadd').summernote('code', '');
+            $('#picturefileblogadd').val('');
+            $('#createdateblogadd').prop('readonly', true);
+            $('#createdateblogadd').val('');
+            $('#modifiledateblogadd').prop('readonly', true);
+            $('#modifiledateblogadd').val('');
+            $('#createbyblogadd').prop('readonly', true);
+            $('#createbyblogadd').val('');
+            $('#modifilebyblogadd').prop('readonly', true);
+            $('#modifilebyblogadd').val('');
+            $('#statusblogadd').prop('checked', false);
+            $('#idblogadd').val('');
+            $('#btnSubmitblogadd').show();
+        });
+        //hien ten hinh
+        $('#btnUploadblogadd').click(function () {
+            $('#fileUploadblogadd').trigger('click');
+        });
+        //chon file
+        $('#fileUploadblogadd').change(function () {
+            if (window.FormData !== undefined) {
+                let fileUpload = $('#fileUploadblogadd').get(0);
+                let files = fileUpload.files;
+                let formdata = new FormData();
+                formdata.append('file', files[0]);
+                $.ajax({
+                    type: 'post',
+                    url: '/icts/blogadds/UploadImage',
+                    contentType: false,
+                    processData: false,
+                    data: formdata,
+                    success: function (urlImage) {
+                        $('#pictureblogadd').attr('src', urlImage);
+                        $('#picturefileblogadd').val(urlImage);
+                    }
+                })
+            }
+
+        });
+        //phan trang
+        $('#pageblogadd').on('click', 'li', function (e) {
+            e.preventDefault();
+            page = $(this).attr('id');
+            Blogadd(seach, page);
+        });
+        ////tim kiem
+        $('#btnSeachblogadd').click(function () {
+            page = 1;
+            seach = $('#seachblogadd').val();
+            Blogadd(seach, page);
+        });
+        $('#seachblogadd').on('keypress', function (e) {
+            if (e.which == 13) {
+                $('#btnSeachblogadd').click();
+            }
+        });
+        //catchuoi
+        $('#nameblogadd').keyup(function () {
+            $('#urlblogadd').val(GetChuoi($(this).val()));
+            $('#titleblogadd').val($(this).val());
+        });
+        //Detail
+        $(document).on('click', "button[name='viewblogadd']", function () {
+            let id = $(this).closest('tr').attr('id');
+            Detailblogadd(id);
+            $('#createdateblogadd').prop('readonly', true);
+            $('#modifiledateblogadd').prop('readonly', true);
+            $('#modifilebyblogadd').prop('readonly', true);
+            $('#createbyblogadd').prop('readonly', true);
+            $('#modifiledateblogadd').show();
+            $('#modifilebyblogadd').show();
+            $('#btnSubmitblogadd').hide();
+            $('#idblogadd').val('');
+        });
+        //Edit
+        $(document).on('click', "button[name='updateblogadd']", function () {
+            let id = $(this).closest('tr').attr('id');
+            Detailblogadd(id);
+            $('#createdateblogadd').prop('readonly', true);
+            $('#createbyblogadd').prop('readonly', true);
+            $('#modifiledateblogadd').prop('readonly', true);
+            $('#modifilebyblogadd').prop('readonly', true);
+            $('#modalTitleblogadd').text("Sửa Blog");
+            $('#btnSubmitblogadd').show();
+            $('#idblogadd').val('');
+
+        });
+        //delete
+        $(document).on('click', "button[name='deleteblogadd']", function () {
+            let id = $(this).closest('tr').attr('id');
+            if (confirm("Bạn có muốn xóa dữ liệu này")) {
+                $.ajax({
+                    url: '/icts/blogadds/Delete',
+                    type: 'post',
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Xóa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            Blogadd(seach, page)
+                        } else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+
+        });
+
+        //changeblog
+        $(document).on('click', "button[name='change']", function () {
+            $('#modalchange').modal();
+            let id = $(this).closest('tr').attr('id');
+            Detailchange(id);
+        })
+        $('#btnSubmitchange').click(function () {
+            let idnameblog = $('#blogchange option:selected').val();
+            let id = $('#idchange').val().trim();
+            $.ajax({
+                url: '/icts/blogadds/EditBlog',
+                type: 'post',
+                data: {
+                    nameblog: idnameblog,
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: "Thêm Thành Công",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        Blogadd(seach, page);
+                        $('#blogchange').val('');
+                        $('#modalchange').modal('hide');
+                    }
+                    else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        })
+        //confirm add/edit
+        $('#btnSubmitblogadd').click(function () {
+            let name = $('#nameblogadd').val().trim();
+            let url = $('#urlblogadd').val().trim();
+            let title = $('#titleblogadd').val().trim();
+            let content = $('#contentblogadd').summernote('code');
+            let image = $('#picturefileblogadd').val().trim();
+            let status = $('#statusblogadd').prop('checked');
+            let idnameblog = $('#nameblogid option:selected').val();
+            //rang buộc dữ liệu
+            if (name.length == 0 || image == null) {
+                alert('Vui Long Nhập Đầy Đủ Dữ liệu');
+                return;
+            }
+            let idblogadd = $('#idblogadd').val().trim();
+            if (idblogadd.length == 0) {
+                $.ajax({
+                    url: '/icts/blogadds/Add',
+                    type: 'post',
+                    data: {
+                        nameblog: idnameblog,
+                        name: name,
+                        url: url,
+                        title: title,
+                        content: content,
+                        image: image,
+                        status: status
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Thêm Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            Blogadd(seach, page);
+                            $('#nameblogadd').val('');
+                            $('#urlblogadd').val('');
+                            $('#titleblogadd').val('');
+                            $('#contentblogadd').summernote('code', '');
+                            $('#statusblogadd').prop('checked', false);
+                            $('#picturefileblogadd').val('');
+                            $('#modalblogadd').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '/icts/blogadds/Edit',
+                    type: 'post',
+                    data: {
+                        nameblog: idnameblog,
+                        name: name,
+                        url: url,
+                        title: title,
+                        content: content,
+                        image: image,
+                        status: status,
+                        id: idblogadd
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Sửa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            Blogadd(seach, page);
+                            $('#nameblogadd').val('');
+                            $('#urlblogadd').val('');
+                            $('#titleblogadd').val('');
+                            $('#contentblogadd').summernote('code', '');
+                            $('#statusblogadd').prop('checked', false);
+                            $('#statusimageblogadd').prop('checked', false);
+                            $('#picturefileblogadd').val('');
+                            $('#idblogadd').val('');
+                            $('#modalblogadd').modal('hide');
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+        });
+        $('#nameblogid').change(function () {
+            Blogadd(seach, page)
+        })
+        function Blogadd(seach, page) {
+            let idnameblog = $('#nameblogid option:selected').val();
+            $.ajax({
+                url: '/icts/blogadds/BlogAdd',
+                type: 'get',
+                data: {
+                    id: idnameblog,
+                    page: page,
+                    seach: seach
+                },
+                success: function (data) {
+                    $('.Blogadd').empty();
+                    if (data.code == 200) {
+                        let table = '<thead>';
+                        table += '<tr>';
+                        table += '<th>Tên Danh Mục Blog</th>';
+                        table += '<th>Tên Blog</th>';
+                        table += '<th>Ảnh</th>';
+                        table += '<th>Trạng thái</th>';
+                        table += '<th></th>';
+                        table += '<th> <button class = "btn btn-xs btn-success" name = "addblogadd" > <i class="fa-solid fa-plus"></i></button >&nbsp</th>';
+                        table += '</tr>';
+                        table += '</thead>';
+                        table += '<tbody>';
+                        $.each(data.dmsp, function (k, v) {
+                            table += '<tr id="' + v.id + '">';
+                            table += '<td>' + v.nameblog + '</td>';
+                            table += '<td>' + v.name + '</td>';
+                            table += '<td><img style="width:100px" src="/Images/' + v.image + '"</td>';
+                            table += '<td>' + v.status + '</td>';
+                            table += '<td> <button class = "btn btn-xs btn-primary" name = "viewblogadd" > <i class="fa-thin fa-circle-info"></i></button >&nbsp';
+                            table += ' <button class = "btn btn-xs btn-warning" name = "updateblogadd" > <i class="fa-thin fa-wrench"></i></button >&nbsp';
+                            table += ' <button class = "btn btn-xs btn-danger" name = "deleteblogadd" > <i class="fa-thin fa-trash-xmark"></i></button >&nbsp';
+                            table += ' <button class = "btn btn-xs btn-info" name = "change" ><i class="fa-thin fa-arrow-down-square-triangle"></i></button >&nbsp';
+                            table += '</td>';
+                            table += '<td></td>';
+                            table += '</tr>';
+                        });
+                        table += '</tbody>';
+                        $('.Blogadd').append(table);
+                        $('#pageblogadd').empty();
+
+                        for (let i = 1; i <= data.pages; i++) {
+                            $('#pageblogadd').empty();
+                            for (let j = page; j <= (parseInt(page) + 4); j++) {
+                                if (j <= data.pages) {
+                                    let li = '<li class="page-item" id="' + j + '"><a class="page-link" href="#">' + j + '</a></li>';
+                                    $('#pageblogadd').append(li);
+                                }
+
+                            }
+                        }
+                        if (parseInt(page) > 1) {
+                            let Previous = '<li class="page-item" id="' + (parseInt(page) - 1) + '"><a  class="page-link" href="#">Previous</a></li>';
+                            $('#pageblogadd').append(Previous);
+                        }
+
+                        let next = '<li class="page-item" id="' + (parseInt(page) + 1) + '"><a name="nextpage" class="page-link" href="#">Next</a></li>';
+                        $('#pageblogadd').append(next);
+                        let li = $('#pageblogadd li#' + page + '');
+                        $(li).addClass('active')
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function Detailblogadd(id) {
+            $.ajax({
+                url: '/icts/blogadds/Detail',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#idblogadd').val(data.tv.Id);
+                        $('#nameblogadd').val(data.tv.Name);
+                        $('#urlblogadd').val(data.tv.Meta);
+                        $('#titleblogadd').val(data.tv.Title);
+                        $('#contentblogadd').summernote('code', data.tv.Content);
+                        $('#picturefileblogadd').val("/Images/" + data.tv.Image);
+                        if (data.tv.Status == true) {
+                            $('#statusblogadd').prop('checked', true);
+                        } else {
+                            $('#statusblogadd').prop('checked', false);
+                        }
+                        $('#pictureblogadd').attr('src', $('#picturefileblogadd').val())
+                        $('#createdateblogadd').val(ConvertJsonDateString(data.tv.CreateDate));
+                        $('#modifiledateblogadd').val(ConvertJsonDateString(data.tv.ModifileDate));
+                        $('#createbyblogadd').val(data.tv.CreateBy);
+                        $('#modifilebyblogadd').val(data.tv.ModifileBy);
+
+                        $('#modalTitleblogadd').text("Chi Tiết Blog");
+                        $('#modalblogadd').modal();
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function Detailchange(id) {
+            $.ajax({
+                url: '/icts/blogadds/Detail',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#idchange').val(data.tv.Id);
+                        $('#blogchange').val(data.tv.IdBlog);
+                        $('#modalchange').modal();
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+        function Addblogadd() {
+            $.ajax({
+                url: '/adminsss/Add',
+                type: 'get',
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#createdateblogadd').val(ConvertJsonDateString(data.date));
+                        $('#createbyblogadd').val(data.d);
+                        $('#modalTitleblogadd').text("Thêm Blog");
+                        $('#modalblogadd').modal();
+                    }
+                }
+            });
+        }
+        function BlogById() {
+            $.ajax({
+                url: '/icts/blogadds/BlogById',
+                type: 'get',
+                success: function (data) {
+                    $('#nameblogid').empty()
+                    $('#blogchange').empty()
+                    if (data.code == 200) {
+                        $.each(data.dmsp, function (k, v) {
+                            let option = '<option id="' + v.id + '" value="' + v.id + '">' + v.name + '</option>';
+                            $('#nameblogid').append(option)
+                            $('#blogchange').append(option)
+                        })
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+
+            });
+        }
+        //convert date string
+        function ConvertJsonDateString(jsonDate) {
+            var shortDate = null;
+            if (jsonDate) {
+                var regex = /-?\d+/;
+                var matches = regex.exec(jsonDate);
+                var dt = new Date(parseInt(matches[0]));
+                var month = dt.getMonth() + 1;
+                var monthString = month > 9 ? month : '0' + month;
+                var day = dt.getDate();
+                var dayString = day > 9 ? day : '0' + day;
+                var year = dt.getFullYear();
+                shortDate = monthString + '/' + dayString + '/' + year;
+            }
+            return shortDate;
+        };
+        $(document).ready(function () {
+            Blog(seach, page);
+            $('#contentblogadd').summernote();
+            $('#seachinputblogadd').hide();
+            document.getElementById("trangchu").style.visibility = "hidden";
+            document.getElementById("giaiphap").style.visibility = "hidden";
+            document.getElementById("sanpham").style.visibility = "hidden";
+            document.getElementById("thuonghieu").style.visibility = "hidden";
+            document.getElementById("chitietsanpham").style.visibility = "hidden";
+            document.getElementById("download").style.visibility = "hidden";
+            document.getElementById("service").style.visibility = "hidden";
+            document.getElementById("blog").style.visibility = "visible";
+        });
+    </script>
+}
+
+

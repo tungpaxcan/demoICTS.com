@@ -33,5 +33,30 @@ namespace ICTS.com.Controllers
                 return Json(new { code = 500, msg = "Hiểm thị dữ liệu thất bại" + e.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+        [HttpPost]
+        public JsonResult Count(int id)
+        {
+            try
+            {
+                var count = db.Downloads.SingleOrDefault(x => x.Id == id);
+                if (count.Count == null)
+                {
+                    count.Count = 1;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    count.Count += 1;
+                    db.SaveChanges();
+                }
+                
+                
+                return Json(new { code = 200,  }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { code = 500, msg = "Hiểm thị dữ liệu thất bại" + e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

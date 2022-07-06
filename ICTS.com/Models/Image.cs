@@ -15,6 +15,7 @@ namespace ICTS.com.Models
     public partial class Image
     {
         public int Id { get; set; }
+        public Nullable<int> IdProduct { get; set; }
         public string Image1 { get; set; }
         public string Name { get; set; }
         public string Meta { get; set; }
@@ -24,5 +25,7 @@ namespace ICTS.com.Models
         public Nullable<System.DateTime> ModifileDate { get; set; }
         public string ModifileBy { get; set; }
         public Nullable<bool> Status { get; set; }
+    
+        public virtual Product Product { get; set; }
     }
 }

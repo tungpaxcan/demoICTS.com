@@ -132,6 +132,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\ICTS\Controllers\BaseController.cs" />
+    <Compile Include="Areas\ICTS\Controllers\BlogAddsController.cs" />
+    <Compile Include="Areas\ICTS\Controllers\BlogsController.cs" />
     <Compile Include="Areas\ICTS\Controllers\BrandsController.cs" />
     <Compile Include="Areas\ICTS\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\ICTS\Controllers\ContactsController.cs" />
@@ -143,16 +145,20 @@
     <Compile Include="Areas\ICTS\Controllers\DownloadsController.cs" />
     <Compile Include="Areas\ICTS\Controllers\FootersController.cs" />
     <Compile Include="Areas\ICTS\Controllers\HomeAdminController.cs" />
+    <Compile Include="Areas\ICTS\Controllers\ImageAddsController.cs" />
     <Compile Include="Areas\ICTS\Controllers\PartnersController.cs" />
     <Compile Include="Areas\ICTS\Controllers\ProductCategoriesController.cs" />
     <Compile Include="Areas\ICTS\Controllers\ProductsController.cs" />
     <Compile Include="Areas\ICTS\Controllers\PromotionController.cs" />
+    <Compile Include="Areas\ICTS\Controllers\SeosController.cs" />
     <Compile Include="Areas\ICTS\Controllers\ServicesController.cs" />
     <Compile Include="Areas\ICTS\Controllers\SlidersController.cs" />
     <Compile Include="Areas\ICTS\Controllers\SolutionsController.cs" />
     <Compile Include="Areas\ICTS\Controllers\VideoController.cs" />
     <Compile Include="Areas\ICTS\ICTSAreaRegistration.cs" />
     <Compile Include="Controllers\AdminsssController.cs" />
+    <Compile Include="Controllers\BlogAddController.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CategoriesHomeController.cs" />
     <Compile Include="Controllers\CategoryProductHomeController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
@@ -161,17 +167,25 @@
     <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImageAddController.cs" />
     <Compile Include="Controllers\PartnerController.cs" />
     <Compile Include="Controllers\ProductHomeController.cs" />
     <Compile Include="Controllers\PromotionsController.cs" />
     <Compile Include="Controllers\SeachProductController.cs" />
+    <Compile Include="Controllers\SeoController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
-    <Compile Include="Controllers\SlidersController.cs" />
+    <Compile Include="Controllers\SliderController.cs" />
     <Compile Include="Controllers\SolutionHomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Admin.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Blog.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BlogAdd.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Brand.cs">
@@ -181,9 +195,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Contact.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Content.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Customer.cs">
@@ -198,7 +209,13 @@
     <Compile Include="Models\Download.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GmailNewsLetter.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Image.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Manager.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Model1.Context.cs">
@@ -229,6 +246,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Promotion.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SEO.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Service.cs">
@@ -2368,6 +2388,7 @@
     <Content Include="Images\05052022114041_39.jpg" />
     <Content Include="Images\29462021094637394_46.png" />
     <Content Include="Images\29462021094649875_3.jpg" />
+    <Content Include="Images\blue-sky-819982_960_720 %281%29.png" />
     <Content Include="Images\bokeh_PNG20.png" />
     <Content Include="Images\header-bg.jpg" />
     <Content Include="Images\i.png" />
@@ -2699,6 +2720,8 @@
     <Content Include="Areas\ICTS\Views\Downloads\Index.cshtml" />
     <Content Include="Images\Web.pdf" />
     <Content Include="Areas\ICTS\Views\Services\Index.cshtml" />
+    <Content Include="Areas\ICTS\Views\Blogs\Index.cshtml" />
+    <Content Include="Images\Bước 1.docx" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -2753,17 +2776,19 @@
     <Content Include="Views\CategoryProductHome\Index.cshtml" />
     <Content Include="Views\CategoryProductHome\ProCateIndex.cshtml" />
     <Content Include="Views\Service\Index.cshtml" />
+    <Content Include="Views\Blog\Index.cshtml" />
+    <Content Include="Views\BlogAdd\Index.cshtml" />
+    <Content Include="Views\Blog\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\ICTS\Data\" />
-    <Folder Include="Areas\ICTS\Views\Base\" />
-    <Folder Include="Areas\ICTS\Views\Customers\" />
-    <Folder Include="Areas\ICTS\Views\Promotion\" />
     <Folder Include="Areas\ICTS\Views\Video\" />
     <Folder Include="Views\Customer\" />
     <Folder Include="Views\Download\" />
+    <Folder Include="Views\ImageAdd\" />
     <Folder Include="Views\Promotions\" />
+    <Folder Include="Views\Seo\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

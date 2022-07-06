@@ -293,6 +293,7 @@
                         let table = '<thead>';
                         table += '<tr>';
                         table += '<th>Tên </th>';
+                        table += '<th>Số Lượng tải </th>';
                         table += '<th>Trạng thái</th>';
                         table += '<th></th>';
                         table += '<th> <button class = "btn btn-xs btn-success" name = "adddownload" > <i class="fa-solid fa-plus"></i></button >&nbsp</th>';
@@ -302,6 +303,7 @@
                         $.each(data.dmsp, function (k, v) {
                             table += '<tr id="' + v.id + '">';
                             table += '<td>' + v.name + '</td>';
+                            table += '<td>' + v.count + '</td>';
                             table += '<td>' + v.status + '</td>';
                             table += '<td> <button class = "btn btn-xs btn-primary" name = "viewdownload" > <i class="fa-thin fa-circle-info"></i></button >&nbsp';
                             table += ' <button class = "btn btn-xs btn-warning" name = "updatedownload" > <i class="fa-thin fa-wrench"></i></button >&nbsp';
@@ -409,7 +411,7 @@
             document.getElementById("chitietsanpham").style.visibility = "hidden";
             document.getElementById("download").style.visibility = "visible";
             document.getElementById("service").style.visibility = "hidden";
-
+            document.getElementById("blog").style.visibility = "hidden";
         });
     </script>
     }

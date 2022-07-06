@@ -52,7 +52,8 @@ namespace ICTS.com.Areas.ICTS.Controllers
                                  id = s.Id,
                                  name = s.Name,
                                  title = s.Title,
-                                 download = s.Download1
+                                 download = s.Download1,
+                                 count=s.Count
                              }).ToList();
                 return Json(new { code = 200, dmspp = dmspp, msg = "Hiển Thị Dữ liệu thành công" }, JsonRequestBehavior.AllowGet);
             }
@@ -73,6 +74,7 @@ namespace ICTS.com.Areas.ICTS.Controllers
                                  id = s.Id,
                                  name = s.Name,
                                  title = s.Title,
+                                 count=s.Count,
                                  download = s.Download1,
                                  createdate = s.CreateDate.Value.Day + "/" + s.CreateDate.Value.Month + "/" + s.CreateDate.Value.Year,
                                  createby = s.CreateBy,
@@ -161,9 +163,19 @@ namespace ICTS.com.Areas.ICTS.Controllers
             {
                 db.Configuration.ProxyCreationEnabled = false;
                 var l = db.Downloads.Find(id);
-                db.Downloads.Remove(l);
-                db.SaveChanges();
-                return Json(new { code = 200, msg = "Xoa Dữ Liệu thành công" }, JsonRequestBehavior.AllowGet);
+                var session = (Admin)Session["admin"];
+                var role = session.Role;
+                if (role == true)
+                {
+                    db.Downloads.Remove(l);
+                    db.SaveChanges();
+                    return Json(new { code = 200, msg = "Xoa Dữ Liệu thành công" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { code = 300, msg = "Bạn không có quyền xóa dữ liệu" }, JsonRequestBehavior.AllowGet);
+                }
+               
             }
             catch (Exception e)
             {

@@ -7,12 +7,9 @@
     <div class="input-box">
         <input type="text" id="seachh" class="form-control" placeholder="Seach">       <button hidden type="button" id="btnSeach" class="btn btn-primary"></button>
         <i class="fa fa-search"></i>
-
-
     </div>
 
     <div class="menu-categgory" id="mymenu">
-
         <div id="menu-category">
             @foreach (var item in Model)
             {
@@ -30,7 +27,7 @@
         </div>
         <a href="javascript:void(0);" style="font-size:100% ;" class="icon" onclick="myFunction()">&#9776;</a>
     </div>
-    <div class="product-container">
+    <div id="san-pham-theo-loai" class="product-container">
         <div id="imageproductbyid" class="product-">
         </div>
     </div>
@@ -77,7 +74,7 @@
                     $('.Add' + ids[i] + '').empty();
                     if (data.code == 200) {
                         $.each(data.dmsp, function (k, v) {
-                            let li = '<a id="' + v.id + '" name="a">' + v.name + '</a>';
+                            let li = '<a href="#san-pham-theo-loai" id="' + v.id + '" name="a">' + v.name + '</a>';
                             $('.Add' + ids[i] + '').append(li);
                         });
                     }
@@ -135,7 +132,7 @@
                         $.each(data.dmsp, function (k, v) {
                             let div = ' <a id="' + v.id + '"  name="b">';
                             div += '<div class="product--display">';
-                            div += '<img src="/Images/' + v.image + '" />';
+                            div += '<img alt="'+v.title+'" src="/Images/' + v.image + '" />';
                             div += '</div>';
                             div += ' <div class="product--hover">';
                             div += '<h2 id="w-rm">' + v.content + '</h2>';
@@ -184,9 +181,9 @@
                     $('#imageproductbyid').empty();
                     if (data.code == 200) {
                         $.each(data.dmsp, function (k, v) {
-                            let div = ' <a id="' + v.id + '" href="" name="b">';
+                            let div = ' <a id="' + v.id + '" name="b">';
                             div += '<div class="product--display">';
-                            div += '<img src="/Images/' + v.image + '" />';
+                            div += '<img alt="' + v.title +'" src="/Images/' + v.image + '" />';
                             div += '</div>';
                             div += ' <div class="product--hover">';
                             div += '<h2 id="w-rm">' + v.content + '</h2>';
@@ -236,7 +233,7 @@
                 success: function (data) {
                     if (data.code == 200) {
                         $.each(data.left, function (k, v) {
-                            window.location.href = data.Url + v.meta + "/" + v.id
+                            window.location.href = data.Url + v.meta + "/" + v.ids
                         })
 
                     }

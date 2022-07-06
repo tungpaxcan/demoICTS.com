@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title ="Dịch Vụ";
     Layout = "~/Areas/ICTS/Views/Shared/_Layout_Admin.cshtml";
 }
 <div id="seachinputservice" class="input-group">
@@ -17,7 +17,7 @@
     <ul class="pagination" id="pageservice">
     </ul>
 </div>
-@*-----------------modal brand------------------*@
+@*-----------------modal service------------------*@
 <div id="modalservice" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -110,7 +110,7 @@
             $('#nameservice').val('');
             $('#urlservice').val('');
             $('#titleservice').val('');
-            $('#contentservice').val('');
+            $('#contentservice').summernote('code','');
             $('#picturefileservice').val('');
             $('#createdateservice').prop('readonly', true);
             $('#createdateservice').val('');
@@ -229,7 +229,7 @@
                             $('#nameservice').val('');
                             $('#urlservice').val('');
                             $('#titleservice').val('');
-                            $('#contentservice').val('');
+                            $('#contentservice').summernote('code','');
                             $('#statusservice').prop('checked', false);
                             $('#statusimageservice').prop('checked', false);
                             $('#picturefileservice').val('');
@@ -465,6 +465,8 @@
             document.getElementById("chitietsanpham").style.visibility = "hidden";
             document.getElementById("download").style.visibility = "hidden";
             document.getElementById("service").style.visibility = "visible";
+            document.getElementById("blog").style.visibility = "hidden";
+            document.getElementById("blog").style.visibility = "hidden";
         });
     </script>
     }

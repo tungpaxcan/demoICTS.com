@@ -28,6 +28,7 @@ namespace ICTS.com.Models
         public string CreateBy { get; set; }
         public Nullable<System.DateTime> ModifileDate { get; set; }
         public string ModifileBy { get; set; }
+        public int Positon { get; set; }
         public Nullable<bool> Status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -4,30 +4,36 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="af870e3c1dea42248a47fbb2dd04597a" Name="Diagram1">
-        <EntityTypeShape EntityType="ICTS.COMModel.Admin" Width="1.5" PointX="9.75" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.Brand" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.Category" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.Contact" Width="1.5" PointX="7.5" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.Content" Width="1.5" PointX="9.75" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.Customer" Width="1.5" PointX="5.75" PointY="11.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.DetailProduct" Width="1.5" PointX="7.5" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.DetailSolution" Width="1.5" PointX="3" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.Download" Width="1.5" PointX="7.75" PointY="11.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.Image" Width="1.5" PointX="9.75" PointY="11.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.Module" Width="1.5" PointX="11.75" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.Partner" Width="1.5" PointX="11.75" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.Product" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.ProductCategory" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.Promotion" Width="1.5" PointX="11.75" PointY="11.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.Service" Width="1.5" PointX="13.75" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.Slider" Width="1.5" PointX="0.75" PointY="14.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICTS.COMModel.Solution" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
+      <Diagram DiagramId="2dd18e8015054c7da009e236f60048a0" Name="Diagram1">
+        <EntityTypeShape EntityType="ICTS.COMModel.Admin" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.Blog" Width="1.5" PointX="9.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.BlogAdd" Width="1.5" PointX="12" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.Brand" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.Category" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.Contact" Width="1.5" PointX="7.5" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.Customer" Width="1.5" PointX="9.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.DetailProduct" Width="1.5" PointX="7.5" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.DetailSolution" Width="1.5" PointX="12" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.Download" Width="1.5" PointX="2.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.GmailNewsLetter" Width="1.5" PointX="4.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.Image" Width="1.5" PointX="7.5" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.Manager" Width="1.5" PointX="11.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.Module" Width="1.5" PointX="13.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.Partner" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.Product" Width="1.5" PointX="5.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.ProductCategory" Width="1.5" PointX="3" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.Promotion" Width="1.5" PointX="14.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.SEO" Width="1.5" PointX="4.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.Service" Width="1.5" PointX="6.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.Slider" Width="1.5" PointX="8.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTS.COMModel.Solution" Width="1.5" PointX="9.75" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="ICTS.COMModel.FK_BlogAdd_Blog" ManuallyRouted="false" />
         <AssociationConnector Association="ICTS.COMModel.FK_Product_Brand" ManuallyRouted="false" />
         <AssociationConnector Association="ICTS.COMModel.FK_ProductCategory_Category" ManuallyRouted="false" />
         <AssociationConnector Association="ICTS.COMModel.FK_Contact_Product" ManuallyRouted="false" />
         <AssociationConnector Association="ICTS.COMModel.FK_DetailProduct_Product" ManuallyRouted="false" />
         <AssociationConnector Association="ICTS.COMModel.FK_DetailSolution_Solution" ManuallyRouted="false" />
+        <AssociationConnector Association="ICTS.COMModel.FK_Images_Product" ManuallyRouted="false" />
         <AssociationConnector Association="ICTS.COMModel.FK_Product_ProductCategory" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>

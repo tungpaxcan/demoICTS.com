@@ -63,21 +63,51 @@
         </div>
     </div>
 </div>
+<div id="modallistemailcontact" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div style="color: red; text-align: center" class="panel-heading" id="modalTitlecontact"></div>
+                <input type="text" hidden id="idcontact" value="" />
+                <table id="tableexcel">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbdemailcontact">
+                    </tbody>
+                </table>
+                <iframe id="txtArea1" style="display:none"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button  class="btn btn-success" onclick="exportTableToExcel('tableexcel', 'members-data');"> EXPORT </button>
+                <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div>
     <ul class="pagination" id="pagecontact">
     </ul>
 </div>
+<button class="btn btn-primary" type="button" id="btnlistemailcontact">Danh Sách Email</button>
 @section scripts{
     <script>
         var page = 1;
         var seach = '';
         $(document).ready(function () {
             ListContact(seach, page);
+            ListEmail();
             document.getElementById("trangchu").style.visibility = "hidden";
             document.getElementById("sanpham").style.visibility = "hidden";
             document.getElementById("giaiphap").style.visibility = "hidden";
             document.getElementById("thuonghieu").style.visibility = "hidden";
             document.getElementById("chitietsanpham").style.visibility = "hidden";
+            document.getElementById("download").style.visibility = "hidden";
+            document.getElementById("service").style.visibility = "hidden";
+            document.getElementById("blog").style.visibility = "hidden";
         })
         //--------------------------------------------------contacts-------------------------------------------------------------------------------------------------------
         $(document).on('click', "a[name='contactclick']", function () {
@@ -148,6 +178,30 @@
             }
 
         });
+        //listEmailcontact
+        $('#btnlistemailcontact').click(function () {
+            $('#modallistemailcontact').modal();
+           
+        })
+        function ListEmail() {
+            $.ajax({
+                url: '/icts/contacts/ListGmail',
+                type: 'get',
+                success: function (data) {
+                    var stt = 1;
+                    $('#tbdemailcontact').empty();
+                    if (data.code == 200) {
+                        $.each(data.ct, function (k, v) {
+                            let tbd = '<tr>';
+                            tbd += '<td>' + (stt++) + '</td>'
+                            tbd += '<td>' + v.email + '</td>'
+                            tbd += '</tr>'
+                            $('#tbdemailcontact').append(tbd);
+                        })                       
+                    }
+                }
+            })
+        }
         function ListContact(seach, page) {
             $.ajax({
                 url: '/icts/contacts/Contact',
@@ -225,7 +279,7 @@
                 }
             });
         }
-
+    
     </script>
     }
 

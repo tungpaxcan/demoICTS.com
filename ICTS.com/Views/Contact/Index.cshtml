@@ -6,49 +6,51 @@
 
 
 <div style="position:relative" id="w-hv" class="home-backround">
-
     <div class="row contact">
         <div class="col-sm-6 contactform">
             <h1 class="LHVCT">Liên Hệ Với Chúng Tôi</h1>
             <div id="content">
                 <h1>Contact</h1>
-                <p>
-                    <label for="username" class="icon-user">
-                        Tên
-                        <span class="required">*</span>
-                    </label>
-                    <input type="text" name="username" id="namecontact" required="required" placeholder="Tên" />
-                </p>
-                <p>
-                    <label class="icon-envelope">
-                        Số Điện Thoại
-                        <span class="required">*</span>
-                    </label>
-                    <input type="text" id="phonecontact" placeholder="Số Điện Thoại" required="required" />
-                </p>
-                <p>
-                    <label for="usermail" class="icon-envelope">
-                        E-mail
-                        <span class="required">*</span>
-                    </label>
-                    <input type="email" id="emailcontact" placeholder="Nhập Email" required="required" />
-                </p>
-                <p>
-                    <label class="icon-envelope">
-                        Tên DN
-                        <span class="required">*</span>
-                    </label>
-                    <input type="text" id="enterprisecontact" placeholder="Tên Doanh Nghiệp" required="required" />
-                </p>
-                <input hidden id="idproduct" value="" />
-                <p>
-                    <label class="icon-envelope">
-                        Nội Dung
-                        <span class="required">*</span>
-                    </label>
-                    <textarea type="text" id="deccontact" placeholder="Nội Dung" required="required"></textarea>
-                </p>
-                <button type="submit" class="btn btn-primary" id="btnsubmitcontact">Gửi Liên Hệ</button>
+                <form id="setaction" @*action="https://formsubmit.co/b71a591dcf7f69a3dc504fa653653f30"*@ method="POST">
+                    <p>
+                        <label for="username" class="icon-user">
+                            Tên
+                            <span class="required">*</span>
+                        </label>
+                        <input type="text" name="Name" id="namecontact" required="required" placeholder="Tên" />
+                    </p>
+                    <p>
+                        <label class="icon-envelope">
+                            Số Điện Thoại
+                            <span class="required">*</span>
+                        </label>
+                        <input name="phone" type="text" id="phonecontact" placeholder="Số Điện Thoại" required="required" />
+                    </p>
+                    <p>
+                        <label for="usermail" class="icon-envelope">
+                            E-mail
+                            <span class="required">*</span>
+                        </label>
+                        <input name="Email" type="email" id="emailcontact" placeholder="Nhập Email" required="required" />
+                    </p>
+                    <p>
+                        <label class="icon-envelope">
+                            Tên DN
+                            <span class="required">*</span>
+                        </label>
+                        <input name="Business" type="text" id="enterprisecontact" placeholder="Tên Doanh Nghiệp" required="required" />
+                    </p>
+                    <input hidden id="idproduct" value="" />
+                    <p>
+                        <label class="icon-envelope">
+                            Nội Dung
+                            <span class="required">*</span>
+                        </label>
+                        <textarea name="Content" type="text" id="deccontact" placeholder="Nội Dung" required="required"></textarea>
+                    </p>
+                    <button type="submit" class="btn btn-primary" id="btnsubmitcontact">Gửi Liên Hệ</button>
+                </form>
+             
             </div>
         </div>
         <div class="col-sm-6 contactdec">
@@ -115,7 +117,7 @@
                 $('#cskhcontact').empty();
                 if (data.code == 200) {
                     $.each(data.a, function (k, v) {
-                        let span = '' + v.phone + '';
+                        let span = '<a href="tel:' + v.phone + '">' + v.phone + '</a>';
                         $('#cskhcontact').append(span);
                     });
                 }
@@ -129,7 +131,7 @@
                 $('#kt').empty();
                 if (data.code == 200) {
                     $.each(data.a, function (k, v) {
-                        let span = '' + v.phone + '';
+                        let span = '<a href="tel:' + v.phone + '">' + v.phone + '</a>';
                         $('#kt').append(span);
                     });
                 }
@@ -143,7 +145,7 @@
                 $('#phonehcm').empty();
                 if (data.code == 200) {
                     $.each(data.a, function (k, v) {
-                        let span = '' + v.phone + '';
+                        let span = '<a href="tel:' + v.phone + '">' + v.phone + '</a>';
                         $('#phonehcm').append(span);
                     });
                 }
@@ -157,7 +159,7 @@
                 $('#phonehn').empty();
                 if (data.code == 200) {
                     $.each(data.a, function (k, v) {
-                        let span = '' + v.phone + '';
+                        let span = '<a href="tel:' + v.phone + '">' + v.phone + '</a>';
                         $('#phonehn').append(span);
                     });
                 }
@@ -173,7 +175,7 @@
                 if (data.code == 200) {
                     $.each(data.a, function (k, v) {
                         let span = '' + v.address + '';
-                        let spans = '' + v.email + '';
+                        let spans = '<a href="mailto:' + v.email + '">' + v.email + '</a>';
                         $('#tphcm').append(span);
                         $('#email').append(spans);
                     });
@@ -282,8 +284,21 @@
             $('#modalMAP2').modal();
             $('.MAP2 iframe').css("width", "100%")
         })
-
-
+        //setaction
+        function SetAction() {
+            $.ajax({
+                url: '/contact/Gmail/',
+                type: 'get',
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#setaction').attr('action', 'https://formsubmit.co/'+data.a.Email);
+                    }
+                }
+            });    
+        }
+        $(document).ready(function () {
+            SetAction();
+        })
     </script>
 
 }

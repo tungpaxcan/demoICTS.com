@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ICTS.com.Models.Content>
+﻿
 @{
     ViewBag.Title = "Quản Trị";
     Layout = "~/Areas/ICTS/Views/Shared/_Layout_Admin.cshtml";
@@ -596,6 +596,10 @@
                     <input type="button" id="btnUploadcustomer" value="..." class="btn-bg-success" />
                     <img style="width:100px" id="picturecustomer" />
                 </div>
+                <div class="form-group" style="margin-left:20px">
+                    <label>Đường dẫn</label>
+                    <input type="text" class="form-control" id="linkcustomer">
+                </div>
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group" style="margin-left:20px">
@@ -747,6 +751,9 @@
                         $('#modifilebylogo').val(data.tv.ModifileBy);
                         $('#modalTitle').text("Sửa Logo");
                         $('#modallogo').modal();
+                        if (data.role == false) {
+                            $('#btnSubmitLogo').hide();
+                        }
                     } else {
                         alert(data.msg);
                     }
@@ -839,6 +846,9 @@
                         $('#btnSubmitcskh').show();
                         $('#modalTitlephone').text("Cập Nhật");
                         $('.CSKH').modal();
+                        if (data.role == false) {
+                            $('#btnSubmitcskh').hide();
+                        }
                     } else {
                         alert(data.msg);
                     }
@@ -1095,6 +1105,7 @@
                         $('#createbyslider').val(data.d);
                         $('#modalTitle').text("Thêm Slider");
                         $('#modalslider').modal();
+                       
                     }
                 }
             });
@@ -1233,6 +1244,9 @@
                         $('#modifilebywhy').val(data.tv.ModifileBy);
                         $('#modalTitlewhy').text("Sửa");
                         $('#why').modal();
+                        if (data.role == false) {
+                            $('#btnSubmitwhy').hide();
+                        }
                        /* WhyName();*/
                     } else {
                         alert(data.msg);
@@ -2571,6 +2585,7 @@
             $('#namecustomer').val('');
             $('#titlecustomer').val('');
             $('#urlcustomer').val('');
+            $('#linkcustomer').val('');
             $('#picturefilecustomer').val('');
             $('#createdatecustomer').prop('readonly', true);
             $('#createdatecustomer').val('');
@@ -2615,6 +2630,7 @@
             let name = $('#namecustomer').val().trim();
             let url = $('#urlcustomer').val().trim();
             let title = $('#titlecustomer').val().trim();
+            let link = $('#linkcustomer').val().trim();
             let image = $('#picturefilecustomer').val().trim();
             let status = $('#statuscustomer').prop('checked');
             let statusimage = $('#statusimagecustomer').prop('checked');
@@ -2633,6 +2649,7 @@
                         url: url,
                         title: title,
                         image: image,
+                        link: link,
                         status: status,
                         statusimage: statusimage
                     },
@@ -2649,6 +2666,7 @@
                             $('#namecustomer').val('');
                             $('#urlcustomer').val('');
                             $('#titlecustomer').val('');
+                            $('#linkcustomer').val('');
                             $('#statuscustomer').prop('checked', false);
                             $('#statusimagecustomer').prop('checked', false);
                             $('#picturefilecustomer').val('');
@@ -2667,6 +2685,7 @@
                         name: name,
                         url: url,
                         title: title,
+                        link: link,
                         image: image,
                         status: status,
                         statusimage: statusimage,
@@ -2685,6 +2704,7 @@
                             $('#namecustomer').val('');
                             $('#urlcustomer').val('');
                             $('#titlecustomer').val('');
+                            $('#linkcustomer').val('');
                             $('#statuscustomer').prop('checked', false);
                             $('#statusimagecustomer').prop('checked', false);
                             $('#picturefilecustomer').val('');
@@ -2751,7 +2771,7 @@
             let id = $(this).closest('tr').attr('id');
             if (confirm("Bạn có muốn xóa dữ liệu này")) {
                 $.ajax({
-                    url: '/icts/promotion/Delete',
+                    url: '/icts/customers/Delete',
                     type: 'post',
                     data: {
                         id: id
@@ -2786,6 +2806,7 @@
                         table += '<tr>';
                         table += '<th>STT</th>';
                         table += '<th>Tên Khách Hàng</th>';
+                        table += '<th>Đường Dẫn</th>';
                         table += '<th>Ảnh</th>';
                         table += '<th>Trạng thái</th>';
                         table += '<th>Trạng thái Hình Ảnh</th>';
@@ -2798,6 +2819,7 @@
                             table += '<tr id="' + v.id + '">';
                             table += '<td>' + (stt++) + '</td>';
                             table += '<td>' + v.name + '</td>';
+                            table += '<td>' + v.link + '</td>';
                             table += '<td><img style="width:100px" src="/Images/' + v.image + '"</td>';
                             table += '<td>' + v.status + '</td>';
                             table += '<td>' + v.statusimage + '</td>';
@@ -2816,7 +2838,7 @@
                 }
             });
         }
-        function Detailcustomer(id) {
+        function Detailcustomer(id)  {
             $.ajax({
                 url: '/icts/customers/Detail',
                 type: 'get',
@@ -2827,6 +2849,7 @@
                     if (data.code == 200) {
                         $('#idcustomer').val(data.tv.Id);
                         $('#namecustomer').val(data.tv.Name);
+                        $('#linkcustomer').val(data.tv.link);
                         $('#picturefilecustomer').val("/Images/" + data.tv.Image);
                         if (data.tv.Status == true) {
                             $('#statuscustomer').prop('checked', true);
@@ -2894,6 +2917,7 @@
             document.getElementById("chitietsanpham").style.visibility = "hidden";
             document.getElementById("download").style.visibility = "hidden";
             document.getElementById("service").style.visibility = "hidden";
+            document.getElementById("blog").style.visibility = "hidden";
 
         });
 

@@ -3,33 +3,60 @@
     ViewBag.Title = "Sản Phẩm";
     Layout = "~/Areas/ICTS/Views/Shared/_Layout_Admin.cshtml";
 }
-
+<style>
+    #seachinputproductcategory, #seachinputproduct {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-content: space-between;
+        justify-content: center;
+    }
+</style>
 <div id="seachinput" class="input-group">
+    
     <div class="form-outline">
-        <input type="search" id="seach" class="form-control" placeholder="Danh Mục Sản Phẩm" />
+        <div><input type="search" id="seach" class="form-control" placeholder="Danh Mục Sản Phẩm" /></div>
+
     </div>
     <button type="button" id="btnSeach" class="btn btn-primary">
         <i class="fas fa-search"></i>
     </button>
 </div>
 
-<div id="seachinputproductcategory" class="input-group">
-    <div class="form-outline">
-        <input type="search" id="seachproductcategory" class="form-control" placeholder="Loại Sản Phẩm" />
+<div id="seachinputproductcategory">
+    <div class="input-group">
+        <div class="form-outline">
+            <input type="search" id="seachproductcategory" class="form-control" placeholder="Loại Sản Phẩm" />
+        </div>
+        <button type="button" id="btnSeachproductcategory" class="btn btn-primary">
+            <i class="fas fa-search"></i>
+        </button>
     </div>
-    <button type="button" id="btnSeachproductcategory" class="btn btn-primary">
-        <i class="fas fa-search"></i>
-    </button>
+    <div>
+        <select id="selectcategory">
+        </select>
+    </div>
 </div>
 
-<div id="seachinputproduct" class="input-group">
-    <div class="form-outline">
-        <input type="search" id="seachproduct" class="form-control" placeholder="Sản Phẩm" />
+<div id="seachinputproduct">
+    <div class="input-group">
+        <div class="form-outline">
+            <input type="search" id="seachproduct" class="form-control" placeholder="Sản Phẩm" />
+        </div>
+        <button type="button" id="btnSeachproduct" class="btn btn-primary">
+            <i class="fas fa-search"></i>
+        </button>
     </div>
-    <button type="button" id="btnSeachproduct" class="btn btn-primary">
-        <i class="fas fa-search"></i>
-    </button>
+    <div>
+        <select id="selectcategory1">
+        </select>
+        <select id="selectproductcategory">
+        </select>
+        <select id="selectbrand">
+        </select>
+    </div>
 </div>
+
 
 <div id="seachinputbrand" class="input-group">
     <div class="form-outline">
@@ -39,6 +66,15 @@
         <i class="fas fa-search"></i>
     </button>
 </div>
+<div class="inn" id="result">
+
+</div>
+@*<div class="inn" id="result1">
+
+</div>
+<div class="inn" id="result2">
+
+</div>*@
 <table class="table Category Productcategory Brand Product">
 </table>
 <div>
@@ -271,27 +307,6 @@
             <div class="panel panel-primary">
                 <div style="color: red; text-align: center" class="panel-heading" id="modalTitleproduct"></div>
                 <input type="text" hidden id="idproduct" value="" />
-                    <div class="form-group" style="margin-left:20px">
-                        <label>Tên Danh Mục</label>
-                        <div>
-                            <select class="browser-default custom-select" id="namecategoryid">
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group" style="margin-left:20px">
-                        <label>Tên Loại Sản Phẩm</label>
-                        <div>
-                            <select class="browser-default custom-select" id="nameproductcategoryid">
-                            </select>
-                        </div>
-                    </div>
-                <div class="form-group" style="margin-left:20px">
-                    <label>Tên Thương Hiệu</label>
-                    <div>
-                        <select class="browser-default custom-select" id="namebrandid">
-                        </select>
-                    </div>
-                </div>
                 <div class="form-group" style="margin-left:20px">
                     <label>Tên sản phẩm</label>
                     <input type="text" class="form-control" id="nameproduct" placeholder="Tên Sản Phẩm">
@@ -302,18 +317,23 @@
                 <div class="form-group" style="margin-left:20px">
                     <input type="text" class="form-control hidden" hidden id="titleproduct" placeholder="title">
                 </div>
-                <div class="form-inline">
-                    <label>Chọn ảnh</label>
-                    <input type="text" hidden name="picture" id="picturefileproduct" class="form-control" />
-                    <input type="file" id="fileUploadproduct" name="fileUpload" accept="image/*" style="display:none" />
-                    <input type="button" id="btnUploadproduct" value="..." class="btn-bg-success" />
-                    <img style="width:100px" id="pictureproduct" />
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-inline">
+                            <label>Chọn ảnh Chính</label>
+                            <input type="text" hidden name="picture" id="picturefileproduct" class="form-control" />
+                            <input type="file" id="fileUploadproduct" name="fileUpload" accept="image/*" style="display:none" />
+                            <input type="button" id="btnUploadproduct" value="..." class="btn-bg-success" />
+                            <img style="width:100px" id="pictureproduct" />
+                        </div>
+                    </div>
+
                 </div>
+
                 <div class="form-group">
+                    <label>Thông Số</label>
                     <textarea class="form-control" id="thongso"></textarea>
                 </div>
-
-
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group" style="margin-left:20px">
@@ -355,6 +375,7 @@
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary" id="btnSubmitdetailproduct">Chỉnh Sửa Chi Tiết Sản Phẩm</button>
                 <button type="submit" class="btn btn-primary" id="btnSubmitproduct">Xác Nhận</button>
+                <div id="bt"></div>
                 <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
             </div>
         </div>
@@ -367,10 +388,10 @@
             <div class="panel panel-primary">
                 <div style="color: red; text-align: center" class="panel-heading" id="modalTitledetailproduct"></div>
                 <input type="text" hidden id="idproduct" value="" />
-                <div  id="id">
+                <div id="id">
 
                 </div>
-                
+
                 <div class="form-group">
                     <label>Ứng Dụng</label>
                     <textarea class="form-control" id="applicationdetailproduct"></textarea>
@@ -387,19 +408,178 @@
                     <label>mô tả</label>
                     <textarea class="form-control" id="optiondetailproduct"></textarea>
                 </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" id="btnSubmitOK">Xác Nhận</button>
-                <button type="submit" class="btn btn-secondary" id="dong" data-dismiss="modal">Đóng</button>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="btnSubmitOK">Xác Nhận</button>
+                    <button type="submit" class="btn btn-secondary" id="dong" data-dismiss="modal">Đóng</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
+@*-----------------modal imageadd------------------*@
+<div id="modalimageadd" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel panel-primary">
+                <div style="color: red; text-align: center" class="panel-heading" id="modalTitleimageadd"></div>
+                <input type="text" hidden id="idimageadd" value="" />
+                <table>
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Ảnh</th>
+                            <th>
+                                <div class="form-inline">
+                                    <label>Ảnh Mới</label>
+                                    <input type="text" hidden name="picture" id="picturefileimageadd" class="form-control" />
+                                    <input type="file" id="fileUploadimageadd" name="fileUpload" accept="image/*" style="display:none" />
+                                    <button id="btnUploadimageadd" class="btn btn-xs btn-success"> <i class="fa-solid fa-plus"></i></button>&nbsp
+                                    <img style="width:50px" id="pictureimageadd" />
+                                </div>
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbd"></tbody>
+                </table>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="btnSubmitimageaddok">Xác Nhận</button>
+                    <button type="submit" class="btn btn-secondary" id="dongimageadd" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @section scripts{
     <script>
+         //--------------------------------------------------autoseach-------------------------------------------------------------------------------------------------------
+        //cate
+        //Detail
+        $(document).on('click', "p[name='view']", function () {
+            let id = $(this).closest('p').attr('id');
+            Detail(id);
+            $('#createdate').prop('readonly', true);
+            $('#modifiledate').prop('readonly', true);
+            $('#modifileby').prop('readonly', true);
+            $('#createby').prop('readonly', true);
+            $('#modifiledate').show();
+            $('#modifileby').show();
+            $('#btnSubmitdmsp').hide();
+            $('#iddmsp').val('');
+        });
+        $('#seach').on('keyup', function (e) {
+            $('.inn').css("display", "flex")
+            var none = $('#seach').val();
+            autoseach(none);
+            if (none.length == 0) {
+                none = "";
+                $('.inn').css("display", "none")
+            }
+        });
+        function autoseach(none) {
+            $.ajax({
+                url: '/icts/categories/SeachAuto',
+                type: 'get',
+                data: {
+                    seach: none
+                },
+                success: function (data) {
+                    $('#result').empty();
+                    if (data.code == 200) {
+                        $.each(data.dmsp, function (k, v) {
+                            let s = ' <p id="' + v.id + '"name="view">' + v.name + '( chi tiết)</p>';
+                            $('#result').append(s);
+                        });
+                    }
+                }
+            });
+        }
+        //procate
+        //Detail
+        $(document).on('click', "p[name='viewproductcategory']", function () {
+            let id = $(this).closest('p').attr('id');
+            DetailProductcategory(id);
+            $('#createdateproductcategory').prop('readonly', true);
+            $('#modifiledateproductcategory').prop('readonly', true);
+            $('#modifilebyproductcategory').prop('readonly', true);
+            $('#createbyproductcategory').prop('readonly', true);
+            $('#btnSubmitproductcategory').hide();
+            $('#idproductcategory').val('');
+        });
+        $('#seachproductcategory').on('keyup', function (e) {
+            $('.inn').css("display", "flex")
+            var none1 = $('#seachproductcategory').val();
+            autoseachprocate(none1);
+            if (none1.length == 0) {
+                none1 = "";
+                $('.inn').css("display", "none")
+            }
+        });
+        function autoseachprocate(none) {
+            $.ajax({
+                url: '/icts/productcategories/SeachAuto',
+                type: 'get',
+                data: {
+                    seach: none
+                },
+                success: function (data) {
+                    $('#result').empty();
+                    if (data.code == 200) {
+                        $.each(data.dmsp, function (k, v) {
+                            let s = ' <p id="' + v.id + '" name="viewproductcategory">' + v.name + '(chi tiết)</p>';
+                            $('#result').append(s);
+                        });
+                    }
+                }
+            });
+        }
+        //pro
+        //Detail
+        $(document).on('click', "p[name='viewproduct']", function () {
+            let id = $(this).closest('p').attr('id');
+            DetailProduct(id);
+            $('#createdateproduct').prop('readonly', true);
+            $('#modifiledateproduct').prop('readonly', true);
+            $('#modifilebyproduct').prop('readonly', true);
+            $('#createbyproduct').prop('readonly', true);
+            $('#modifiledateproduct').show();
+            $('#modifilebyproduct').show();
+            $('#btnSubmitproduct').hide();
+            $('#btnSubmitdetailproduct').hide();
+            $('#btnSubmitimageadd').hide();
+            $('#idproduct').val('');
+        });
+        $('#seachproduct').on('keyup', function (e) {
+            $('.inn').css("display", "flex")
+            var none2 = $('#seachproduct').val();
+            autoseachpro(none2);
+            if (none2.length == 0) {
+                none2 = "";
+                $('.inn').css("display", "none")
+            }
+        });
+        function autoseachpro(none) {
+            $.ajax({
+                url: '/icts/products/SeachAuto',
+                type: 'get',
+                data: {
+                    seach: none
+                },
+                success: function (data) {
+                    $('#result').empty();
+                    if (data.code == 200) {
+                        $.each(data.dmsp, function (k, v) {
+                            let s = ' <p id="' + v.id + '" name="viewproduct">' + v.name + '( chi tiết)</p>';
+                            $('#result').append(s);
+                        });
+                    }
+                }
+            });
+        }
         var page = 1;
         var seach = '';
         //--------------------------------------------------category-------------------------------------------------------------------------------------------------------
+
         $('#btndanhmuc').click(function () {
             DanhMucSanPham(seach, page);
             $('#pageproductcategory').hide();
@@ -553,6 +733,7 @@
             DanhMucSanPham(seach, page);
         });
         ////tim kiem
+
         $('#btnSeach').click(function () {
             page = 1;
             seach = $('#seach').val();
@@ -731,6 +912,9 @@
             });
         }
         //--------------------------------------------------productcategory-------------------------------------------------------------------------------------------------------
+        $('#selectcategory').change(function () {
+            ProductCategory(seach, page)
+        })
         $('#btndanhmucsanpham').click(function () {
             ProductCategory(seach, page);
             $('#pageproductcategory').show();
@@ -914,10 +1098,12 @@
 
         });
         function ProductCategory(seach, page) {
+            let idselectcategory = $('#selectcategory option:selected').val();
             $.ajax({
                 url: '/icts/productcategories/ProductCategory',
                 type: 'get',
                 data: {
+                    id: idselectcategory,
                     page: page,
                     seach: seach
                 },
@@ -1013,10 +1199,13 @@
                 type: 'get',
                 success: function (data) {
                     $('#namecategory').empty();
+                    $('#selectcategory').empty();
                     if (data.code == 200) {
                         $.each(data.dmsp, function (k, v) {
                             let option = '<option id="' + v.id + '" value="' + v.id + '">' + v.name + '</option>';
+                            let option1 = '<option id="' + v.id + '" value="' + v.id + '">' + v.name + '</option>';
                             $('#namecategory').append(option);
+                            $('#selectcategory').append(option1);
                         })
                     }
                 }
@@ -1221,7 +1410,7 @@
                         table += '<th> <button class = "btn btn-xs btn-success" name = "addbrand" > <i class="fa-solid fa-plus"></i></button >&nbsp</th>';
                         table += '</tr>';
                         table += '</thead>';
-                        table += '<tbody>';
+                        table += '<tbody class="order_position1">';
                         $.each(data.dmsp, function (k, v) {
                             table += '<tr id="' + v.id + '">';
                             table += '<td>' + v.name + '</td>';
@@ -1244,6 +1433,9 @@
                         $('#pagebrand').append(next);
                         let li = $('#pagebrand li#' + page + '');
                         $(li).addClass('active')
+                        $('.order_position1').sortable({
+                            placeholder: 'ui-state-highlight',
+                        });
                     } else {
                         alert(data.msg);
                     }
@@ -1294,8 +1486,13 @@
             });
         }
         //--------------------------------------------------product-------------------------------------------------------------------------------------------------------
+        $('#selectproductcategory').change(function () {
+            Product(seach, page)
+        })
+        $('#selectbrand').change(function () {
+            Product(seach, page)
+        })
         $('#btnsanpham').click(function () {
-            Product(seach, page);
             $('#pageproductcategory').hide();
             $('#categorypage').hide();
             $('#seachinputproductcategory').hide();
@@ -1324,6 +1521,9 @@
             $('#statusproduct').prop('checked', false);
             $('#idproduct').val('');
             $('#btnSubmitproduct').show();
+            $('#btnSubmitdetailproduct').hide();
+            $('#btnSubmitimageadd').hide();
+            $('#modalTitleproduct').text("Thêm Sản Phẩm");
             $('#hide').show();
         });
         //hien ten hinh
@@ -1354,8 +1554,8 @@
         //confirm add/edit
         $('#btnSubmitproduct').click(function () {
             let name = $('#nameproduct').val().trim();
-            let nameproductcategoryid = $('#nameproductcategoryid').val();
-            let namebrandid = $('#namebrandid').val();
+            let nameproductcategoryid = parseInt($('#selectproductcategory option:selected').val());
+            let namebrandid = parseInt($('#selectbrand option:selected').val());
             let thongso = $('#thongso').summernote('code');
             let url = $('#urlproduct').val().trim();
             let title = $('#titleproduct').val().trim();
@@ -1366,7 +1566,7 @@
                 alert('Vui Long Nhập Đầy Đủ Dữ liệu');
                 return;
             }
-            let idproduct = $('#idproduct').val().trim();
+            let idproduct = $('#idproduct').val();
             if (idproduct.length == 0) {
                 $.ajax({
                     url: '/icts/products/Add',
@@ -1478,6 +1678,8 @@
             $('#modifiledateproduct').show();
             $('#modifilebyproduct').show();
             $('#btnSubmitproduct').hide();
+            $('#btnSubmitdetailproduct').hide();
+            $('#btnSubmitimageadd').hide();
             $('#idproduct').val('');
         });
         //Edit
@@ -1490,6 +1692,8 @@
             $('#modifilebyproduct').prop('readonly', true);
             $('#modalTitleproduct').text("Sửa Sản Phẩm");
             $('#btnSubmitproduct').show();
+            $('#btnSubmitdetailproduct').show();
+            $('#btnSubmitimageadd').show();
             $('#idproduct').val('');
 
         });
@@ -1521,11 +1725,16 @@
             }
 
         });
+        //sap xep
         function Product(seach, page) {
+            let idselectproductcategory = $('#selectproductcategory option:selected').val();
+            let idselectbrand = $('#selectbrand option:selected').val();
             $.ajax({
                 url: '/icts/products/Product',
                 type: 'get',
                 data: {
+                    idprocate: idselectproductcategory,
+                    idbr: idselectbrand,
                     page: page,
                     seach: seach
                 },
@@ -1545,7 +1754,7 @@
                         table += '<th> <button class = "btn btn-xs btn-success" name = "addproduct" > <i class="fa-solid fa-plus"></i></button >&nbsp</th>';
                         table += '</tr>';
                         table += '</thead>';
-                        table += '<tbody>';
+                        table += '<tbody class="order_position">';
                         $.each(data.dmsp, function (k, v) {
                             table += '<tr id="' + v.id + '">';
                             table += '<td>' + v.namecategory + '</td>';
@@ -1557,6 +1766,7 @@
                             table += '<td> <button class = "btn btn-xs btn-primary" name = "viewproduct" > <i class="fa-thin fa-circle-info"></i></button >&nbsp';
                             table += ' <button class = "btn btn-xs btn-warning" name = "updateproduct" > <i class="fa-thin fa-wrench"></i></button >&nbsp';
                             table += ' <button class = "btn btn-xs btn-danger" name = "deleteproduct" > <i class="fa-thin fa-trash-xmark"></i></button >&nbsp';
+                            table += ' <button class = "btn btn-xs btn-danger" name = "imageadd" > <i class="fa-thin fa-images"></i></button >&nbsp';
                             table += '</td>';
                             table += '<td></td>';
                             table += '</tr>';
@@ -1584,7 +1794,9 @@
                         $('#pageproduct').append(next);
                         let li = $('#pageproduct li#' + page + '');
                         $(li).addClass('active')
-
+                        $('.order_position').sortable({
+                            placeholder: 'ui-state-highlight',
+                        });
                     } else {
                         alert(data.msg);
                     }
@@ -1645,11 +1857,17 @@
                 type: 'get',
                 success: function (data) {
                     $('#namecategoryid').empty();
+                    $('#selectcategory1').empty();
+                    let option1 = '<option >All</option>';
                     if (data.code == 200) {
                         $.each(data.dmsp, function (k, v) {
                             let option = '<option id="' + v.id + '" value="' + v.id + '">' + v.name + '</option>';
+                             option1 += '<option id="' + v.id + '" value="' + v.id + '">' + v.name + '</option>';
                             $('#namecategoryid').append(option);
+                           
                         })
+                        $('#selectcategory1').append(option1);
+                        ProductCateId();
                     }
                 }
             });
@@ -1675,6 +1893,28 @@
                 });
             });
         }
+        function ProductCateId() {
+            $('#selectcategory1').change(function () {
+                var id = $(this).find(':selected')[0].id;
+                $.ajax({
+                    url: '/icts/products/ProductById',
+                    type: 'get',
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        $('#selectproductcategory').empty();
+                        let option = '<option>All</option>';
+                        if (data.code == 200) {
+                            $.each(data.dmsp, function (k, v) {
+                                 option += '<option id="' + v.id + '" value="' + v.id + '">' + v.name + '</option>';                               
+                            })
+                            $('#selectproductcategory').append(option);
+                        }
+                    }
+                });
+            });
+        }
         function BrandById() {
             $.ajax({
                 url: '/icts/products/BrandById',
@@ -1682,14 +1922,18 @@
                 success: function (data) {
                     if (data.code == 200) {
                         $('#namebrandid').empty();
+                        $('#selectbrand').empty();
                         $.each(data.dmsp, function (k, v) {
                             let option = '<option id="' + v.id + '" value="' + v.id + '">' + v.name + '</option>';
+                            let option1 = '<option id="' + v.id + '" value="' + v.id + '">' + v.name + '</option>';
                             $('#namebrandid').append(option);
+                            $('#selectbrand').append(option1);
                         })
                     }
                 }
             });
         }
+
         //--------------------------------------------------detailproduct-------------------------------------------------------------------------------------------------------
         //modal add category
         $('#btnSubmitdetailproduct').on('click', function () {
@@ -1701,10 +1945,10 @@
                 success: function (data) {
                     $('#id').empty();
                     if (data.code == 200) {
-                        $.each(data.dmsp, function (k, v) {                          
+                        $.each(data.dmsp, function (k, v) {
                             let div = '<input hidden type="text"  class="iddetailproduct" id="' + v.idproduct + '" />';
                             $('#id').append(div)
-                        })                      
+                        })
                     }
                 }
             })
@@ -1718,6 +1962,8 @@
             let option = $('#optiondetailproduct').summernote('code');
             var ids = $('.iddetailproduct').map(function (_, x) { return x.id; }).get();
             let id = $('#idproduct').val().trim();
+            let name = $('#nameproduct').val().trim();
+            console.log(name)
             var c = ids.includes('' + id + '')
             if (c == true) {
                 $.ajax({
@@ -1728,6 +1974,7 @@
                         dec: dec,
                         dectech: dectech,
                         option: option,
+                        name: name,
                         id: id
                     },
                     success: function (data) {
@@ -1739,7 +1986,7 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             });
-                        
+
                         }
                     }
                 })
@@ -1752,6 +1999,7 @@
                         dec: dec,
                         dectech: dectech,
                         option: option,
+                        name:name,
                         id: id
                     },
                     success: function (data) {
@@ -1767,8 +2015,8 @@
                     }
                 })
             }
-           
-        }); 
+
+        });
         function DetailProductDetail(id) {
             var ids = $('.iddetailproduct').map(function (_, x) { return x.id; }).get();
             var c = ids.includes('' + id + '')
@@ -1800,10 +2048,10 @@
                     },
                     success: function (data) {
                         if (data.code == 200) {
-                            $('#applicationdetailproduct').summernote('code','');
-                            $('#decdetailproduct').summernote('code','');
-                            $('#dectechdetailproduct').summernote('code','');
-                            $('#optiondetailproduct').summernote('code','');
+                            $('#applicationdetailproduct').summernote('code', '');
+                            $('#decdetailproduct').summernote('code', '');
+                            $('#dectechdetailproduct').summernote('code', '');
+                            $('#optiondetailproduct').summernote('code', '');
                             $('#modalTitledetailproduct').text("Chi Tiết Sản Phẩm");
                             $('#modaldetailproduct').modal();
                         } else {
@@ -1811,11 +2059,132 @@
                     }
                 });
             }
-           
+
         }
         $('#dong').click(function () {
             $('#modalproduct').show()
             $('#modaldetailproduct').hide()
+        })
+        //--------------------------------------------------imageadd-------------------------------------------------------------------------------------------------------
+        //modal add category
+        $(document).on('click', "button[name='imageadd']", function () {
+            let id = $(this).closest('tr').attr('id');
+            $('#modalproduct').hide();
+            $('#modalimageadd').show();
+            $('#modalTitleimageadd').text("Thêm ảnh");
+            ImageAdd(id)
+            $('#idimageadd').val(id);
+
+        });
+        //hien ten hinh
+        $('#btnUploadimageadd').click(function () {
+            $('#fileUploadimageadd').trigger('click');
+
+        });
+        //chon file
+        $('#fileUploadimageadd').change(function () {
+            if (window.FormData !== undefined) {
+                let fileUpload = $('#fileUploadimageadd').get(0);
+                let files = fileUpload.files;
+                let formdata = new FormData();
+                formdata.append('file', files[0]);
+                $.ajax({
+                    type: 'post',
+                    url: '/icts/imageadds/UploadImage',
+                    contentType: false,
+                    processData: false,
+                    data: formdata,
+                    success: function (urlImage) {
+                        $('#pictureimageadd').attr('src', urlImage);
+                        $('#picturefileimageadd').val(urlImage);
+
+                    }
+                })
+            }
+        })
+        //add
+
+        $('#btnSubmitimageaddok').click(function () {
+            let image = $('#picturefileimageadd').val().trim();
+            let ids = $('#idimageadd').val().trim(); console.log(ids)
+            $.ajax({
+                type: 'post',
+                url: '/icts/imageadds/Add',
+                data: {
+                    id: ids,
+                    image: image
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: "Thêm Thành Công",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        ImageAdd(ids)
+                    }
+                }
+            })
+        })
+        //delete
+        $(document).on('click', "button[name='deleteimageadd']", function () {
+            let id = $(this).closest('tr').attr('id');
+            let ids = $('#idimageadd').val().trim();
+            if (confirm("Bạn có muốn xóa dữ liệu này")) {
+                $.ajax({
+                    url: '/icts/imageadds/Delete',
+                    type: 'post',
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Xóa Thành Công",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            ImageAdd(ids)
+                        } else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+
+        });
+        function ImageAdd(id) {
+            $.ajax({
+                url: '/imageadds/Id',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    var stt = 1;
+                    $('#tbd').empty();
+                    if (data.code == 200) {
+                        $.each(data.dmsp, function (k, v) {
+                            let tr = '<tr id="' + v.id + '">';
+                            tr += '<td>' + (stt++) + '</td>';
+                            tr += '<td><img style="width:50px" src="/Images/' + v.image + '"</td>';
+                            tr += '<td>';
+                            tr += ' <button class = "btn btn-xs btn-danger" name = "deleteimageadd" > <i class="fa-thin fa-trash-xmark"></i></button >&nbsp';
+                            tr += '</td>';
+                            tr += '</tr>';
+                            $('#tbd').append(tr)
+                        })
+                    }
+                }
+            })
+        }
+        $('#dongimageadd').click(function () {
+            $('#modalimageadd').hide()
+            $('#idimageadd').val('');
         })
         //convert date string
         function ConvertJsonDateString(jsonDate) {
@@ -1839,9 +2208,9 @@
             $('#decdetailproduct').summernote();
             $('#dectechdetailproduct').summernote();
             $('#optiondetailproduct').summernote();
+            $('.modal-dialog').css("max-width", "1000px")
             DanhMucSanPham(seach, page);
             ProductCategoryId()
-            Product(seach, page)
             ProductCategoryById()
             ProductId()
             BrandById()
@@ -1858,6 +2227,8 @@
             document.getElementById("sanpham").style.visibility = "visible";
             document.getElementById("thuonghieu").style.visibility = "visible";
             document.getElementById("chitietsanpham").style.visibility = "visible";
-        });
+            document.getElementById("blog").style.visibility = "hidden";
+        })
     </script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 }

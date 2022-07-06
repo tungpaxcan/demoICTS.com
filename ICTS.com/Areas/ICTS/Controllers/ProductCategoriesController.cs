@@ -16,12 +16,12 @@ namespace ICTS.com.Areas.ICTS.Controllers
         
         private Entities db = new Entities();
         [HttpGet]
-        public JsonResult ProductCategory(string seach, int page)
+        public JsonResult ProductCategory(int id, string seach, int page)
         {
             try
             {
                 var pageSize = 5;
-                var dmspp = (from s in db.ProductCategories.Where(x => x.Id > 0)
+                var dmspp = (from s in db.ProductCategories.Where(x => x.IdCategory == id)
                              join ss in db.Categories on s.IdCategory equals ss.Id
                              select new
                              {
@@ -117,15 +117,43 @@ namespace ICTS.com.Areas.ICTS.Controllers
             {
                 db.Configuration.ProxyCreationEnabled = false;
                 var l = db.ProductCategories.Find(id);
-                db.ProductCategories.Remove(l);
-                db.SaveChanges();
-                return Json(new { code = 200, msg = "Xoa Dữ Liệu thành công" }, JsonRequestBehavior.AllowGet);
+                var session = (Admin)Session["admin"];
+                var role = session.Role;
+                if (role == true)
+                {
+                    db.ProductCategories.Remove(l);
+                    db.SaveChanges();
+                    return Json(new { code = 200, msg = "Xoa Dữ Liệu thành công" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { code = 300, msg = "Bạn không có quyền xóa dữ liệu" }, JsonRequestBehavior.AllowGet);
+                }
+               
             }
             catch (Exception e)
             {
                 return Json(new { code = 500, msg = "Xoa nhật dữ liệu thất bại" + e.Message }, JsonRequestBehavior.AllowGet);
             }
         }
-
+        [HttpGet]
+        public JsonResult SeachAuto(string seach)
+        {
+            try
+            {
+                var dmsp = (from s in db.ProductCategories.Where(x => x.Id > 0)
+                            join ss in db.Categories on s.IdCategory equals ss.Id
+                            select new
+                            {
+                                id = s.Id,
+                                name = s.Name,
+                            }).ToList().Where(x => x.name.ToLower().Contains(seach));
+                return Json(new { code = 200, dmsp = dmsp, msg = "Hiển Thị Dữ liệu thành công" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { code = 500, msg = "Hiểm thị dữ liệu thất bại" + e.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

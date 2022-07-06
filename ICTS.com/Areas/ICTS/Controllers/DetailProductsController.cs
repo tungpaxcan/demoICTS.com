@@ -32,7 +32,7 @@ namespace ICTS.com.Areas.ICTS.Controllers
             }
         }
         [HttpPost, ValidateInput(false)]
-        public JsonResult Edit(int id,string application,string dec,string dectech,string option)
+        public JsonResult Edit(int id,string application,string dec,string dectech,string option,string name)
         {
             try
             {
@@ -43,6 +43,7 @@ namespace ICTS.com.Areas.ICTS.Controllers
                     a.C_content_Dec = dec;
                     a.C_content_DecTech = dectech;
                     a.C_content_Option = option;
+                a.Name = name;
                     a.CreateBy = nameAdmin;
                     a.CreateDate = DateTime.Now;
                     a.ModifileBy = nameAdmin;
@@ -57,13 +58,14 @@ namespace ICTS.com.Areas.ICTS.Controllers
             }
         }
         [HttpPost, ValidateInput(false)]
-        public JsonResult Add(int id, string application, string dec, string dectech, string option)
+        public JsonResult Add(int id, string application, string dec, string dectech, string option,string name)
         {
             try
             {
                 var session = (Admin)Session["admin"];
                 var nameAdmin = session.Name;
                 var d = new DetailProduct();
+                d.Name = name;
                 d.IdProduct = id;
                 d.C_content_Application = application;
                 d.C_content_Dec = dec;

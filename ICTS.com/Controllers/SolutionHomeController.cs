@@ -68,7 +68,7 @@ namespace ICTS.com.Controllers
                             {
                                 id = s.Id,
                                 title = so.Title,
-                                meta = so.Meta,
+                                meta = so.Meta.Replace("&","-"),
                                 name = so.Name,
                                 content = s.Content,
                                 image = s.Image

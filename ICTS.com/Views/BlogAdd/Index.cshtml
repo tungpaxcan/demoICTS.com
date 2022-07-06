@@ -1,0 +1,48 @@
+﻿@model ICTS.com.Models.BlogAdd
+@{
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<input hidden value="@Model.Id" id="idblogadd" />
+<div style="padding:3%" class="home-backround">
+    <div class="title-big ">
+        <h1 class="nameblog">Blog/@Model.Name</h1>
+    </div>
+    <div id="blogdetail">
+
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            BlogAdd();
+            $('.title-big .nameblog').css("text-align", "left");
+            $('.title-big .nameblog').css("padding-left", "5%");
+            $('.title-big .nameblog').css("padding-top", "2%");
+        })
+        function BlogAdd() {
+            let idblogadd = $('#idblogadd').val().trim();
+            let stt = 1;
+            $.ajax({
+                url: '/blogadd/BlogAdd',
+                type: 'get',
+                data: {
+                    id: idblogadd
+                },
+                success: function (data) {
+                    $('#blogdetail').empty();
+                    if (data.code == 200) {
+                        $.each(data.left, function (k, v) {
+                            let div = ''+v.content+'';
+                            $('#blogdetail').append(div);
+                        });
+
+                    } else {
+                        alert(data.msg)
+                    }
+                }
+            });
+        }
+
+    </script>
+}

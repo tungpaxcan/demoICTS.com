@@ -36,7 +36,7 @@ namespace ICTS.com.Areas.ICTS.Controllers
                     var sub21 = sub2.Replace(":", "");
                     string _FileName = "";
                     int index = file.FileName.IndexOf('.');
-                    _FileName = sub11 + sub21 + "Solution" + "." + file.FileName.Substring(index + 1);
+                    _FileName = sub11 + sub21 + "Solution" + file.FileName;
                     file.SaveAs(Server.MapPath("/Images/" + _FileName));
 
                     return "/Images/" + _FileName;
@@ -158,9 +158,19 @@ namespace ICTS.com.Areas.ICTS.Controllers
             {
                 db.Configuration.ProxyCreationEnabled = false;
                 var l = db.Solutions.Find(id);
-                db.Solutions.Remove(l);
-                db.SaveChanges();
-                return Json(new { code = 200, msg = "Xoa Dữ Liệu thành công" }, JsonRequestBehavior.AllowGet);
+                var session = (Admin)Session["admin"];
+                var role = session.Role;
+                if (role == true)
+                {
+                    db.Solutions.Remove(l);
+                    db.SaveChanges();
+                    return Json(new { code = 200, msg = "Xoa Dữ Liệu thành công" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { code = 300, msg = "bạn không có quyền xóa dữ liệu" }, JsonRequestBehavior.AllowGet);
+                }
+               
             }
             catch (Exception e)
             {

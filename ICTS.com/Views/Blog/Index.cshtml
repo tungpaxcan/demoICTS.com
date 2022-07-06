@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "Blog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="home-backround">
+    <div class="h-product-wp">
+        <div style="text-align:center" class="h-product-block ">
+            <ul id="blog" class="home-imageproduct">
+            </ul>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            Blog();
+        })
+        function Blog() {
+            $.ajax({
+                url: '/blog/BlogMenu',
+                type: 'get',
+                success: function (data) {
+                    $('#blog').empty();
+                    if (data.code == 200) {
+                        $.each(data.dmsp, function (k, v) {
+                            let div = '<li id="' + v.id + '" name="ablog">';
+                            div += ' <div class="h-product-item">';
+                            div += ' <div style="padding:3%;margin-top:1%" class="title-big ">';
+                            div += '<h1>' + v.name + '</h1>';
+                            div += ' </div>'
+                            div += ' <div  class="h-product-item-img perspective">';
+                            div += '<a href="" class="image-product ">';
+                            div += '<img src="/Images/' + v.image + '" title="' + v.title + '" />';
+                            div += '</a>';
+                            div += '</div>';
+                            div += '</div>';
+                            div += '</li>';
+                            $('#blog').append(div);
+                        });
+
+                    } else {
+                        alert(data.msg)
+                    }
+                }
+            });
+        }
+/*         ---------addlink---------------*/
+        $(document).on('click', "li[name='ablog']", function () {
+            let id = $(this).closest('li').attr('id')
+            $.ajax({
+                url: '/blog/BlogUrl',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 200) {
+                        $.each(data.left, function (k, v) {
+                            window.location.href = data.Url + v.meta + "/" + v.id
+                        })
+
+                    }
+                }
+            })
+        })
+    </script>
+    }
